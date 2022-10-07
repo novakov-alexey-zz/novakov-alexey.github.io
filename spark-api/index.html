@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Spark API Languages
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Spark API Languages
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2022-10-07'>October 07, 2022</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    7 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1244 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/big-data/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        big data
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/spark/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        spark
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/java/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        java
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/python/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        python
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;f5527f4e3552d53200.jpg" class="center-image"/>
+<br/><br/><h1 id="context">Context</h1>
+<p>As part of my role of Data Architect at work, I often deal with AWS data services to run Apache Spark jobs such as EMR and Glue ETL. At the very beginning team needed to choose Spark supported programming language and start writing our main jobs for data processing.</p>
+<p>Before we further dive into the languages choice, let's quickly remind what is Spark for EMR. Glue ETL is going to be skipped from the blog-post.</p>
+<p><a href="https://github.com/apache/spark">Apache Spark</a> is one of the main component of <a href="https://aws.amazon.com/emr/">AWS EMR</a>, which makes EMR still meaningful service to be used by Big Data teams. AWS EMR team is building its own Spark distribution to integrate it with other EMR applications seamlessly. Even though Amazon builds own Spark, they keep the same Spark version, which is equal to open source version of Spark. All features of Apache Spark are available in EMR Spark. EMR allows to run a Spark application in EMR cluster via step type called “Spark Application”.</p>
+<span id="continue-reading"></span><h1 id="spark-apis">Spark APIs</h1>
+<p>Apache Spark is mainly written in <a href="https://www.scala-lang.org/">Scala programming language</a>, which is running on top of JVM. Scala is more than the 15 years old programming language with state of the art eco-system of development tools like SBT, its plugin eco-system and many others. Scala was developed to enable programmers to write scale-able code in terms of code base size. That means one can tackle very large problem with small amount of Scala code.
+Spark has also Java code in its main code base. Both languages are working in the same application without any problems. With rise of Data Science domain, Spark community brought R and Python languages support and started to support their SDKs officially as part of the Apache Spark repository. One of the main reason of adding Python and R was to enable Data Scientists to do data preparation for their further work using massive parallel execution engine which Spark is. In summary, there are 5 APIs that Spark supports today:</p>
+<ol>
+<li>Scala</li>
+<li>Java</li>
+<li>SQL</li>
+<li>Python a.k.a PySpark </li>
+<li>R</li>
+</ol>
+<p>SQL is available from all supported above languages using string expressions.
+First 3 APIs are native, so entire application execution is controlled only by JVM instances running on driver and executor side. In case of PySpark, there are Python interpreters on driver and executor sides, which require additional resources on cluster and client side. However, most of the execution is still happening inside the JVMs even the PySpark SDK is submitting the code. Spark DataFrame API was introduced in Spark some time ago to align performance of all supported languages. There is one major downside still exists when using Python. This issue arises when Spark JVM code needs to communicate with Spark-Python user code back and forth. Communication between Python and JVM processes is done via TCP Sockets, so the overhead of data serialization/de-serialization takes place. Such communication is not so intensive to produce performance penalties, unless user is using User-defined-Function (UDFs) in Python code.
+Other Python limitations are coming from the language ergonomics itself. These limitations hurt productivity of data engineers especially when it comes to write internal/corporate library with typical data processing jobs. Still, Python can be easily used for data exploration in EMR Notebooks and/or PySpark shell.</p>
+<h1 id="scala-benefits">Scala Benefits</h1>
+<ol>
+<li>Statically typed code is verified by Scala compiler. Enables ease of program code refactoring. This is the main feature of language like Scala that eliminates issues in runtime, which may cause a lot of harm if data processing job fails on some program statement after running for 4 hours already.</li>
+<li>IDE support: code error syntax highlighting, autocomplete, go-to definition to Spark Scala/Java API or own application code. <a href="https://www.jetbrains.com/pycharm/">PyCharm</a> or similar Python IDE do not easily work with Spark type-stubs. Out of the Spark, IDE features are by an order of magnitude better for statically typed languages than for dynamically typed languages.</li>
+<li>SBT (scala build tool similar to Maven in Java) allows to version and package Spark program code as a JAR file using <a href="https://github.com/sbt/sbt-assembly">sbt-assembly</a> plugin and upload it to S3 bucket using few build commands.</li>
+<li>Huge eco-system of Java and Scala libraries. Any library from Maven/Ivy repository can be called directly from Spark driver or executor side.</li>
+<li>Scala benefits over Java language as well, because Java has quite verbose language syntax.</li>
+</ol>
+<h1 id="python-challenges">Python Challenges</h1>
+<ol>
+<li>Syntax validation. Mypy or similar Python type-checker can be used to validate optional type annotations. However, that does not prevent a programmer to ship syntactically incorrect code to EMR Step execution, unless it is deployed by CI/CD job. Using Scala, one can't ship incorrect code to Spark without going through the compilation phase.</li>
+<li>Refactoring is labor-intensive. Usually, Spark programs evolve to a home-grown library of data-processing jobs that requires code sharing to get manageable and scaleable codebase. Often times it is hard to refactor Python code automatically or semi-automatically even with IDE. Editors and IDEs work better for statically typed languages, since they introspect type annotations and make decision on wrong/correct syntax highlighting, automatic renaming and other refactoring tasks. Refactored Python program requires severe testing than it would be needed for a Scala program. Code refactoring here is not necessarily related to Spark API, but to that parts which combine user's and Spark's code all together.</li>
+<li>White-space sensitivity and back-slash continuation syntax. Due to the fact that Spark API is extensively using “builder” pattern. Such as when program statements are split by dot and line break characters in the same time. This can also be done in Python with back-slash syntax or wrapping the entire statement in parentheses, which clutters the code.</li>
+</ol>
+<h1 id="scala-learning-curve">Scala Learning Curve</h1>
+<ol>
+<li>In order to write Spark code in Scala, one can learn that in one day. Spark DataFrame API is almost identical across all Spark languages. Programmers do not require to know all Scala language aspects, but they can discover them over time.</li>
+<li>Scala function definition syntactically looks very like Python function definition. Difference becomes even smaller, when using optional type annotation in Python. Python developers usually find Scala's syntax quite familiar.</li>
+<li>There are many resources and free courses on Scala fundamentals, which were produced over the last 10 years in Scala eco-system.</li>
+<li>IntelliJ IDEA provides well-supported <a href="https://plugins.jetbrains.com/plugin/1347-scala">JetBrains Scala Plugin</a> for a long time. There is also light alternative to IntelliJ like VSCode + <a href="https://scalameta.org/metals/">Metals LSP (Metals)</a>,
+The last one is an implementation of Language Server Protocol for Scala.</li>
+<li>Knowledge of Java helps to learn Scala, but they are not mandatory.</li>
+</ol>
+<h1 id="summary">Summary</h1>
+<p>No matter whether you are going to use data science libraries in Python further down the line of data pipelines, it worth to consider Scala as the main data processing language.
+Having Scala as main language for your data platform APIs, data processing pipelines and DevOps makes the work of software engineers as a joy. Python may seems easy language to use and pick up, but its dynamic types and cumbersome syntax leads to a refactoring nightmare and makes the entire code base as one giant technical debt, which can't be easily eliminated.</p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Spark API Languages' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Spark API Languages" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Spark API Languages" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;spark-api&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-context" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/spark-api/#context">
+                Context
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-spark-apis" class="toc is-size-7 " href="https://novakov-alexey.github.io/spark-api/#spark-apis">
+                Spark APIs
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-scala-benefits" class="toc is-size-7 " href="https://novakov-alexey.github.io/spark-api/#scala-benefits">
+                Scala Benefits
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-python-challenges" class="toc is-size-7 " href="https://novakov-alexey.github.io/spark-api/#python-challenges">
+                Python Challenges
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-scala-learning-curve" class="toc is-size-7 " href="https://novakov-alexey.github.io/spark-api/#scala-learning-curve">
+                Scala Learning Curve
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/spark-api/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/spark-api/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'spark-api'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

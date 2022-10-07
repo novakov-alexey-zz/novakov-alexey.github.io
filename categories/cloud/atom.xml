@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Alexey Novakov Notes - cloud</title>
+	<subtitle>Alexey Novakov: Software Engineering Notes</subtitle>
+	<link href="https://novakov-alexey.github.io/categories/cloud/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://novakov-alexey.github.io"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2020-12-08T00:00:00+00:00</updated>
+	<id>https://novakov-alexey.github.io/categories/cloud/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Path to AWS Solution Architect Certification</title>
+		<published>2020-12-08T00:00:00+00:00</published>
+		<updated>2020-12-08T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://novakov-alexey.github.io/aws-saa-exam/" type="text/html"/>
+		<id>https://novakov-alexey.github.io/aws-saa-exam/</id>
+		<content type="html">&lt;p&gt;Earlier this year I started learning few Udemy courses for &lt;a href=&quot;https:&#x2F;&#x2F;aws.amazon.com&#x2F;certification&#x2F;certified-solutions-architect-associate&#x2F;&quot;&gt;AWS Solution Architect Associate Certification&lt;&#x2F;a&gt;. My initial plan was just to get some basic knowledge about AWS services, not the certification itself. Before starting the course, I did not have any experience with native AWS services. I never used EC2 instances to launch something in production. However, I used EC2 fleet of instances to deploy Kubernetes cluster. I started my path to cloud-native tools with Docker and shifted later to Kubernetes and OpenShift. Pure AWS services were never on my radar. I think the experience of deploying Kubernetes on top of the EC2 instances is one thing, but using different AWS services like ELB, EBS, EFS, EC2 and S3 is completely another story. So I decided it is time to get to know what are those AWS main services. After coming to the end of the Udemy course, I realised it worth to go for certification to make a final point in my AWS education. As I already spent so much time. &lt;&#x2F;p&gt;
+
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;31ae93a412bfd67700.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+&lt;p&gt;Eventually I got certification after 7 &lt;strong&gt;calendar&lt;&#x2F;strong&gt; months. During that time, I did several pauses for vacation and other activities at work, when
+learning AWS was too hard to keep in my head. Perhaps, pure learning time was from 3 to 4 months.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;preparation&quot;&gt;Preparation&lt;&#x2F;h1&gt;
+&lt;p&gt;The final path I followed looks likes this:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Main Udemy preparation courses:
+&lt;ul&gt;
+&lt;li&gt;AWS Certified Solutions Architect Associate - 2020 SAA-C02 from Neal Davis&lt;&#x2F;li&gt;
+&lt;li&gt;Ultimate AWS Certified Solutions Architect Associate 2020 from Stephane Maarek&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;AWS Free Video Courses&lt;&#x2F;li&gt;
+&lt;li&gt;AWS related project at work ;-) &lt;&#x2F;li&gt;
+&lt;li&gt;Udemy SAA Practise Exams from Neal Davis&lt;&#x2F;li&gt;
+&lt;li&gt;Udemy AWS VPC and Networking in Depth from Chetan Agrawal&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The best learning was in a project at work. However, theoretical knowledge helped quiet a lot to be fast in practise. &lt;&#x2F;p&gt;
+&lt;h1 id=&quot;how-to-pass-the-exam&quot;&gt;How to pass the exam&lt;&#x2F;h1&gt;
+&lt;p&gt;Every Udemy preparation course contains a series of labs almost for every lecture. Let&#x27;s say a block on AWS VPC (Virtual Public Cloud) has 15 lectures, then there are around 10 labs that you need to practise on your own.&lt;&#x2F;p&gt;
+&lt;p&gt;Composition of the theoretical and practical labs at platform like Udemy plus real experience at work
+gives you a high chance to pass the certification for &amp;quot;Associate&amp;quot; level. Recommended practical experience from Amazon to pass &amp;quot;Associate&amp;quot; level is 1 year.
+I spent several times less with regards to practical experience. I believe those who already has practical experience of 1 year with AWS can easily
+watch one of the MOOC course and straight away go for certification exam. If you want to go for certification in relaxed mode, then take your time
+by working on some project at work related to AWS.&lt;&#x2F;p&gt;
+&lt;p&gt;The hardest thing is to motivate yourself to go for certification after one or more years of working with AWS. I think some people will eventually loose the 
+motivation in certification, since they are already so professional that they might think the certification is just waist of time. 
+By end the day, the certification exam is also a stressful exercise. You either have to go to a certification centre in your city or go for online exam at home or office. So it gives you some headache.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;recommendations&quot;&gt;Recommendations&lt;&#x2F;h1&gt;
+&lt;h2 id=&quot;take-notes&quot;&gt;Take notes&lt;&#x2F;h2&gt;
+&lt;p&gt;After watching and practising with topic number 10 out of 25 topics I quickly realised that I should have been taking some summary notes for
+lecture I watched and practised before. So that I could quickly review my notes and recall those topics I learnt earlier. I started making an AWS mind map.
+Since I was using mind maps for almost 10 years already, it was natural choice for me. The mind mapping software I use called &lt;a href=&quot;https:&#x2F;&#x2F;www.xmind.net&#x2F;&quot;&gt;XMind&lt;&#x2F;a&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;So I started to do mind map in the middle of the first course, then I fulfilled the missing topics while watching second course, so that it covers
+all possible topics related to Solution Architect Associate certification. Eventually, I got around 1600 nodes in my mind map tree. XMind software
+performance is not good on my old 8 GB RAM laptop. It is probably not good practise to create such big mind maps. I could probably go with a separate mind map
+per AWS topic or separate tab in the same map, but then I would ended up with 20 different maps or tabs. 
+A text search across different mind maps would be a nightmare then. If you know a solution for big mind map problem, please let me know.&lt;&#x2F;p&gt;
+&lt;p&gt;Below picture show some part of the AWS mind map I created as summary notes:&lt;&#x2F;p&gt;
+
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;c04dc82bebd6cd5f00.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;
+&lt;p&gt;My mind map became so big that I can&#x27;t really print it easily, if I would want that.&lt;&#x2F;p&gt;
+&lt;p&gt;You can go with your own way of making notes. The important thing is to do them, rather than trying to keep everything in your head. Some people say
+that hand-written notes are the best way to remember a lot in your head. I am always struggling with handwritten notes to transfer them into digital format.
+There are some tools for that, but it is not straightforward. So I abandoned an idea of paper or tablet handwritten notes until some time in future.&lt;&#x2F;p&gt;
+&lt;p&gt;One thing with regards to mind map, I think a mind map is useful only for the mind map author. If I read someone else&#x27;s mind map, I can&#x27;t remember it nor learn something with it. A mind map is a personal tool like personal notes in a notebook. There is only you who can understand your notes, since it reflects your brain work.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;youtube&quot;&gt;Youtube&lt;&#x2F;h2&gt;
+&lt;p&gt;Do not waste time by watching free videos on youtube for AWS certification, since it is not going to be a complete course. They will probably not provide
+practise test after each topic nor test exams with 65 questions each. This is the state of 2020 year. Maybe in future the things get change on Youtube, 
+so that we will be able to do full blown MOOCs there as well. We will see.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;exam-topics&quot;&gt;Exam Topics&lt;&#x2F;h1&gt;
+&lt;p&gt;I am software developer by trade. Back in my university I had no any strong focus on computer networking. This topic was the most difficult for me at AWS
+certification. All those Sys Admin related things like block storage, VPN, firewall (security groups, network ACL), network file systems, encryption, DNS
+took me several iteration until I finally learnt that. &lt;&#x2F;p&gt;
+&lt;p&gt;Below is a list of topics which are required from you to learn to pass the certification exam.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;1-vpc&quot;&gt;1. VPC&lt;&#x2F;h2&gt;
+&lt;p&gt;It is huge block that includes many things to get familiar with:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;IP ranges &#x2F; CIDRs&lt;&#x2F;li&gt;
+&lt;li&gt;Gateway Endpoint&lt;&#x2F;li&gt;
+&lt;li&gt;VPC endpoint&lt;&#x2F;li&gt;
+&lt;li&gt;Security group, Network ACL&lt;&#x2F;li&gt;
+&lt;li&gt;Subnet&lt;&#x2F;li&gt;
+&lt;li&gt;NAT Gateway, Instance&lt;&#x2F;li&gt;
+&lt;li&gt;Site-to-Site VPN&lt;&#x2F;li&gt;
+&lt;li&gt;Direct Connect&lt;&#x2F;li&gt;
+&lt;li&gt;Transit Gateway&lt;&#x2F;li&gt;
+&lt;li&gt;Route table&lt;&#x2F;li&gt;
+&lt;li&gt;VPC flow logs&lt;&#x2F;li&gt;
+&lt;li&gt;Private Link&lt;&#x2F;li&gt;
+&lt;li&gt;VPC peering&lt;&#x2F;li&gt;
+&lt;li&gt;VPN CloudHub&lt;&#x2F;li&gt;
+&lt;li&gt;Interface endpoint&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This topic was the most difficult for me. All that I listed above you need to know well before going to Solution Architect certification.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-ec2&quot;&gt;2. EC2&lt;&#x2F;h2&gt;
+&lt;p&gt;It is also quite large and popular topic on the exam. Requires to know:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pricing Models: Reserved, On-Demand, Dedicated, Scheduled, etc.&lt;&#x2F;li&gt;
+&lt;li&gt;Relation to AMIs (VM images), location of AMIs, etc.&lt;&#x2F;li&gt;
+&lt;li&gt;Placement groups: cluster, spread, partition&lt;&#x2F;li&gt;
+&lt;li&gt;IP address types: private public, Elastic IP&lt;&#x2F;li&gt;
+&lt;li&gt;HPC features: EFA, Enhanced Networking&lt;&#x2F;li&gt;
+&lt;li&gt;EC2 instance lifecycle&lt;&#x2F;li&gt;
+&lt;li&gt;EC2 API: user, meta data&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This topic was tricky for me as well, after being working for several years with Kubernetes. I did not care what underlying infrastructure was used.
+VMs or bare-metal servers. Anyway, I found EC2 topic as important as VPC. Basically, it is one of the building block of the AWS. You must know
+this topic very well.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;3-elb-route53-cdn&quot;&gt;3. ELB, Route53, CDN&lt;&#x2F;h2&gt;
+&lt;p&gt;Elastic Load Balancing is popular topic too. &lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;General idea is to know how different load balancers can be used with EC2 instances, Target Groups.&lt;&#x2F;li&gt;
+&lt;li&gt;Different target types: EC2, IP, Lambda function&lt;&#x2F;li&gt;
+&lt;li&gt;When to use ALB, NLB or CLB&lt;&#x2F;li&gt;
+&lt;li&gt;Auto Scaling group connection with ELB and Target Groups&lt;&#x2F;li&gt;
+&lt;li&gt;Relation to CloudWatch and EC2 metrics&lt;&#x2F;li&gt;
+&lt;li&gt;Different features like Global Accelerator, HA setup using Availability Zones, stick sessions. multi-VPC balancing&lt;&#x2F;li&gt;
+&lt;li&gt;WAF&lt;&#x2F;li&gt;
+&lt;li&gt;DNS record sets&lt;&#x2F;li&gt;
+&lt;li&gt;Route 53 DNS policies (latency, failover, geo-proximity, etc.)&lt;&#x2F;li&gt;
+&lt;li&gt;CloudFront&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;4-security&quot;&gt;4. Security&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;KMS: key types from management perspective, supported encryption algorithms&lt;&#x2F;li&gt;
+&lt;li&gt;S3 data encryption types at rest (quite popular topic)&lt;&#x2F;li&gt;
+&lt;li&gt;Encryption support per data storage and database service: EBS, EFS, RDS, etc.&lt;&#x2F;li&gt;
+&lt;li&gt;High-level knowledge on different services for security like Certification Manager, Shield, Artefact&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;5-databases-data-processing&quot;&gt;5. Databases &amp;amp; Data Processing&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;RDS master and replica encryption. There are several lifecycle transitions to remember like how to make encrypted database from unencrypted database.&lt;&#x2F;li&gt;
+&lt;li&gt;Aurora, Serverless, Global&lt;&#x2F;li&gt;
+&lt;li&gt;DynamoDB&lt;&#x2F;li&gt;
+&lt;li&gt;Kinesis, Firehose&lt;&#x2F;li&gt;
+&lt;li&gt;RedShift&lt;&#x2F;li&gt;
+&lt;li&gt;Athena&lt;&#x2F;li&gt;
+&lt;li&gt;Glue&lt;&#x2F;li&gt;
+&lt;li&gt;EMR&lt;&#x2F;li&gt;
+&lt;li&gt;Data Migration Service&lt;&#x2F;li&gt;
+&lt;li&gt;ElasticCache: difference between Redis and Memcached&lt;&#x2F;li&gt;
+&lt;li&gt;DataSync&lt;&#x2F;li&gt;
+&lt;li&gt;Neptune&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;RDS, DynamoDB are the most popular topics on the exam. However, you need to know main capabilities of other databases&#x2F;tools.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;6-integration&quot;&gt;6. Integration&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;SQS&lt;&#x2F;li&gt;
+&lt;li&gt;SNS&lt;&#x2F;li&gt;
+&lt;li&gt;Amazon MQ&lt;&#x2F;li&gt;
+&lt;li&gt;Step Functions&lt;&#x2F;li&gt;
+&lt;li&gt;System Manager Parameter Store&lt;&#x2F;li&gt;
+&lt;li&gt;SWF&lt;&#x2F;li&gt;
+&lt;li&gt;AppSync&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;You need to know the difference between SQS versus SNS very well.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;7-iam&quot;&gt;7. IAM&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Users, Groups, Roles, Policies&lt;&#x2F;li&gt;
+&lt;li&gt;Authentication types&lt;&#x2F;li&gt;
+&lt;li&gt;Organization and SCP&lt;&#x2F;li&gt;
+&lt;li&gt;Resource Access Manager&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;8-storage&quot;&gt;8. Storage&lt;&#x2F;h2&gt;
+&lt;p&gt;As I mention, it was quite hard topic for me, since you need to remember the IOPS per each disk type,
+storage class durability, availability, minimum storage period, retrieval period, prices
+There are many sub-options to keep in mind. It is quite large topic and as popular on the exam as VPC and EC2.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;EBS&lt;&#x2F;li&gt;
+&lt;li&gt;EFS&lt;&#x2F;li&gt;
+&lt;li&gt;S3&lt;&#x2F;li&gt;
+&lt;li&gt;Instance Store&lt;&#x2F;li&gt;
+&lt;li&gt;Storage Gateway&lt;&#x2F;li&gt;
+&lt;li&gt;FSx for Windows, Lustre&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;9-dev-tools&quot;&gt;9. Dev Tools&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Lambda&lt;&#x2F;li&gt;
+&lt;li&gt;API Gateway&lt;&#x2F;li&gt;
+&lt;li&gt;SAM&lt;&#x2F;li&gt;
+&lt;li&gt;ECS, ECR, Fargate, EKS&lt;&#x2F;li&gt;
+&lt;li&gt;CodeCommit, CodeBuild, CodeDeploy, CodePipeline (just know what they are offering)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;10-operations&quot;&gt;10. Operations&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;OpsWorks&lt;&#x2F;li&gt;
+&lt;li&gt;Cloud Formation&lt;&#x2F;li&gt;
+&lt;li&gt;Server Migration Service&lt;&#x2F;li&gt;
+&lt;li&gt;Recovery strategies: Backup and Restore, Pilot light, Warm Standby, Multi Site&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;11-monitoring-auditing&quot;&gt;11. Monitoring, Auditing&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CloudWatch Logs, Alarms, Events&lt;&#x2F;li&gt;
+&lt;li&gt;CloudTrail&lt;&#x2F;li&gt;
+&lt;li&gt;TrustedAdvisor&lt;&#x2F;li&gt;
+&lt;li&gt;AWS Config &lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Those service that I have not commented above you just need high-level understanding what they do and that is enough.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;when-and-how-to-go-for-exam&quot;&gt;When and How to go for Exam&lt;&#x2F;h1&gt;
+&lt;p&gt;Once you feel it is time to get a certification exam, make sure you have passed through any test &#x2F; simulation exam at Udemy, anywhere you can find them.
+Check sample questions at AWS training web-site. &lt;&#x2F;p&gt;
+&lt;p&gt;In my case, it was very helpful to study right answers for failed questions at Udemy test exams.
+Basically, these simulation tests already show you a percentage result whether you can pass real exam and how close you are to 72% of right answers.
+I think if you above 80% right answers you can go for exam.&lt;&#x2F;p&gt;
+&lt;p&gt;These days everything is happening remotely as well as certification at AWS. You can schedule an exam by make an order at &amp;quot;aws.training &#x2F; certmetrics&amp;quot; web-sites.
+Chose exam provider and day for an exam. &lt;&#x2F;p&gt;
+&lt;p&gt;In my case, I could schedule an exam on next day I checked the available time slots, so there is
+no long time waiting to schedule an exam.&lt;&#x2F;p&gt;
+&lt;p&gt;If you feel that you are already overloaded with the theory while preparing for an exam, then it is a sign that you are ready to for the certification.
+Of course, need to try all possible test exams and see if you get good percentage of right answers. Some people do not pass from the first time, but
+most of the time pass from the second attempt. So do not bother if you did not pass first time, it is going to be a good rehearsal since you will be able
+to see real questions and get familiar with level of complexity. As for me, it was very important to know how difficult those real exam questions.
+Once I started the exam I realised that I can cope with the real questions. &lt;&#x2F;p&gt;
+&lt;p&gt;One last recommendation, do not stay too long on one question during the real exam. I would say 1.5 minute per question
+should be enough. Some questions can be answered within 10 seconds. It highly depends on the question length. Udemy test exams have lengthy question and that is quite close to reality.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;summary&quot;&gt;Summary&lt;&#x2F;h1&gt;
+&lt;p&gt;Although it requires quite a lot of time and efforts to go for any certification, it worth to do just because you will really learn a lot.
+I would not learn that amount of knowledge in case I would just watch the video course. Also, certification may help you
+to win a good project if you are working in a company or for yourself as a contractor. &lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

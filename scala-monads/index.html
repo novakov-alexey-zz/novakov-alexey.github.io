@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Monads in Scala
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Monads in Scala
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2020-03-28'>March 28, 2020</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    14 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    2616 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/fp/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        fp
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Once you start dig deeper into Scala and its suitability for functional programming, you meet Monads. In this blog post, we will explore Monads in Scala:
+their usage and usefulness. </p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;c9b09cbbd093192500.png" class="center-image"/>
+<br/><br/><span id="continue-reading"></span><h2 id="what-is-monad">What is Monad?</h2>
+<p>You have probably already heard this quote:</p>
+<blockquote>
+  A monad is just a monoid in the category of endofunctors<br />
+  
+  -- Saunders Mac Lane
+  
+</blockquote>
+<p><a href="https://stackoverflow.com/a/3870310/6176274">More details on StackOverflow answer</a></p>
+<p>Well, that does not bring much help. Obviously, Monad is not just Scala pattern, but it is something what is coming 
+from <a href="https://en.wikipedia.org/wiki/Category_theory">Category Theory</a>. 
+However, we are not going to touch Category Theory in general, but let's say that Monad definition is coming from abstract theory of Mathematics.</p>
+<p>I like another definition of Monad, which is given in the  book &quot;Functional Programming in Scala&quot;:</p>
+<blockquote>
+  Monad is an abstract interface<br />
+  
+  -- Chiusano, Bjarnason
+  
+</blockquote>
+<p>It is more clear for programmers. Before we clarify in details what Monad is, let us look at some examples of Mondas in Scala standard library.
+This might already click for you that Monad is not something from aliens:</p>
+<ul>
+<li>Option</li>
+<li>Either</li>
+<li>List</li>
+<li>Future</li>
+<li>Map</li>
+<li>Set</li>
+<li>Stream</li>
+<li>Vector</li>
+<li>Try </li>
+</ul>
+<p>... and others</p>
+<h2 id="what-makes-thing-a-monad">What makes thing a Monad?</h2>
+<p>There are several minimum combinations of functions which make some type a Monad. One of the popular minimum set is two functions:</p>
+<ul>
+<li><strong>flatMap</strong> - also known as <code>bind</code></li>
+<li><strong>unit</strong> - also known as <code>pure</code> in <a href="https://typelevel.org/cats/typeclasses/monad.html#monad-instances">Cats library</a> or <code>apply</code> in pure Scala</li>
+</ul>
+<p>These two functions implemented for some type bring powerful abstraction to write complex programs easy.</p>
+<h2 id="make-your-monad">Make your Monad</h2>
+<p>Monad sometimes reminds a container to work with its values using special interface. If we model Monad ourselves, then it may look like a box with a thing
+inside, which we access using <code>flatMap</code> and one more useful function <code>map</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">class</span><span style="color:#8fbcbb;"> Box</span><span>[</span><span style="color:#8fbcbb;">A</span><span>](v: </span><span style="color:#8fbcbb;">A</span><span>) { 
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">flatMap</span><span>[</span><span style="color:#8fbcbb;">B</span><span>](f: </span><span style="color:#8fbcbb;">A </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#8fbcbb;">B</span><span>]): </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#8fbcbb;">B</span><span>] </span><span style="color:#81a1c1;">=</span><span> f(v)
+</span><span>  
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">map</span><span>[</span><span style="color:#8fbcbb;">B</span><span>](f: </span><span style="color:#8fbcbb;">A </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">B</span><span>): </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#8fbcbb;">B</span><span>] </span><span style="color:#81a1c1;">=</span><span> flatMap(a </span><span style="color:#81a1c1;">=&gt; new </span><span style="color:#8fbcbb;">Box</span><span>(f(a)))
+</span><span>}
+</span></code></pre>
+<p><strong>map</strong> - is implemented in terms of <code>flatMap</code> + <code>unit</code> (i.e. Box class constructor). 
+So we can implement <code>map</code> for any kind of Monads, as we will see that later.</p>
+<p>Now let's use <code>Box </code> Monad to show some usage example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">Box</span><span>(</span><span style="color:#b48ead;">1</span><span>)
+</span><span>res2: </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">1
+</span><span>
+</span><span>scala&gt; res2</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> + </span><span style="color:#b48ead;">1</span><span>)
+</span><span>res3: </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">2
+</span><span>
+</span><span>scala&gt; res3</span><span style="color:#81a1c1;">.</span><span>flatMap(i </span><span style="color:#81a1c1;">=&gt; new </span><span style="color:#8fbcbb;">Box</span><span>(</span><span style="color:#b48ead;">1</span><span> + i))
+</span><span>res5: </span><span style="color:#8fbcbb;">Box</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">3
+</span></code></pre>
+<p><code>Box</code> contains single integer value and allows us to manipulate it without leaving <code>Box</code> context, i.e. our result is always a <code>Box[T]</code>.
+We can also make variable <code>v</code> as public and read it when needed. <code>Box</code> behaves similarly to non-empty single element list.
+It is hard to say when this particular <code>Box</code> Monad will be useful looking at above example. However, it should give you an idea how Monad implementation may look like.</p>
+<h2 id="scala-examples">Scala Examples</h2>
+<p><strong>List</strong></p>
+<p>List operates on collection of values. </p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; </span><span style="color:#81a1c1;">val l = </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">,</span><span style="color:#b48ead;">3</span><span>) </span><span style="color:#616e88;">// &lt;-- unit
+</span><span>l: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span>)
+</span><span>
+</span><span>scala&gt; l</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> + </span><span style="color:#b48ead;">1</span><span>)
+</span><span>res0: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">4</span><span>)
+</span><span>
+</span><span>scala&gt; l</span><span style="color:#81a1c1;">.</span><span>flatMap(i </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">List</span><span>(i + </span><span style="color:#b48ead;">1</span><span>))
+</span><span>res1: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">4</span><span>)
+</span></code></pre>
+<p><strong>Option</strong></p>
+<p>Option has two sub-types: <code>Some</code> and <code>None</code>. </p>
+<p><code>Some</code> is like non-empty single element list, similar to Box Monad example above.
+<code>None</code> ignores application of lambda function in <code>flatMap</code> or <code>map</code>.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val isOn = </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>) </span><span style="color:#616e88;">// &lt;-- unit
+</span><span style="color:#81a1c1;">val isBlack = </span><span style="color:#8fbcbb;">None </span><span style="color:#616e88;">// &lt;-- unit without any argument
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">makeCoffee</span><span>: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">String</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)
+</span><span>
+</span><span>scala&gt; isOn
+</span><span>         </span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_ =&gt;</span><span> isBlack
+</span><span>         </span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_ =&gt;</span><span> makeCoffee))
+</span><span>
+</span><span>res0: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">String</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">None
+</span></code></pre>
+<p>Example above won't return value of <code>isOn</code> variable because the first <code>flatMap</code> call returns <code>None</code> because of <code>isBlack</code>, so that second <code>flatMap</code> even won't be called.</p>
+<h2 id="generic-monad">Generic Monad</h2>
+<p>We have already seen example of at least 3 Monads above. In order to detach definition of Monad from its concrete implementation like
+List or Option, let us define abstract Monad interface using Scala high-order types feature:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">trait</span><span style="color:#8fbcbb;"> Monad</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]] extends </span><span style="color:#8fbcbb;">Functor</span><span>[</span><span style="color:#8fbcbb;">F</span><span>] {
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">unit</span><span>[</span><span style="color:#8fbcbb;">A</span><span>](a: </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">A</span><span>): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">A</span><span>]
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">flatMap</span><span>[</span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">B</span><span>](ma: </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">A</span><span>])(f: </span><span style="color:#8fbcbb;">A </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">B</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">B</span><span>]
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">map</span><span>[</span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">B</span><span>](ma: </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">A</span><span>])(f: </span><span style="color:#8fbcbb;">A </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">B</span><span>): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">B</span><span>] </span><span style="color:#81a1c1;">= 
+</span><span>      flatMap(ma)(a </span><span style="color:#81a1c1;">=&gt;</span><span> unit(f(a))) 
+</span><span>  }
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">trait</span><span style="color:#8fbcbb;"> Functor</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]] {
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">map</span><span>[</span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">B</span><span>](fa: </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">A</span><span>])(f: </span><span style="color:#8fbcbb;">A </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">B</span><span>): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">B</span><span>]
+</span><span>  }
+</span></code></pre>
+<p>Functor is one more abstraction which is more simpler than Monad. It requires only <code>map</code> implementation. We can say that every Monad also a Functor. 
+Functor is also coming from the Category Theory. I decided to mention it here, because you will frequently find it in the context of Monads,
+when learning functional programming in general. Abstract Monad interface can also implement map in terms of <code>flatMap</code> and <code>unit</code> functions, 
+so that <code>map</code> is implemented automatically for any concrete implementation of some Monad.</p>
+<h2 id="function-application-in-flatmap">Function application in flatMap</h2>
+<p>An application of <code>f</code> function in <code>flatMap</code> and <code>map</code> depends on the concrete Monad instance. In one case the lambda
+function we pass to the <code>flatMap</code> is always executed, in another cases not. Examples:</p>
+<p>&quot;f&quot; applied when:</p>
+<ul>
+<li>Option[A]: is Some(A)</li>
+<li>Either[A, B]: is Right(B)</li>
+<li>List[A]: is non-empty</li>
+<li>Future[A]: is ready</li>
+</ul>
+<p>Even though <code>flatMap</code> behaves differently on concrete Monad instance, there is still great benefits to use them in any ordinary program.
+In order to classify some type as a Monad, it needs to comply with <strong>Monad Laws</strong> and that is closing the definition of Monads. Let's look 
+at Monad laws before we move further to practical examples.</p>
+<h2 id="monad-laws">Monad Laws</h2>
+<h3 id="1-identity">1. Identity</h3>
+<p>Result of a function which creates Monad instance using <code>unit</code> is equal to application of this function over already created Monad instance.</p>
+<p>Example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f</span><span>(x: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(x)
+</span><span>
+</span><span>scala&gt; </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#81a1c1;">.</span><span>flatMap(f) </span><span style="color:#81a1c1;">==</span><span> f(</span><span style="color:#b48ead;">1</span><span>)
+</span><span>res0: </span><span style="color:#81a1c1;">Boolean = true
+</span><span>
+</span><span>scala&gt; f(</span><span style="color:#b48ead;">1</span><span>) </span><span style="color:#81a1c1;">== </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#81a1c1;">.</span><span>flatMap(f)
+</span><span>res1: </span><span style="color:#81a1c1;">Boolean = true
+</span></code></pre>
+<p>Abstract definition of Identity Law:</p>
+<h4 id="1-1-left-identity">1.1 Left identity</h4>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f</span><span>[</span><span style="color:#8fbcbb;">A</span><span>](x: </span><span style="color:#8fbcbb;">A</span><span>): </span><span style="color:#8fbcbb;">Monad</span><span>[</span><span style="color:#8fbcbb;">A</span><span>] </span><span style="color:#81a1c1;">=</span><span> unit(x)
+</span><span>
+</span><span>flatMap(unit(x))(f) </span><span style="color:#81a1c1;">==</span><span> f(x) 
+</span></code></pre>
+<h4 id="1-2-right-identity">1.2 Right identity</h4>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>f(x) </span><span style="color:#81a1c1;">==</span><span> flatMap(unit(x))(f)
+</span></code></pre>
+<h3 id="2-associative">2. Associative</h3>
+<p>Application of <code>f1</code> and <code>f2</code> functions one after another yields the same result as applying them within the first <code>flatMap</code>.</p>
+<p>Example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f1</span><span>(a: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(a + </span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f2</span><span>(a: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(a * </span><span style="color:#b48ead;">2</span><span>)
+</span><span>
+</span><span>scala&gt; </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#81a1c1;">.</span><span>flatMap(f1)</span><span style="color:#81a1c1;">.</span><span>flatMap(f2)
+</span><span>res0: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">4</span><span>)
+</span><span>
+</span><span>scala&gt; </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#81a1c1;">.</span><span>flatMap(a </span><span style="color:#81a1c1;">=&gt;</span><span> f1(a)</span><span style="color:#81a1c1;">.</span><span>flatMap(f2))
+</span><span>res1: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">4</span><span>)
+</span></code></pre>
+<p>Abstract definition:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f1</span><span>[</span><span style="color:#8fbcbb;">A</span><span>](a: </span><span style="color:#8fbcbb;">A</span><span>): </span><span style="color:#8fbcbb;">Monad</span><span>[</span><span style="color:#8fbcbb;">A</span><span>]
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f2</span><span>[</span><span style="color:#8fbcbb;">A</span><span>](a: </span><span style="color:#8fbcbb;">A</span><span>): </span><span style="color:#8fbcbb;">Monad</span><span>[</span><span style="color:#8fbcbb;">A</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">if</span><span> x is a </span><span style="color:#8fbcbb;">Monad</span><span> instance</span><span style="color:#eceff4;">,
+</span><span>
+</span><span>flatMap(flatMap(x)(f1))(f2) </span><span style="color:#81a1c1;">==</span><span> flatMap(x)(a </span><span style="color:#81a1c1;">=&gt;</span><span> flatMap(f1(a))(f2))
+</span></code></pre>
+<h2 id="functor-laws">Functor Laws</h2>
+<h3 id="1-identity-1">1. Identity</h3>
+<p>Example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>map(</span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>))(a </span><span style="color:#81a1c1;">=&gt;</span><span> a) </span><span style="color:#81a1c1;">== </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)
+</span></code></pre>
+<p>Abstract definition:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>map(x)(a </span><span style="color:#81a1c1;">=&gt;</span><span> a) </span><span style="color:#81a1c1;">==</span><span> x  </span><span style="color:#616e88;">// the same value returned
+</span></code></pre>
+<h3 id="2-associative-1">2. Associative</h3>
+<p>Example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val f1 = </span><span>(n: </span><span style="color:#81a1c1;">Int</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> n + </span><span style="color:#b48ead;">1
+</span><span style="color:#81a1c1;">val f2 = </span><span>(n: </span><span style="color:#81a1c1;">Int</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> n * </span><span style="color:#b48ead;">2
+</span><span>
+</span><span>map(map(</span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>))(f1))(f2) </span><span style="color:#616e88;">// Some(4)
+</span><span>            </span><span style="color:#81a1c1;">== 
+</span><span>map(</span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>))(f2 compose f1) </span><span style="color:#616e88;">// Some(4)
+</span></code></pre>
+<p>Standard Scala function <code>compose</code> return a function which applies f1 and then f2 taking the result of the first f1 function.</p>
+<p>Abstract definition:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>map(map(x)(f1))(f2) </span><span style="color:#81a1c1;">==</span><span> map(x)(f2 compose f1) 
+</span></code></pre>
+<h2 id="application-of-monads">Application of Monads</h2>
+<p>Using Monads we can do sequential composition. If we have several values in form of Option, we can sequence them into logic program,
+which evaluates next value based on the <code>flatMap</code> behaviour of the previous value. </p>
+<h3 id="compose-option">Compose Option</h3>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> Coffee</span><span>(name: </span><span style="color:#8fbcbb;">String</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">val isOn = </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">val coffeeName = </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#a3be8c;">&quot;black&quot;</span><span>)
+</span><span style="color:#81a1c1;">val makeCoffee = </span><span>(name: </span><span style="color:#8fbcbb;">String</span><span>) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">Coffee</span><span>(name))
+</span><span>
+</span><span style="color:#81a1c1;">for </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">_ &lt;-</span><span> isOn
+</span><span>  name </span><span style="color:#81a1c1;">&lt;-</span><span> coffeeName
+</span><span>  coffee </span><span style="color:#81a1c1;">&lt;-</span><span> makeCoffee(name)
+</span><span>} </span><span style="color:#81a1c1;">yield</span><span> coffee
+</span><span>
+</span><span>scala&gt; </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Coffee</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">Coffee</span><span>(black))
+</span></code></pre>
+<p>Final result of this program is Some(..) value. However, it could result into None, if one these three values is None.</p>
+<h3 id="compose-either">Compose Either</h3>
+<p>The following three functions return Either Monad, so that we can compose them into a sequence.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Cluster</span><span>(pods: </span><span style="color:#81a1c1;">Int</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">validateNamespace</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#81a1c1;">()</span><span>)
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">clusterExists</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">Cluster</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#81a1c1;">()</span><span>)
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createCluster</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>cluster: </span><span style="color:#8fbcbb;">Cluster</span><span>): </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>] </span><span style="color:#81a1c1;">= 
+</span><span>  </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span>(cluster</span><span style="color:#81a1c1;">.</span><span>pods))
+</span></code></pre>
+<p>We can compose them in same manner as we have done with <strong>Option</strong> example above:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val ns = </span><span style="color:#a3be8c;">&quot;my-cluster&quot;
+</span><span style="color:#81a1c1;">for </span><span>{
+</span><span>   </span><span style="color:#81a1c1;">_ &lt;-</span><span> validateNamespace(ns)
+</span><span>   </span><span style="color:#81a1c1;">_ &lt;-</span><span> clusterExists(ns)</span><span style="color:#81a1c1;">.</span><span>left</span><span style="color:#81a1c1;">.</span><span>map(c </span><span style="color:#81a1c1;">=&gt; 
+</span><span>           </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Cluster with ${c</span><span style="color:#81a1c1;">.</span><span>pods} pods already exists</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>   newCluster </span><span style="color:#81a1c1;">&lt;-</span><span> createCluster(ns</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">4</span><span>))
+</span><span>} </span><span style="color:#81a1c1;">yield</span><span> newCluster
+</span></code></pre>
+<p>From business logic perspective we want to create some hypothetical cluster if namespace is valid and cluster for the given namespace does not exist. 
+We implemented errors as <code>Either.Left</code> and normal result as <code>Either.Right</code>. Interface like <code>Either</code> is a popular approach not only in Scala to have some sort of result wrapper
+for normal and error results.</p>
+<p>Final result value is based on the return values we hardcoded in the given functions:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">Cluster</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">4</span><span>))
+</span></code></pre>
+<p>Benefits of using Monads is that we do not need to use <code>if/else</code> control flow, since we have Monads Laws working when we compose Monad instances.</p>
+<p>In case some of the given function returns <code>Either.Left</code>, for example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">validNamespace</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= 
+</span><span>   </span><span style="color:#81a1c1;">if </span><span>(ns </span><span style="color:#81a1c1;">== </span><span style="color:#a3be8c;">&quot;my-cluster&quot;</span><span>) 
+</span><span>   </span><span style="color:#8fbcbb;">Left</span><span>(
+</span><span>     “</span><span style="color:#8fbcbb;">Cluster</span><span> namespace is not valid name</span><span style="color:#eceff4;">,</span><span> choose another name”
+</span><span>   ) </span><span style="color:#81a1c1;">else </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#81a1c1;">()</span><span>)
+</span></code></pre>
+<p>Then it turns the whole result of the composition into error state, i.e. into <code>Either.Left</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">Cluster</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Left</span><span>(
+</span><span>              </span><span style="color:#8fbcbb;">Cluster</span><span> namespace is not valid name</span><span style="color:#eceff4;">,</span><span> choose another name
+</span><span>            )
+</span></code></pre>
+<h2 id="for-comprehension">For comprehension</h2>
+<p>Scala offers special syntax for the sequence of nested <code>flatMap</code> calls and one <code>map</code> at the end, which is called &quot;for-comprehension&quot;.</p>
+<p><strong>for {…} yield</strong> is a syntactic sugar for a sequence of calls:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>flatMap1(… + flatMapN(</span><span style="color:#81a1c1;">..</span><span> + map(…)))
+</span></code></pre>
+<p><strong>Desugared version</strong>:</p>
+<p>Behind the scene, Scala compiler desugars the <code>for-comprehension</code> into the following code:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>validNamespace(</span><span style="color:#a3be8c;">&quot;my-cluster&quot;</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_ =&gt;
+</span><span>     clusterExists(ns)
+</span><span>       </span><span style="color:#81a1c1;">.</span><span>left
+</span><span>       </span><span style="color:#81a1c1;">.</span><span>map(c </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Cluster with ${c</span><span style="color:#81a1c1;">.</span><span>pods} pods already exists</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>       </span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_ =&gt;
+</span><span>            createCluster(ns</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">4</span><span>))
+</span><span>               </span><span style="color:#81a1c1;">.</span><span>map(newCluster </span><span style="color:#81a1c1;">=&gt;</span><span> newCluster)
+</span><span>        )
+</span><span>  )
+</span></code></pre>
+<p><strong>Sugared version of the same code snippet</strong>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">for </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">_ &lt;-</span><span> validNamespace(</span><span style="color:#a3be8c;">&quot;my-cluster&quot;</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">_ &lt;-</span><span> clusterExists(ns)</span><span style="color:#81a1c1;">.</span><span>left</span><span style="color:#81a1c1;">.</span><span>map(c </span><span style="color:#81a1c1;">=&gt; 
+</span><span>          </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Cluster with ${c</span><span style="color:#81a1c1;">.</span><span>pods} pods already exists</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>  newCluster </span><span style="color:#81a1c1;">&lt;-</span><span> createCluster(ns</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">4</span><span>))
+</span><span>} </span><span style="color:#81a1c1;">yield</span><span> newCluster
+</span></code></pre>
+<p>For-comprehension of this program is much more readable and thus recommended to be used when composing monadic values in particular programs.</p>
+<h2 id="caveat-with-monads">Caveat with Monads</h2>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;fabc8e637818e02200.png" class="center-image"/>
+<br/><br/>
+<p>We can easily compose Monads of the same types, like we have seen in examples, all values were options or eithers and so on. 
+However, it is not straightforward to compose different Monad stacks, like Option and Either values in one sequence.
+Let's look at the example of such problem below.</p>
+<h3 id="problem">Problem</h3>
+<p>Let's make one of the value in the <code>for-comprehension</code> to be different type, so that we will try to compose different Monads:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">validateNamespace</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): 
+</span><span>    </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">clusterExists</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): 
+</span><span>    </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>]] </span><span style="color:#616e88;">//Attention &lt;-- two Monad layers
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createCluster</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>cluster: </span><span style="color:#8fbcbb;">Cluster</span><span>): 
+</span><span>    </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>] 
+</span></code></pre>
+<p>If we try to compile below code:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">for </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">_ &lt;-</span><span> validateNamespace(ns)
+</span><span>  cluster </span><span style="color:#81a1c1;">&lt;-</span><span> clusterExists(ns)
+</span><span>  updated </span><span style="color:#81a1c1;">&lt;-</span><span> createCluster(ns</span><span style="color:#eceff4;">,</span><span> cluster)
+</span><span>} </span><span style="color:#81a1c1;">yield</span><span>  updated
+</span></code></pre>
+<p>This is going to end up in compiler errors:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>updated &lt;- createCluster(ns</span><span style="color:#eceff4;">,</span><span> cluster)
+</span><span>                             ^
+</span><span style="color:#81a1c1;">&lt;pastie&gt;</span><span style="color:#eceff4;">:4: error: type mismatch;
+</span><span style="color:#eceff4;"> found   : Either[String,Cluster]
+</span><span style="color:#eceff4;"> required: Cluster
+</span><span style="color:#eceff4;">
+</span><span style="color:#eceff4;">    cluster </span><span style="background-color:#bf616a;color:#d8dee9;">&lt;</span><span style="color:#eceff4;">- clusterExists(ns)
+</span><span style="color:#eceff4;">            ^
+</span><span style="color:#81a1c1;">&lt;pastie&gt;</span><span style="color:#eceff4;">:3: error: type mismatch;
+</span><span style="color:#eceff4;"> found   : Option[Nothing]
+</span><span style="color:#eceff4;"> required: scala.util.Either[?,?]
+</span><span style="color:#eceff4;">Option[Nothing] </span><span style="background-color:#bf616a;color:#d8dee9;">&lt;</span><span style="color:#eceff4;">: scala.util.Either[?,?]?
+</span><span style="color:#eceff4;">false
+</span></code></pre>
+<p><strong>First Monadic value rules them all</strong>. </p>
+<p>Once we put first value such as <code>validateNamespace</code>, which returns <code>Either[_, _]</code>, it starts
+to drive the return type of the <code>flatMap</code> function. Second nested value is not <code>Either</code> type, but <code>Option[_]</code>. Here it starts to brake
+the Monad interface and eventually won't let it compile the code. What we need is to align monadic values to common ground.</p>
+<h2 id="monad-transformer">Monad Transformer</h2>
+<p>In order to compose different Monad types, we can use one more pattern called <a href="https://en.wikipedia.org/wiki/Monad_transformer">Monad Transformer</a>.</p>
+<p>Monad Transformer is a custom-written Monad designed specifically for composition. Of course we could tackle above problem
+by unboxing Option, then checking what is in the Either, return Either again to make <code>for-comprehension</code> to be compiled. However, 
+this would be clumsy and not scalable solution in terms of code maintenance. Monad Transformers example:</p>
+<ul>
+<li><code>OptionT</code> to compose <code>Option</code> + Any other Monad</li>
+<li><code>EitherT</code> to compose <code>Either</code> + Any other Monad</li>
+<li><code>ReaderT</code> to compose <code>Reader</code> + Any other Monad</li>
+<li><code>WriterT</code> to compose <code>Writer</code> + Any other Monad</li>
+<li>... others</li>
+</ul>
+<p>If we want to compose Option Monad with other monadic values of type <code>Either</code>, then we need to use <code>EitherT</code> monad for <code>Option</code>.
+<code>EitherT</code> instance knows how to unbox and box <code>Option</code> to operate on nested <code>Either</code> and thus guide the <code>flatMap</code> function.</p>
+<p>Let us look at <code>EitherT</code> example implementation taken from Cats library:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// takes 3 type parameters: 
+</span><span style="color:#616e88;">// 1. high-order type of the outer Monad 
+</span><span style="color:#616e88;">// 2. left type of Either
+</span><span style="color:#616e88;">// 3. right type of Either
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> EitherT</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">B</span><span>](value: </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">B</span><span>]]) {
+</span><span>
+</span><span> </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">flatMap</span><span>[</span><span style="color:#8fbcbb;">AA </span><span style="color:#81a1c1;">&gt;: </span><span style="color:#8fbcbb;">A</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">D</span><span>](f: </span><span style="color:#8fbcbb;">B </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">EitherT</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">AA</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">D</span><span>])(</span><span style="color:#81a1c1;">implicit </span><span>F: </span><span style="color:#8fbcbb;">Monad</span><span>[</span><span style="color:#8fbcbb;">F</span><span>])
+</span><span>   : </span><span style="color:#8fbcbb;">EitherT</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">AA</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">D</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>   </span><span style="color:#616e88;">// Attention: there is one more &quot;flatMap&quot; to unwrap first Monad layer,
+</span><span>   </span><span style="color:#616e88;">// which is F[_] 
+</span><span>   </span><span style="color:#8fbcbb;">EitherT</span><span>(</span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>flatMap(value) { 
+</span><span>     </span><span style="color:#81a1c1;">case </span><span>l </span><span style="color:#81a1c1;">@ </span><span style="color:#8fbcbb;">Left</span><span>(</span><span style="color:#81a1c1;">_</span><span>) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>pure(l</span><span style="color:#81a1c1;">.</span><span>rightCast)
+</span><span>     </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Right</span><span>(b)    </span><span style="color:#81a1c1;">=&gt;</span><span> f(b)</span><span style="color:#81a1c1;">.</span><span>value
+</span><span>   })
+</span><span>}
+</span></code></pre>
+<p>See inline comments above. One more important point is that we expect an implicit Monad instance for that outer Monad 
+<code>F[_]</code>. We use it to unwrap first Monad, by convention this variable is also named <code>F</code>. 
+So Monad Transformer does not do any magic, but it is just a type constructor, which returns a Monad as result. </p>
+<h3 id="apply-monad-transformer">Apply Monad Transformer</h3>
+<p>Now let us use the same example and define return values:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Cluster</span><span>(pods: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span>updated: </span><span style="color:#81a1c1;">Long</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">validateNamespace</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= 
+</span><span>  </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#81a1c1;">()</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">clusterExists</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>]] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">System</span><span style="color:#81a1c1;">.</span><span>currentTimeMillis())))
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">updateCluster</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>cluster: </span><span style="color:#8fbcbb;">Cluster</span><span>): 
+</span><span>  </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span>(cluster</span><span style="color:#81a1c1;">.</span><span>pods</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">System</span><span style="color:#81a1c1;">.</span><span>currentTimeMillis()))
+</span></code></pre>
+<p>We are going to use <code>EitherT</code> instance from <a href="https://typelevel.org/cats/datatypes/eithert.html">Cats</a> library.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>implicits</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>EitherT
+</span><span>
+</span><span style="color:#81a1c1;">val cluster = for </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">_ &lt;-</span><span> validateNamespace(ns)</span><span style="color:#81a1c1;">.</span><span>toEitherT[</span><span style="color:#8fbcbb;">Option</span><span>]
+</span><span>    cluster</span><span style="color:#81a1c1;">&lt;- </span><span style="color:#8fbcbb;">EitherT</span><span>(clusterExists(ns))
+</span><span>    updated </span><span style="color:#81a1c1;">&lt;-</span><span> updateCluster(ns</span><span style="color:#eceff4;">,</span><span> cluster)</span><span style="color:#81a1c1;">.</span><span>toEitherT[</span><span style="color:#8fbcbb;">Option</span><span>]
+</span><span>} </span><span style="color:#81a1c1;">yield</span><span>  updated
+</span></code></pre>
+<p>Since we introduced Monad transformer into composition, we have to use it for all the monadic values in the same sequence of flatMaps.
+So, we have to wrap first value and third value into EitherT as well using extension method <code>to EitherT</code>.</p>
+<p>In the result we have two layers of Monads too. First <code>Option</code>, then <code>Either</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; cluster</span><span style="color:#81a1c1;">.</span><span>value
+</span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">Right</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span>(</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span style="color:#b48ead;">1583095558496</span><span>)))
+</span></code></pre>
+<p>Alternative case, when some of the statement in composition yields an error value:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// we return Left value this time
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">clusterExists</span><span>(ns: </span><span style="color:#8fbcbb;">String</span><span>): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Cluster</span><span>]] </span><span style="color:#81a1c1;">=
+</span><span>    </span><span style="color:#8fbcbb;">Left</span><span>(</span><span style="color:#a3be8c;">&quot;Cluster is invalid&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>some
+</span><span>
+</span><span>scala&gt; cluster</span><span style="color:#81a1c1;">.</span><span>value
+</span><span>res4: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">,</span><span style="color:#8fbcbb;">Cluster</span><span>]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">Left</span><span>(</span><span style="color:#8fbcbb;">Cluster</span><span> is invalid))
+</span></code></pre>
+<p>In the result, our composition stopped on the second statement. <code>clusterExists</code> returns Some(Left(...)), so that 
+<code>EitherT</code> could detect that <code>Either.Left</code> is end of the journey and entire composition ended on <code>Left</code> even it is wrapped into <code>Some</code>.
+Basically, Monad transformer looks into two layers one by one, when chaining monadic values. This was our goal
+to get a concise program and handle nested monadic value on composition in the same time.</p>
+<h2 id="summary">Summary</h2>
+<p>Monad and Monad transformers are useful abstractions in every day life of functional programmer.
+Although it may seems like Monad is programming language on its own, it allows us to write programs based on the Laws!!!
+We can compose different monadic values without using much a control flow. 
+In the result, we get fewer logical errors in the code, better structured programs and 
+what is more important we get possibility to change programs in future much easier without breaking the entire world.</p>
+<p>Now go and flatMap all the things :-)</p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Monads in Scala' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Monads in Scala" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Monads in Scala" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;scala-monads&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-what-is-monad" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/scala-monads/#what-is-monad">
+                What is Monad?
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-what-makes-thing-a-monad" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#what-makes-thing-a-monad">
+                What makes thing a Monad?
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-make-your-monad" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#make-your-monad">
+                Make your Monad
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-scala-examples" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#scala-examples">
+                Scala Examples
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-generic-monad" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#generic-monad">
+                Generic Monad
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-function-application-in-flatmap" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#function-application-in-flatmap">
+                Function application in flatMap
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-monad-laws" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#monad-laws">
+                Monad Laws
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-1-identity" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#1-identity">
+                    1. Identity
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-2-associative" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#2-associative">
+                    2. Associative
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-functor-laws" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#functor-laws">
+                Functor Laws
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-1-identity-1" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#1-identity-1">
+                    1. Identity
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-2-associative-1" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#2-associative-1">
+                    2. Associative
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-application-of-monads" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#application-of-monads">
+                Application of Monads
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-compose-option" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#compose-option">
+                    Compose Option
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-compose-either" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#compose-either">
+                    Compose Either
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-for-comprehension" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#for-comprehension">
+                For comprehension
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-caveat-with-monads" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#caveat-with-monads">
+                Caveat with Monads
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-problem" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#problem">
+                    Problem
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-monad-transformer" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#monad-transformer">
+                Monad Transformer
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-apply-monad-transformer" class="toc is-size-7" href="https://novakov-alexey.github.io/scala-monads/#apply-monad-transformer">
+                    Apply Monad Transformer
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/scala-monads/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/scala-monads/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'scala-monads'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

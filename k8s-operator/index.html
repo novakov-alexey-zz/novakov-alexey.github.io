@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Kubernetes Operator in Scala for Kerberos Keytab Management
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Kubernetes Operator in Scala for Kerberos Keytab Management
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-10-16'>October 16, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    13 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    2416 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/kerberos/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        kerberos
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/kubernetes/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        kubernetes
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/operator/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        operator
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/devops/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        devops
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <style>
+  .container {    
+    justify-content: center;
+  }
+</style> 
+<div class="container">
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;eee4491f16e26d4500.png"/>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;e0df69cb5098af6700.png"/>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;1fc138b0e9c31c6400.png"/>
+</div><br/>
+<p>Kubernetes has built-in controllers to handle its native resource such as</p>
+<ul>
+<li>Pod</li>
+<li>Service</li>
+<li>Deployment</li>
+<li>etc. </li>
+</ul>
+<p>What if you want a completely new resource type, which would describe some new abstraction in clear and concise way? Such new resource would describe everything in 
+one single type which would require 5-10 separate native Kubernetes resources.</p>
+<span id="continue-reading"></span>
+<p>Good news is that such custom resource creation is possible in Kubernetes, however who would be processing such custom resources?
+The answer is the <code>Custom Controller</code> would process such new custom resources and this is official way that Kubernetes allows its users
+to extend Kubernetes API-Server:</p>
+<ol>
+<li>kind: CustomResourceDefinition, apiVersion: apiextensions.k8s.io/v1</li>
+<li>Custom Controller, which is dedicated program running usually inside the Kubernetes cluster </li>
+</ol>
+<h1 id="operator-pattern">Operator Pattern</h1>
+<p>Custom Controller is also called <code>Kubernetes Operator</code>. Operator became a design pattern to automate application deployment operations by
+running custom program, which will deploy Kubernetes native resources based on code logic. So you can say that the Operator pattern
+is a next level of automation, which DevOps applies to Kubernetes. Of course, you could also go with <code>Helm</code> package manager 
+and deploy/change your set of native resources via command like <code>helm update</code>. However, that requires a full-time engineer to sit and perform such operations by hands.</p>
+<p>Operator workflow can be illustrated as the following 3 steps:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;2ca8e6f9d3aa9c6e00.png" class="center-image"/>
+<br/><br/>
+<ol>
+<li>User creates new custom resource instance via Kubernetes API, for example using <code>kubectl</code> CLI</li>
+<li>Once custom resource is created, this event is sent to custom controller, since the last one is subscribed to custom resource type updates</li>
+<li>Once custom controller got the event it automatically executes one or multiple CRUD commands towards API server</li>
+</ol>
+<p>Later, users can modify or delete custom resources like any other native resources. Custom controller will handle these events as well. Based
+on its programmed logic it decides what to do in case of custom resource modification or deletion. Custom controller can watch for native resources as well, there are no restrictions to that.</p>
+<h1 id="use-case-kerberos-operator">Use Case: Kerberos Operator</h1>
+<p>Let's look at how to develop new operator from scratch in Scala using <a href="https://github.com/joan38/kubernetes-client">Kubernetes-Client</a> library.</p>
+<p>Our desired custom resources are going to be the following:</p>
+<p><em>KrbServer</em></p>
+<pre data-lang="yaml" style="background-color:#2e3440;color:#d8dee9;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#8fbcbb;">apiVersion</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">krb-operator.novakov-alexey.github.io/v1
+</span><span style="color:#8fbcbb;">kind</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">KrbServer
+</span><span style="color:#8fbcbb;">metadata</span><span style="color:#eceff4;">:
+</span><span>  </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">my-krb
+</span><span>  </span><span style="color:#8fbcbb;">namespace</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">test
+</span><span style="color:#8fbcbb;">spec</span><span style="color:#eceff4;">:
+</span><span>  </span><span style="color:#8fbcbb;">realm</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">EXAMPLE.COM  
+</span></code></pre>
+<p><em>Principals</em></p>
+<pre data-lang="yaml" style="background-color:#2e3440;color:#d8dee9;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#8fbcbb;">apiVersion</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">krb-operator.novakov-alexey.github.io/v1
+</span><span style="color:#8fbcbb;">kind</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">Principals
+</span><span style="color:#8fbcbb;">metadata</span><span style="color:#eceff4;">:
+</span><span>  </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">my-krb1
+</span><span>  </span><span style="color:#8fbcbb;">namespace</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">test
+</span><span>  </span><span style="color:#8fbcbb;">labels</span><span style="color:#eceff4;">:
+</span><span>    </span><span style="color:#8fbcbb;">krb-operator.novakov-alexey.github.io/server</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">my-krb </span><span style="color:#616e88;"># reference to KrbServer
+</span><span style="color:#8fbcbb;">spec</span><span style="color:#eceff4;">:
+</span><span>  </span><span style="color:#8fbcbb;">list</span><span style="color:#eceff4;">:
+</span><span>    - </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">client1
+</span><span>      </span><span style="color:#8fbcbb;">password</span><span style="color:#eceff4;">:
+</span><span>        </span><span style="color:#8fbcbb;">type</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">static
+</span><span>        </span><span style="color:#8fbcbb;">value</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">mypass
+</span><span>      </span><span style="color:#8fbcbb;">keytab</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">cluster.keytab
+</span><span>      </span><span style="color:#8fbcbb;">secret</span><span style="color:#eceff4;">:
+</span><span>        </span><span style="color:#8fbcbb;">type</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">Keytab
+</span><span>        </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">cluster-keytab
+</span><span>    - </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">user2
+</span><span>      </span><span style="color:#8fbcbb;">keytab</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">cluster.keytab
+</span><span>      </span><span style="color:#8fbcbb;">secret</span><span style="color:#eceff4;">:
+</span><span>        </span><span style="color:#8fbcbb;">type</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">KeytabAndPassword
+</span><span>        </span><span style="color:#8fbcbb;">name</span><span style="color:#eceff4;">: </span><span style="color:#a3be8c;">cluster-keytab
+</span></code></pre>
+<p>Based on above resource example, our operator will eventually create/modify/delete the following native resources:</p>
+<ul>
+<li>Service to expose Kerberos server</li>
+<li>Pod to launch Kerberos container</li>
+<li>Secrets to keep Kerberos principal keytabs or their credentials</li>
+</ul>
+<p>Operator will have native resource templates in its code to apply them when it gets custom resource instance. Such native template will be 
+used to create native resources based on values available in custom resources. So that we get logical
+mapping between particular custom resource instance and its set of native resources, which user expects to create/modify/delete in Kubernetes namespace(s).</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;8b96b07f29ef501e00.png" class="center-image"/>
+<br/><br/><h2 id="implementation">Implementation</h2>
+<h3 id="libraries">Libraries</h3>
+<p>Below are the main Scala libraries to implement new operator app:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">lazy val kubernetesClient = </span><span style="color:#a3be8c;">&quot;com.goyeau&quot;</span><span> %% </span><span style="color:#a3be8c;">&quot;kubernetes-client&quot;</span><span> % </span><span style="color:#a3be8c;">&quot;0.8.0&quot;
+</span><span style="color:#81a1c1;">lazy val circeVersion = </span><span style="color:#a3be8c;">&quot;0.14.1&quot;
+</span><span style="color:#81a1c1;">lazy val circeExtra = </span><span style="color:#a3be8c;">&quot;io.circe&quot;</span><span> %% </span><span style="color:#a3be8c;">&quot;circe-generic-extras&quot;</span><span> % circeVersion
+</span><span style="color:#81a1c1;">lazy val circeCore = </span><span style="color:#a3be8c;">&quot;io.circe&quot;</span><span> %% </span><span style="color:#a3be8c;">&quot;circe-core&quot;</span><span> % circeVersion
+</span></code></pre>
+<h3 id="resource-model">Resource Model</h3>
+<p>Custom resource specification is modeled as a hierarchy of Scala case classes:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Password
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> Static</span><span>(value: </span><span style="color:#8fbcbb;">String</span><span>) extends </span><span style="color:#8fbcbb;">Password
+</span><span style="color:#81a1c1;">case object</span><span style="color:#8fbcbb;"> Random </span><span>extends </span><span style="color:#8fbcbb;">Password
+</span><span>
+</span><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Secret </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">val name</span><span>: </span><span style="color:#8fbcbb;">String
+</span><span>}
+</span><span>
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> Keytab</span><span>(name: </span><span style="color:#8fbcbb;">String</span><span>) extends </span><span style="color:#8fbcbb;">Secret
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> KeytabAndPassword</span><span>(name: </span><span style="color:#8fbcbb;">String</span><span>) extends </span><span style="color:#8fbcbb;">Secret
+</span><span>
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> Principal</span><span>(
+</span><span>    name: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">,
+</span><span>    password: </span><span style="color:#8fbcbb;">Password </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Random</span><span style="color:#eceff4;">,
+</span><span>    keytab: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">,
+</span><span>    secret: </span><span style="color:#8fbcbb;">Secret
+</span><span>)
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> Principals</span><span>(list: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Principal</span><span>])
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> PrincipalsStatus</span><span>(
+</span><span>    processed: </span><span style="color:#81a1c1;">Boolean</span><span style="color:#eceff4;">,
+</span><span>    lastPrincipalCount: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">,
+</span><span>    totalPrincipalCount: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">,
+</span><span>    error: </span><span style="color:#8fbcbb;">String </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;&quot;
+</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> KrbServer</span><span>(realm: </span><span style="color:#8fbcbb;">String</span><span>)
+</span><span style="color:#81a1c1;">final case class</span><span style="color:#8fbcbb;"> KrbServerStatus</span><span>(processed: </span><span style="color:#81a1c1;">Boolean</span><span style="color:#eceff4;">, </span><span>error: </span><span style="color:#8fbcbb;">String </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;&quot;</span><span>)
+</span></code></pre>
+<p>In the result, we get two custom resources: <code>Princpals</code> and <code>KrbServer</code>. Each of them has a status property such as <code>PrincipalsStatus</code>
+and <code>KrbServerStatus</code> accordingly. Status property of the custom resource is additional way to communicate from an operator to a user who is going 
+to submit CR instances and changes to them. Structure of status property can have anything in it what operator author decides to have.
+Both statuses and main CR specifications are validated according to operator provided OpenAPI JSON schema. Basically, operator author provided a JSON schema when operator is installed. 
+Operators can also install CRD automatically. In order to allow that, a service account used by operator has to have a special RBAC permissions.</p>
+<h3 id="operator-main-class">Operator Main Class</h3>
+<p>Let's import the following classes into the operator main class:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// Cats
+</span><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>effect</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>implicits</span><span style="color:#81a1c1;">._
+</span><span style="color:#616e88;">// Kubernetes Client
+</span><span style="color:#81a1c1;">import</span><span> com</span><span style="color:#81a1c1;">.</span><span>goyeau</span><span style="color:#81a1c1;">.</span><span>kubernetes</span><span style="color:#81a1c1;">.</span><span>client</span><span style="color:#81a1c1;">.</span><span>EventType</span><span style="color:#81a1c1;">.</span><span>{ADDED</span><span style="color:#eceff4;">,</span><span> DELETED</span><span style="color:#eceff4;">,</span><span> ERROR</span><span style="color:#eceff4;">,</span><span> MODIFIED}
+</span><span style="color:#81a1c1;">import</span><span> com</span><span style="color:#81a1c1;">.</span><span>goyeau</span><span style="color:#81a1c1;">.</span><span>kubernetes</span><span style="color:#81a1c1;">.</span><span>client</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> com</span><span style="color:#81a1c1;">.</span><span>goyeau</span><span style="color:#81a1c1;">.</span><span>kubernetes</span><span style="color:#81a1c1;">.</span><span>client</span><span style="color:#81a1c1;">.</span><span>crd</span><span style="color:#81a1c1;">.</span><span>{CrdContext</span><span style="color:#eceff4;">,</span><span> CustomResource}
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>k8s</span><span style="color:#81a1c1;">.</span><span>apiextensionsapiserver</span><span style="color:#81a1c1;">.</span><span>pkg</span><span style="color:#81a1c1;">.</span><span>apis</span><span style="color:#81a1c1;">.</span><span>apiextensions</span><span style="color:#81a1c1;">.</span><span>v1</span><span style="color:#81a1c1;">.</span><span>CustomResourceDefinition
+</span><span style="color:#616e88;">// FS2 from Kubernetes Client
+</span><span style="color:#81a1c1;">import</span><span> fs2</span><span style="color:#81a1c1;">.</span><span>{Pipe</span><span style="color:#eceff4;">,</span><span> Stream}
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>circe</span><span style="color:#81a1c1;">.</span><span>generic</span><span style="color:#81a1c1;">.</span><span>extras</span><span style="color:#81a1c1;">.</span><span>auto</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>circe</span><span style="color:#81a1c1;">.</span><span>{Decoder</span><span style="color:#eceff4;">,</span><span> Encoder}
+</span><span style="color:#616e88;">// Operator&#39;s other classes
+</span><span style="color:#81a1c1;">import</span><span> krboperator</span><span style="color:#81a1c1;">.</span><span>Controller</span><span style="color:#81a1c1;">.</span><span>NewStatus
+</span><span style="color:#81a1c1;">import</span><span> krboperator</span><span style="color:#81a1c1;">.</span><span>service</span><span style="color:#81a1c1;">.</span><span>Template</span><span style="color:#81a1c1;">.</span><span>implicits</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> krboperator</span><span style="color:#81a1c1;">.</span><span>service</span><span style="color:#81a1c1;">.</span><span>{Kadmin</span><span style="color:#eceff4;">,</span><span> Secrets</span><span style="color:#eceff4;">,</span><span> Template}
+</span><span style="color:#616e88;">// Log4cats
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>typelevel</span><span style="color:#81a1c1;">.</span><span>log4cats</span><span style="color:#81a1c1;">.</span><span>Logger
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>typelevel</span><span style="color:#81a1c1;">.</span><span>log4cats</span><span style="color:#81a1c1;">.</span><span>slf4j</span><span style="color:#81a1c1;">.</span><span>Slf4jLogger
+</span><span style="color:#616e88;">// Scala, Java std libs
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>File
+</span><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>concurrent</span><span style="color:#81a1c1;">.</span><span>duration</span><span style="color:#81a1c1;">.</span><span>{DurationInt</span><span style="color:#eceff4;">,</span><span> FiniteDuration}
+</span><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>reflect</span><span style="color:#81a1c1;">.</span><span>ClassTag
+</span></code></pre>
+<p>In the operator main class, we will instantiate Kubernetes client and start watching for <code>KrbServer</code> and <code>Principalas</code> custom resources.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">object</span><span style="color:#8fbcbb;"> KrbOperator </span><span>extends </span><span style="color:#8fbcbb;">IOApp </span><span>with </span><span style="color:#8fbcbb;">Codecs </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">implicit def </span><span style="color:#88c0d0;">unsafeLogger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Sync</span><span>]: </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Slf4jLogger</span><span style="color:#81a1c1;">.</span><span>getLogger[</span><span style="color:#8fbcbb;">F</span><span>]
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val kubernetesClient =
+</span><span>    </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">IO</span><span>](
+</span><span>      </span><span style="color:#8fbcbb;">KubeConfig</span><span style="color:#81a1c1;">.</span><span>fromFile[</span><span style="color:#8fbcbb;">IO</span><span>](
+</span><span>        </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">File</span><span>(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>${</span><span style="color:#8fbcbb;">System</span><span style="color:#81a1c1;">.</span><span>getProperty(</span><span style="color:#a3be8c;">&quot;user.home&quot;</span><span>)}/.kube/config</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>      )
+</span><span>    )
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">run</span><span>(args: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]): </span><span style="color:#8fbcbb;">IO</span><span>[</span><span style="color:#8fbcbb;">ExitCode</span><span>] </span><span style="color:#81a1c1;">= ???
+</span><span>  </span><span style="color:#81a1c1;">....
+</span></code></pre>
+<h3 id="watching-resource">Watching Resource</h3>
+<p>Kubernetes-Client library is brings FS2 library as a direct dependency to watch for the Kubernetes resources. That gives a lot of power
+to handle events in fault-tolerant way. Also, FS2 nicely composes with Cats-Effect.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">watchCr</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Sync</span><span style="color:#eceff4;">, 
+</span><span>    </span><span style="color:#8fbcbb;">Resource</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#eceff4;">, 
+</span><span>    </span><span style="color:#8fbcbb;">Status</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span>](
+</span><span>      ctx: </span><span style="color:#8fbcbb;">CrdContext
+</span><span>  )(</span><span style="color:#81a1c1;">implicit
+</span><span>      controller: </span><span style="color:#8fbcbb;">Controller</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]</span><span style="color:#eceff4;">,
+</span><span>      kubernetesClient: </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]
+</span><span>  ) </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val context =</span><span> crds</span><span style="color:#81a1c1;">.</span><span>context[</span><span style="color:#8fbcbb;">Resource</span><span>]
+</span><span>    </span><span style="color:#8fbcbb;">Stream</span><span style="color:#81a1c1;">.</span><span>eval(
+</span><span>      </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>info(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Watching context: $context</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>    ) &gt;&gt; kubernetesClient
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>customResources[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](context)
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>watch()
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>through(handler[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>])
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>through(submitStatus[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](ctx))
+</span><span>  }
+</span></code></pre>
+<p>Above code opens long-term HTTP connection to Kubernetes API-Server, which is going to listen for custom resource updates. Until this connection is not closed by the
+operator or by the API-Server, operator will receive and pass custom resource events containing current resource state to a function called <code>handler</code>. Its output
+will be passed further to <code>submitStatus</code> function. These two functions will be called on every event sent by API-Server to the watching operator. Now, our goal is to 
+react to these events and make something to happen in Kubernetes cluster. In our case, we need to create Kerberos pod, service and a bunch of secrets.
+Also, our <code>Principals</code> resource means that principal list must be registered in Kerberos database using one of the Kerberos process called KDC. If you never worked with
+Kerberos, then think of it like a database, which we need to deploy to Kubernetes and create new users with requested credentials. Later, someone
+will mount newly created secrets with keytabs to some user's Pod and will going to authenticate to Kerberos via keytab file. Keytab is something like
+password saved into a binary file with additional meta information.</p>
+<h3 id="handler-function">Handler Function</h3>
+<p>We are coming closer to processing the custom resource events. Below is a FS2 Pipe to take CustomResource type and return optional status.
+which is going to be added to the copy of original custom resource event. Then, we take this optional status and pass to the next function to submit it to API-Server.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">handler</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Sync</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](</span><span style="color:#81a1c1;">implicit
+</span><span>      controller: </span><span style="color:#8fbcbb;">Controller</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]
+</span><span>  ): </span><span style="color:#8fbcbb;">Pipe</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Either</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">WatchEvent</span><span>[
+</span><span>    </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]
+</span><span>  ]]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]]] </span><span style="color:#81a1c1;">=
+</span><span>    </span><span style="color:#81a1c1;">_.</span><span>flatMap { s </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#81a1c1;">val action =</span><span> s </span><span style="color:#81a1c1;">match </span><span>{
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Left</span><span>(err) </span><span style="color:#81a1c1;">=&gt;
+</span><span>          </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>error(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Error on watching events: $err</span><span style="color:#a3be8c;">&quot;</span><span>) *&gt; </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>pure(
+</span><span>            none
+</span><span>          )
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Right</span><span>(event) </span><span style="color:#81a1c1;">=&gt;
+</span><span>          </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>debug(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Received event: $event</span><span style="color:#a3be8c;">&quot;</span><span>) &gt;&gt; {
+</span><span>            </span><span style="color:#81a1c1;">val status =
+</span><span>              event</span><span style="color:#81a1c1;">.</span><span>`type` </span><span style="color:#81a1c1;">match </span><span>{
+</span><span>                </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">ADDED </span><span style="color:#81a1c1;">=&gt;
+</span><span>                  controller
+</span><span>                    </span><span style="color:#81a1c1;">.</span><span>onAdd(event</span><span style="color:#81a1c1;">.</span><span>`object`)
+</span><span>                    </span><span style="color:#81a1c1;">.</span><span>map(addStatus(</span><span style="color:#81a1c1;">_</span><span style="color:#eceff4;">,</span><span> event</span><span style="color:#81a1c1;">.</span><span>`object`))
+</span><span>                </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">MODIFIED </span><span style="color:#81a1c1;">=&gt;
+</span><span>                  controller
+</span><span>                    </span><span style="color:#81a1c1;">.</span><span>onModify(event</span><span style="color:#81a1c1;">.</span><span>`object`)
+</span><span>                    </span><span style="color:#81a1c1;">.</span><span>map(addStatus(</span><span style="color:#81a1c1;">_</span><span style="color:#eceff4;">,</span><span> event</span><span style="color:#81a1c1;">.</span><span>`object`))
+</span><span>                </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">DELETED </span><span style="color:#81a1c1;">=&gt;
+</span><span>                  controller</span><span style="color:#81a1c1;">.</span><span>onDelete(event</span><span style="color:#81a1c1;">.</span><span>`object`)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_ =&gt;</span><span> none)
+</span><span>                </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">ERROR </span><span style="color:#81a1c1;">=&gt;
+</span><span>                  </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>error(
+</span><span>                    </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Received error event for ${event</span><span style="color:#81a1c1;">.</span><span>`object`}</span><span style="color:#a3be8c;">&quot;
+</span><span>                  ) *&gt; </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>pure(none)
+</span><span>              }
+</span><span>
+</span><span>            status</span><span style="color:#81a1c1;">.</span><span>handleErrorWith { e </span><span style="color:#81a1c1;">=&gt;
+</span><span>              </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>error(e)(
+</span><span>                </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Controller failed to handle event type ${event</span><span style="color:#81a1c1;">.</span><span>`type`}</span><span style="color:#a3be8c;">&quot;
+</span><span>              ) *&gt; </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>pure(none)
+</span><span>            }
+</span><span>          }
+</span><span>      }
+</span><span>      </span><span style="color:#8fbcbb;">Stream</span><span style="color:#81a1c1;">.</span><span>eval(action)
+</span><span>    }
+</span></code></pre>
+<p>In the above match statement, we call different methods of a controller object, which will define right now:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>effect</span><span style="color:#81a1c1;">.</span><span>Sync
+</span><span style="color:#81a1c1;">import</span><span> cats</span><span style="color:#81a1c1;">.</span><span>syntax</span><span style="color:#81a1c1;">.</span><span>all</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> com</span><span style="color:#81a1c1;">.</span><span>goyeau</span><span style="color:#81a1c1;">.</span><span>kubernetes</span><span style="color:#81a1c1;">.</span><span>client</span><span style="color:#81a1c1;">.</span><span>crd</span><span style="color:#81a1c1;">.</span><span>CustomResource
+</span><span style="color:#81a1c1;">import</span><span> krboperator</span><span style="color:#81a1c1;">.</span><span>Controller</span><span style="color:#81a1c1;">.</span><span>{NewStatus</span><span style="color:#eceff4;">,</span><span> NoStatus</span><span style="color:#eceff4;">,</span><span> noStatus}
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>language</span><span style="color:#81a1c1;">.</span><span>implicitConversions
+</span><span>
+</span><span style="color:#81a1c1;">object</span><span style="color:#8fbcbb;"> Controller </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">type NewStatus</span><span>[</span><span style="color:#8fbcbb;">U</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">type NoStatus = </span><span style="color:#8fbcbb;">NewStatus</span><span>[</span><span style="color:#81a1c1;">Unit</span><span>]
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">noStatus</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>](</span><span style="color:#81a1c1;">implicit </span><span>F: </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>pure(none[</span><span style="color:#8fbcbb;">U</span><span>])
+</span><span>}
+</span><span>
+</span><span style="color:#81a1c1;">abstract class</span><span style="color:#8fbcbb;"> Controller</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>](</span><span style="color:#81a1c1;">implicit val </span><span>F: </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]) {
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">implicit def </span><span style="color:#88c0d0;">unitToNoStatus</span><span>(unit: </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">Unit</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">NoStatus</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    unit *&gt; noStatus
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">onAdd</span><span>(resource: </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">NewStatus</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]] </span><span style="color:#81a1c1;">=</span><span> noStatus
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">onModify</span><span>(resource: </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">NewStatus</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]] </span><span style="color:#81a1c1;">=</span><span> noStatus
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">reconcile</span><span>(resource: </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">NewStatus</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]] </span><span style="color:#81a1c1;">=</span><span> noStatus
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">onError</span><span>(resource: </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#8fbcbb;">NewStatus</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]] </span><span style="color:#81a1c1;">=</span><span> noStatus
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">onDelete</span><span>(resource: </span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>unit
+</span><span>}
+</span></code></pre>
+<p>As you might noticed, main class has word <code>Operator</code> in it. Event handlers are called controllers.
+Basically, our entire application will be called operator. However, this operator app has internal logic wrapped into <code>Controller</code> class. 
+In our case, we will have two controllers, each handles own custom resource such as <code>KrbServer</code> and <code>Principals</code>.</p>
+<h3 id="submit-status">Submit Status</h3>
+<p>Below <code>submitStatus</code> function is to add status value and submit it back to API-Server:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">submitStatus</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>      </span><span style="color:#8fbcbb;">Resource</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span style="color:#eceff4;">, 
+</span><span>      </span><span style="color:#8fbcbb;">Status</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span>](
+</span><span>      ctx: </span><span style="color:#8fbcbb;">CrdContext
+</span><span>  )(</span><span style="color:#81a1c1;">implicit
+</span><span>      client: </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#eceff4;">,
+</span><span>      F: </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]
+</span><span>  ): </span><span style="color:#8fbcbb;">Pipe</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">CustomResource</span><span>[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]]</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    </span><span style="color:#81a1c1;">_.</span><span>flatMap { cr </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#81a1c1;">val action =</span><span> cr </span><span style="color:#81a1c1;">match </span><span>{
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Some</span><span>(r) </span><span style="color:#81a1c1;">=&gt;
+</span><span>          </span><span style="color:#81a1c1;">for </span><span>{
+</span><span>            name </span><span style="color:#81a1c1;">&lt;- </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>fromOption(
+</span><span>              r</span><span style="color:#81a1c1;">.</span><span>metadata</span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_.</span><span>name)</span><span style="color:#eceff4;">,
+</span><span>              </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">RuntimeException</span><span>(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Resource name is empty: $r</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>            )
+</span><span>            namespace </span><span style="color:#81a1c1;">&lt;- </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>fromOption(
+</span><span>              r</span><span style="color:#81a1c1;">.</span><span>metadata</span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#81a1c1;">_.</span><span>namespace)</span><span style="color:#eceff4;">,
+</span><span>              </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">RuntimeException</span><span>(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Resource namespace is empty: $r</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>            )
+</span><span>            </span><span style="color:#81a1c1;">_ &lt;-</span><span> client
+</span><span>              </span><span style="color:#81a1c1;">.</span><span>customResources[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](ctx)
+</span><span>              </span><span style="color:#81a1c1;">.</span><span>namespace(namespace)
+</span><span>              </span><span style="color:#81a1c1;">.</span><span>updateStatus(name</span><span style="color:#eceff4;">,</span><span> r)
+</span><span>              </span><span style="color:#81a1c1;">.</span><span>flatMap(status </span><span style="color:#81a1c1;">=&gt;
+</span><span>                </span><span style="color:#81a1c1;">if </span><span>(status</span><span style="color:#81a1c1;">.</span><span>isSuccess) </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>unit
+</span><span>                </span><span style="color:#81a1c1;">else
+</span><span>                  </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>error(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">RuntimeException</span><span>(status</span><span style="color:#81a1c1;">.</span><span>toString()))(
+</span><span>                    </span><span style="color:#a3be8c;">&quot;Status updated failed on Kubernetes side&quot;
+</span><span>                  )
+</span><span>              )
+</span><span>          } </span><span style="color:#81a1c1;">yield ()
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">None </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>unit
+</span><span>      }
+</span><span>
+</span><span>      </span><span style="color:#8fbcbb;">Stream</span><span style="color:#81a1c1;">.</span><span>eval(action</span><span style="color:#81a1c1;">.</span><span>handleErrorWith { e </span><span style="color:#81a1c1;">=&gt;
+</span><span>        </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>error(e)(
+</span><span>          </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Failed to submit status</span><span style="color:#a3be8c;">&quot;
+</span><span>        ) *&gt; </span><span style="color:#8fbcbb;">F</span><span style="color:#81a1c1;">.</span><span>pure(none)
+</span><span>      })
+</span><span>    }
+</span></code></pre>
+<h3 id="watchers-and-reconcillers">Watchers and Reconcillers</h3>
+<p>We need to create a pair of watchers and return them to Cats IOApp to launch the entire application.
+We are almost ready to define <code>run</code> method of the IOApp:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">run</span><span>(args: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]): </span><span style="color:#8fbcbb;">IO</span><span>[</span><span style="color:#8fbcbb;">ExitCode</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    kubernetesClient
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>use { </span><span style="color:#81a1c1;">implicit </span><span>client </span><span style="color:#81a1c1;">=&gt;
+</span><span>        </span><span style="color:#81a1c1;">for </span><span>{
+</span><span>          operatorCfg </span><span style="color:#81a1c1;">&lt;- </span><span style="color:#8fbcbb;">IO</span><span style="color:#81a1c1;">.</span><span>fromEither(
+</span><span>            </span><span style="color:#8fbcbb;">AppConfig</span><span style="color:#81a1c1;">.</span><span>load
+</span><span>              </span><span style="color:#81a1c1;">.</span><span>leftMap(e </span><span style="color:#81a1c1;">=&gt; new </span><span style="color:#8fbcbb;">RuntimeException</span><span>(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>failed to load config: $e</span><span style="color:#a3be8c;">&quot;</span><span>))
+</span><span>          )
+</span><span>          serverCtx </span><span style="color:#81a1c1;">=</span><span> crds</span><span style="color:#81a1c1;">.</span><span>context[</span><span style="color:#8fbcbb;">KrbServer</span><span>]
+</span><span>          </span><span style="color:#81a1c1;">_ &lt;-</span><span> createCrdIfAbsent[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">KrbServer</span><span>](
+</span><span>            serverCtx</span><span style="color:#eceff4;">,
+</span><span>            crds</span><span style="color:#81a1c1;">.</span><span>server</span><span style="color:#81a1c1;">.</span><span>definition(serverCtx)
+</span><span>          )
+</span><span>          principalCtx </span><span style="color:#81a1c1;">=</span><span> crds</span><span style="color:#81a1c1;">.</span><span>context[</span><span style="color:#8fbcbb;">Principals</span><span>]
+</span><span>          </span><span style="color:#81a1c1;">_ &lt;-</span><span> createCrdIfAbsent[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Principals</span><span>](
+</span><span>            principalCtx</span><span style="color:#eceff4;">,
+</span><span>            crds</span><span style="color:#81a1c1;">.</span><span>principal</span><span style="color:#81a1c1;">.</span><span>definition(principalCtx)
+</span><span>          )
+</span><span>          </span><span style="color:#81a1c1;">_ &lt;-</span><span> createWatchers(
+</span><span>            operatorCfg</span><span style="color:#eceff4;">,
+</span><span>            serverCtx</span><span style="color:#eceff4;">,
+</span><span>            principalCtx
+</span><span>          )</span><span style="color:#81a1c1;">.</span><span>parJoinUnbounded</span><span style="color:#81a1c1;">.</span><span>compile</span><span style="color:#81a1c1;">.</span><span>drain
+</span><span>        } </span><span style="color:#81a1c1;">yield ()
+</span><span>      }
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#8fbcbb;">ExitCode</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Success</span><span>)
+</span><span>  
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createWatchers</span><span>(
+</span><span>      operatorCfg: </span><span style="color:#8fbcbb;">KrbOperatorCfg</span><span style="color:#eceff4;">,
+</span><span>      serverCtx: </span><span style="color:#8fbcbb;">CrdContext</span><span style="color:#eceff4;">,
+</span><span>      principalCtx: </span><span style="color:#8fbcbb;">CrdContext
+</span><span>  )(</span><span style="color:#81a1c1;">implicit </span><span>client: </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">IO</span><span>]) </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val secrets = new </span><span style="color:#8fbcbb;">Secrets</span><span>(client</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span><span>    </span><span style="color:#81a1c1;">val kadmin = new </span><span style="color:#8fbcbb;">Kadmin</span><span>(client</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span><span>    </span><span style="color:#81a1c1;">val template = new </span><span style="color:#8fbcbb;">Template</span><span>(client</span><span style="color:#eceff4;">,</span><span> secrets</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">implicit lazy val serverController =
+</span><span>      </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">ServerController</span><span>(
+</span><span>        template</span><span style="color:#eceff4;">,
+</span><span>        secrets</span><span style="color:#eceff4;">,
+</span><span>        client</span><span style="color:#eceff4;">,
+</span><span>        crds</span><span style="color:#81a1c1;">.</span><span>context[</span><span style="color:#8fbcbb;">KrbServer</span><span>]
+</span><span>      )
+</span><span>    </span><span style="color:#81a1c1;">implicit lazy val principalController =
+</span><span>      </span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">PrincipalController</span><span>(
+</span><span>        secrets</span><span style="color:#eceff4;">,
+</span><span>        kadmin</span><span style="color:#eceff4;">,
+</span><span>        client</span><span style="color:#eceff4;">,
+</span><span>        serverController</span><span style="color:#eceff4;">,
+</span><span>        operatorCfg
+</span><span>      )
+</span><span>
+</span><span>    </span><span style="color:#8fbcbb;">Stream</span><span>(
+</span><span>      watchCr[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">KrbServer</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">KrbServerStatus</span><span>](serverCtx)</span><span style="color:#eceff4;">,
+</span><span>      watchCr[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Principals</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">PrincipalsStatus</span><span>](principalCtx)</span><span style="color:#eceff4;">,
+</span><span>      reconcile[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">KrbServer</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">KrbServerStatus</span><span>](serverCtx)</span><span style="color:#eceff4;">,
+</span><span>      reconcile[</span><span style="color:#8fbcbb;">IO</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Principals</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">PrincipalsStatus</span><span>](principalCtx)
+</span><span>    )
+</span><span>  }
+</span></code></pre>
+<p>Before starting our watchers we check whether our CRDs are already registered in API-Server. If they are not, then make an attempt to register
+by our operator:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createCrdIfAbsent</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Sync</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span>](
+</span><span>      ctx: </span><span style="color:#8fbcbb;">CrdContext</span><span style="color:#eceff4;">,
+</span><span>      customDefinition: </span><span style="color:#8fbcbb;">CustomResourceDefinition</span><span style="color:#eceff4;">,
+</span><span>      attempts: </span><span style="color:#81a1c1;">Int = </span><span style="color:#b48ead;">1
+</span><span>  )(</span><span style="color:#81a1c1;">implicit </span><span>client: </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]): </span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val crdName =</span><span> crds</span><span style="color:#81a1c1;">.</span><span>crdName(ctx)
+</span><span>    </span><span style="color:#81a1c1;">for </span><span>{
+</span><span>      found </span><span style="color:#81a1c1;">&lt;-</span><span> client</span><span style="color:#81a1c1;">.</span><span>customResourceDefinitions
+</span><span>        </span><span style="color:#81a1c1;">.</span><span>get(crdName)
+</span><span>        </span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_ =&gt; true</span><span>)
+</span><span>        </span><span style="color:#81a1c1;">.</span><span>recoverWith { </span><span style="color:#81a1c1;">case _ =&gt;
+</span><span>          </span><span style="color:#81a1c1;">false.</span><span>pure[</span><span style="color:#8fbcbb;">F</span><span>]
+</span><span>        }
+</span><span>      </span><span style="color:#81a1c1;">_ &lt;-
+</span><span>        </span><span style="color:#81a1c1;">if </span><span>(!found &amp;&amp; attempts &gt; </span><span style="color:#b48ead;">0</span><span>)
+</span><span>          client</span><span style="color:#81a1c1;">.</span><span>customResourceDefinitions</span><span style="color:#81a1c1;">.</span><span>create(
+</span><span>            customDefinition
+</span><span>          ) *&gt; createCrdIfAbsent(ctx</span><span style="color:#eceff4;">,</span><span> customDefinition</span><span style="color:#eceff4;">,</span><span> attempts - </span><span style="color:#b48ead;">1</span><span>)
+</span><span>        </span><span style="color:#81a1c1;">else if </span><span>(!found)
+</span><span>          </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>raiseError(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">RuntimeException</span><span>(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>CRD &#39;$crdName&#39; not found</span><span style="color:#a3be8c;">&quot;</span><span>))
+</span><span>        </span><span style="color:#81a1c1;">else </span><span style="color:#8fbcbb;">Sync</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>unit
+</span><span>    } </span><span style="color:#81a1c1;">yield ()
+</span><span>  }
+</span></code></pre>
+<p>If operator failed to create a CRD, then it crashes the entire application, because it won't be able to open a watcher connection later for non-existing CRD.</p>
+<p>Finally, let's look what <code>reconcile</code> function is doing:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">reconcile</span><span>[</span><span style="color:#8fbcbb;">F</span><span>[</span><span style="color:#81a1c1;">_</span><span>]</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Async</span><span style="color:#eceff4;">, 
+</span><span>      </span><span style="color:#8fbcbb;">Resource</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#eceff4;">, 
+</span><span>      </span><span style="color:#8fbcbb;">Status</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Encoder</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Decoder</span><span>](
+</span><span>      ctx: </span><span style="color:#8fbcbb;">CrdContext</span><span style="color:#eceff4;">,
+</span><span>      every: </span><span style="color:#8fbcbb;">FiniteDuration </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">30</span><span style="color:#81a1c1;">.</span><span>seconds
+</span><span>  )(</span><span style="color:#81a1c1;">implicit
+</span><span>      client: </span><span style="color:#8fbcbb;">KubernetesClient</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#eceff4;">,
+</span><span>      controller: </span><span style="color:#8fbcbb;">Controller</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>]
+</span><span>  ): </span><span style="color:#8fbcbb;">Stream</span><span>[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Unit</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    </span><span style="color:#8fbcbb;">Stream
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>awakeEvery(every)
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>evalMap { </span><span style="color:#81a1c1;">_ =&gt;
+</span><span>        </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>debug(
+</span><span>          </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Reconciling events for ${implicitly[</span><span style="color:#8fbcbb;">ClassTag</span><span>[</span><span style="color:#8fbcbb;">Resource</span><span>]]</span><span style="color:#81a1c1;">.</span><span>runtimeClass</span><span style="color:#81a1c1;">.</span><span>getSimpleName}</span><span style="color:#a3be8c;">&quot;
+</span><span>        ) *&gt; client</span><span style="color:#81a1c1;">.</span><span>customResources[</span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](ctx)</span><span style="color:#81a1c1;">.</span><span>list()
+</span><span>      }
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>through(
+</span><span>        </span><span style="color:#81a1c1;">_.</span><span>evalMap { crList </span><span style="color:#81a1c1;">=&gt;
+</span><span>          </span><span style="color:#8fbcbb;">Logger</span><span>[</span><span style="color:#8fbcbb;">F</span><span>]</span><span style="color:#81a1c1;">.</span><span>debug(
+</span><span>            </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Got ${crList</span><span style="color:#81a1c1;">.</span><span>items</span><span style="color:#81a1c1;">.</span><span>length} custom resources</span><span style="color:#a3be8c;">&quot;
+</span><span>          ) *&gt; crList</span><span style="color:#81a1c1;">.</span><span>items
+</span><span>            </span><span style="color:#81a1c1;">.</span><span>map(cr </span><span style="color:#81a1c1;">=&gt;</span><span> controller</span><span style="color:#81a1c1;">.</span><span>reconcile(cr)</span><span style="color:#81a1c1;">.</span><span>map(addStatus(</span><span style="color:#81a1c1;">_</span><span style="color:#eceff4;">,</span><span> cr)))
+</span><span>            </span><span style="color:#81a1c1;">.</span><span>sequence
+</span><span>        }</span><span style="color:#81a1c1;">.</span><span>flatMap(</span><span style="color:#8fbcbb;">Stream</span><span style="color:#81a1c1;">.</span><span>emits)
+</span><span>      )
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>through(submitStatus[</span><span style="color:#8fbcbb;">F</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Resource</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Status</span><span>](ctx))
+</span></code></pre>
+<p>It calls every 30 seconds the API-Server to list all existing CR instances of a specific custom resource type. Then every instance in the list is checked
+whether its state is correctly handled according to business logic of the operator. 
+Main idea of reconciliation loop is to have a chance to recover from failures, which may occur in the main handler stream.</p>
+<h3 id="finish">Finish</h3>
+<p>At this point we have all pieces, which can be used to implement any operator. Just plug in your own controller's logic.
+In our case here, the main business logic is hidden in these classes:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val secrets = new </span><span style="color:#8fbcbb;">Secrets</span><span>(client</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span><span style="color:#81a1c1;">val kadmin = new </span><span style="color:#8fbcbb;">Kadmin</span><span>(client</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span><span style="color:#81a1c1;">val template = new </span><span style="color:#8fbcbb;">Template</span><span>(client</span><span style="color:#eceff4;">,</span><span> secrets</span><span style="color:#eceff4;">,</span><span> operatorCfg)
+</span></code></pre>
+<p>Full source of working operator can be found here: <a href="https://github.com/novakov-alexey/krb-operator2">https://github.com/novakov-alexey/krb-operator2</a></p>
+<h1 id="summary">Summary</h1>
+<p>We have created an operator skeleton in Scala using Kubernetes-Client, which can be used to build any other operator.
+Thanks to Cats-Effect and FS2 we can handle custom resource event stream easily composing functions. </p>
+<p>Kubernetes Operator is a dedicated application which automates deployment of complex stateful and stateless applications.
+Such application can be implemented in any language since API-Server is exposing custom resource via REST API using JSON payloads.
+There is no need to have special operator framework or library to enable developers to create new operators easily. Just have a show case app
+like we have developed and re-use its code to start another operator when needed. Basically, what is actually needed is a decent Kubernetes client
+library like the one we used and you are good to go.</p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Kubernetes Operator in Scala for Kerberos Keytab Management' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Kubernetes Operator in Scala for Kerberos Keytab Management" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Kubernetes Operator in Scala for Kerberos Keytab Management" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;k8s-operator&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-operator-pattern" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/k8s-operator/#operator-pattern">
+                Operator Pattern
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-use-case-kerberos-operator" class="toc is-size-7 " href="https://novakov-alexey.github.io/k8s-operator/#use-case-kerberos-operator">
+                Use Case: Kerberos Operator
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-implementation" class="toc is-size-7" href="https://novakov-alexey.github.io/k8s-operator/#implementation">
+                    Implementation
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/k8s-operator/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/k8s-operator/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'k8s-operator'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

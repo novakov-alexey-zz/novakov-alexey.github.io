@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Artificial Neural Network in Scala - part 2
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Artificial Neural Network in Scala - part 2
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-02-05'>February 05, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    20 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    3837 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/gradient-descent/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        gradient descent
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>In this article we are going to implement ANN from scratch in Scala. It is continuation of <a href="../ann-in-scala-1">the first article</a>, which describes 
+a theory of ANN.</p>
+<p>This implementation will consist of:</p>
+<span id="continue-reading"></span>
+<ol>
+<li>Mini-library for sub-set of Tensor calculus</li>
+<li>Mini-library for data preparation</li>
+<li>A DSL for Neural Network creation, including layers</li>
+<li>Pluggable weights optimizer</li>
+<li>Pluggable implementation of activation and loss functions</li>
+<li>Pluggable training metric calculation</li>
+</ol>
+<p>Everything will be implemented in pure Scala without using any third-party code. 
+By pluggable I mean extendable, i.e. a user can provide own implementation by implementing Scala trait.</p>
+<p>Neural network and data preprocessing APIs are inspired by <a href="https://keras.io/">Keras</a> and <a href="https://scikit-learn.org/stable/">scikit-learn</a> libraries.</p>
+<h1 id="tensor-library">Tensor Library</h1>
+<p>Before starting our journey into the world of linear algebra we need good support for Tensor calculus such as
+multiplication, addition, subtraction, transponding operations. Without these operations, we will clutter the
+main algorithm so that another person, who will be reading our code, may lost. It is very easy to be blown
+away by pile of code which is trying to mimic math. Scala is perfect language to implement math expression as
+it supports custom operands by using symbols as definitions (variables, methods, etc.), i.e. we can implement &quot;*&quot; or any other math operations as part of our custom type <code>Tensor</code>.</p>
+<p>Below we define <code>Tensor</code> trait for a generic type <code>T</code>. Later, we will set boundaries for T. It must have <code>given</code> 
+instances of ClassTag and Numeric types for array creation and general numerical computations.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">type A
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">data</span><span>: </span><span style="color:#8fbcbb;">A
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">length</span><span>: </span><span style="color:#81a1c1;">Int
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">sizes</span><span>: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#81a1c1;">Int</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">cols</span><span>: </span><span style="color:#81a1c1;">Int
+</span><span>  
+</span><span>extension [</span><span style="color:#8fbcbb;">T</span><span>: </span><span style="color:#8fbcbb;">ClassTag</span><span>: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>: </span><span style="color:#8fbcbb;">ClassTag</span><span>](t: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>])
+</span><span>    </span><span style="color:#616e88;">// dot product    
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">*</span><span>(that: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>mul(t</span><span style="color:#eceff4;">,</span><span> that)
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">map</span><span>(f: </span><span style="color:#8fbcbb;">T </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">U</span><span>): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">U</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>map[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>](t</span><span style="color:#eceff4;">,</span><span> f)
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">-</span><span>(that: </span><span style="color:#8fbcbb;">T</span><span>): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>subtract(t</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor0D</span><span>(that))
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">-</span><span>(that: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>subtract(t</span><span style="color:#eceff4;">,</span><span> that)
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">+</span><span>(that: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>plus(t</span><span style="color:#eceff4;">,</span><span> that)    
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">sum</span><span>: </span><span style="color:#8fbcbb;">T </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>sum(t)        
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">split</span><span>(fraction: </span><span style="color:#81a1c1;">Float</span><span>): (</span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">= 
+</span><span>        </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>split(fraction</span><span style="color:#eceff4;">,</span><span> t)
+</span><span>    </span><span style="color:#616e88;">// Hadamard product
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">multiply</span><span>(that: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>multiply(t</span><span style="color:#eceff4;">,</span><span> that)
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">batches</span><span>(
+</span><span>        batchSize: </span><span style="color:#81a1c1;">Int
+</span><span>    ): </span><span style="color:#8fbcbb;">Iterator</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Tensor</span><span style="color:#81a1c1;">.</span><span>batches(t</span><span style="color:#eceff4;">,</span><span> batchSize)    
+</span></code></pre>
+<p>In extension section we add lots of operations that our generic Tensor is going to support. Some of them are symbolic like
+<code>*</code> and <code>-</code>. Other operations are more traditional methods such as <code>map</code> or <code>sum</code>. 
+Note that <code>*</code> and <code>multiply</code> are two different operations. From math perspective, the first one is a <a href="https://en.wikipedia.org/wiki/Dot_product">dot product</a>
+another one is a <a href="https://en.wikipedia.org/wiki/Hadamard_product_(matrices)">Hadamard product</a>. Most of the time, we will use &quot;dot product&quot; operation, 
+however in one place Hadamard product is going to be used (back-propagation part).</p>
+<p>All extension methods are delegating the operations to plain Scala functions in the Tensor singleton object.</p>
+<p>Before checking some of the implementations for Tensor operations, let's look on 3 cases of Tensor itself.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Tensor0D</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](data: </span><span style="color:#8fbcbb;">T</span><span>) extends </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:  
+</span><span>  </span><span style="color:#81a1c1;">....
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Tensor1D</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](data: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) extends </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">....
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](data: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]) extends </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">....
+</span></code></pre>
+<p>From math perspective, first instance is a scalar number, second is a vector and third is a matrix. Of course, we could implement
+tensors in more generic way and invent some N-dimensional array that would support 3, 4 and any number of dimensions,
+but I think from our personal learning perspective, making more concrete hard-coded classes would be easier to understand the whole ANN 
+implementation.</p>
+<h2 id="matmul">Matmul</h2>
+<p>Let's look only at one important operation from Tensor API which is dot product.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">mul</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](a: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  (a</span><span style="color:#eceff4;">,</span><span> b) </span><span style="color:#81a1c1;">match
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Tensor0D</span><span>(data)</span><span style="color:#eceff4;">, </span><span>t) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      scalarMul(t</span><span style="color:#eceff4;">,</span><span> data)
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(t</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor0D</span><span>(data)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      scalarMul(t</span><span style="color:#eceff4;">,</span><span> data)
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Tensor1D</span><span>(data)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor2D</span><span>(data2)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#8fbcbb;">Tensor2D</span><span>(matMul(asColumn(data)</span><span style="color:#eceff4;">,</span><span> data2))
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Tensor2D</span><span>(data)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor1D</span><span>(data2)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#8fbcbb;">Tensor2D</span><span>(matMul(data</span><span style="color:#eceff4;">,</span><span> asColumn(data2)))
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Tensor1D</span><span>(data)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor1D</span><span>(data2)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#8fbcbb;">Tensor1D</span><span>(matMul(asColumn(data)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Array</span><span>(data2))</span><span style="color:#81a1c1;">.</span><span>head)
+</span><span>    </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Tensor2D</span><span>(data)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor2D</span><span>(data2)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#8fbcbb;">Tensor2D</span><span>(matMul(data</span><span style="color:#eceff4;">,</span><span> data2))
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">matMul</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](
+</span><span>      a: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>      b: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>  )(using n: </span><span style="color:#8fbcbb;">Numeric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">=
+</span><span>    assert(
+</span><span>      a</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>length </span><span style="color:#81a1c1;">==</span><span> b</span><span style="color:#81a1c1;">.</span><span>length</span><span style="color:#eceff4;">,
+</span><span>      </span><span style="color:#a3be8c;">&quot;The number of columns in the first matrix should be equal &quot;</span><span> + 
+</span><span>      </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>to the number of rows in the second, ${a</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>length} != ${b</span><span style="color:#81a1c1;">.</span><span>length}</span><span style="color:#a3be8c;">&quot;
+</span><span>    )
+</span><span>    </span><span style="color:#81a1c1;">val rows =</span><span> a</span><span style="color:#81a1c1;">.</span><span>length
+</span><span>    </span><span style="color:#81a1c1;">val cols =</span><span> colsCount(b)
+</span><span>    </span><span style="color:#81a1c1;">val res = </span><span style="color:#8fbcbb;">Array</span><span style="color:#81a1c1;">.</span><span>ofDim[</span><span style="color:#8fbcbb;">T</span><span>](rows</span><span style="color:#eceff4;">,</span><span> cols)
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">for</span><span> i &lt;- (</span><span style="color:#b48ead;">0</span><span> until rows)</span><span style="color:#81a1c1;">.</span><span>indices </span><span style="color:#81a1c1;">do
+</span><span>      </span><span style="color:#81a1c1;">for</span><span> j &lt;- (</span><span style="color:#b48ead;">0</span><span> until cols)</span><span style="color:#81a1c1;">.</span><span>indices </span><span style="color:#81a1c1;">do
+</span><span>        </span><span style="color:#81a1c1;">var </span><span>sum </span><span style="color:#81a1c1;">=</span><span> n</span><span style="color:#81a1c1;">.</span><span>zero
+</span><span>        </span><span style="color:#81a1c1;">for</span><span> k &lt;- b</span><span style="color:#81a1c1;">.</span><span>indices </span><span style="color:#81a1c1;">do
+</span><span>          sum </span><span style="color:#81a1c1;">=</span><span> sum + (a(i)(k) * b(k)(j))
+</span><span>        res(i)(j) </span><span style="color:#81a1c1;">=</span><span> sum
+</span><span>    res    
+</span></code></pre>
+<ol>
+<li>First we select specific type of multiplication based on the tensor dimension. </li>
+<li>If tensor is not scalar, then we try to use matrix multiplication. Here, if some of the operands is vector we make that vector as matrix
+with one column according to math convention. </li>
+<li>Later we check operands dimensions, as they must obey rules of
+matrix multiplication. If rules are not met we throw an error. No Scala <code>Either</code> type or other error modelling is used to not clutter the code. Our goal is to stay as close as possible to math and keep balance between using types and readability.</li>
+</ol>
+<p>See <a href="https://github.com/novakov-alexey/deep-learning-scala/blob/master/src/main/scala/ml/tensors/ops.scala">source code on GitHub</a> for full implementation of tensor library.</p>
+<h1 id="neural-network-dsl">Neural Network DSL</h1>
+<p>Let's define a trait for abstract model that can learn:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Model</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">train</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>y: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>epochs: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Model</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">predict</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">reset</span><span>(): </span><span style="color:#8fbcbb;">Model</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">currentWeights</span><span>: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">losses</span><span>: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span></code></pre>
+<p>The first two methods are the main ones. </p>
+<ol>
+<li>We can use <code>train</code> to provide input features as <code>x</code> and target values as <code>y</code>, specify
+number of training cycles as <code>epochs</code> to learn the right parameters for future predictions.</li>
+<li><code>predict</code> allows us to infer target value by giving only <code>x</code> data</li>
+<li><code>reset</code> cleans model weights, so that it initialises them again upon next training</li>
+<li><code>currentWeights</code> and <code>losses</code> are returning weights and losses of the last training cycle.</li>
+</ol>
+<p>Machine learning model is a stateful thing. It keeps list of parameters called weights and biases of type <code>List[Weight[T]]</code>.
+These parameters are the heart of the model. They are mutating on every training epoch and data batch.</p>
+<h2 id="model-initialisation">Model initialisation</h2>
+<p>Before designing neural network training API, let's look at entities we need:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">trait</span><span style="color:#8fbcbb;"> ActivationFunc</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">apply</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">derivative</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">trait</span><span style="color:#8fbcbb;"> Loss</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">apply</span><span>(actual: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>predicted: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">T
+</span><span>
+</span><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">units</span><span>: </span><span style="color:#81a1c1;">Int
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">f</span><span>: </span><span style="color:#8fbcbb;">ActivationFunc</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Dense</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](f: </span><span style="color:#8fbcbb;">ActivationFunc</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>units: </span><span style="color:#81a1c1;">Int = </span><span style="color:#b48ead;">1</span><span>) extends </span><span style="color:#8fbcbb;">Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](
+</span><span>  w: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>  f: </span><span style="color:#8fbcbb;">ActivationFunc</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>units: </span><span style="color:#81a1c1;">Int
+</span><span>)
+</span><span>
+</span><span style="color:#616e88;">/*
+</span><span style="color:#616e88;"> * z - before activation = w * x
+</span><span style="color:#616e88;"> * a - activation value
+</span><span style="color:#616e88;"> */
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>z: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>a: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>])
+</span></code></pre>
+<p>We have modelled network parameters as traits with implementations as case classes. Later we use 
+them to create an instance of the model.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">trait</span><span style="color:#8fbcbb;"> RandomGen</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">gen</span><span>: </span><span style="color:#8fbcbb;">T
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Sequential</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">RandomGen</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Optimizer</span><span>](
+</span><span>    lossFunc: </span><span style="color:#8fbcbb;">Loss</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    learningRate: </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,
+</span><span>    metric: </span><span style="color:#8fbcbb;">Metric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    batchSize: </span><span style="color:#81a1c1;">Int = </span><span style="color:#b48ead;">16</span><span style="color:#eceff4;">,
+</span><span>    weightStack: </span><span style="color:#81a1c1;">Int =&gt; </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#81a1c1;">_</span><span>: </span><span style="color:#81a1c1;">Int</span><span>) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">List</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,    
+</span><span>    weights: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Nil</span><span style="color:#eceff4;">,
+</span><span>    losses: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Nil
+</span><span>) extends </span><span style="color:#8fbcbb;">Model</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">add</span><span>(layer: </span><span style="color:#8fbcbb;">Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    copy(weightStack </span><span style="color:#81a1c1;">= </span><span>(inputs) </span><span style="color:#81a1c1;">=&gt; </span><span>{
+</span><span>      </span><span style="color:#81a1c1;">val currentWeights =</span><span> weightStack(inputs)
+</span><span>      </span><span style="color:#81a1c1;">val prevInput =
+</span><span>        currentWeights</span><span style="color:#81a1c1;">.</span><span>reverse</span><span style="color:#81a1c1;">.</span><span>headOption</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>units)</span><span style="color:#81a1c1;">.</span><span>getOrElse(inputs)
+</span><span>      </span><span style="color:#81a1c1;">val w =</span><span> random2D(prevInput</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>units)
+</span><span>      </span><span style="color:#81a1c1;">val b =</span><span> zeros(layer</span><span style="color:#81a1c1;">.</span><span>units)
+</span><span>      (currentWeights :+ </span><span style="color:#8fbcbb;">Weight</span><span>(w</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>f</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>units))
+</span><span>    })
+</span></code></pre>
+<p>There are bunch of parameters that we need in simple sequential model with fully connected layers:</p>
+<ol>
+<li>Generic type <code>T</code> is numeric type of the data which can be <code>Float</code>, <code>Double</code>, <code>Int</code>, etc. Most of the time you want numbers with floating point in machine learning.</li>
+<li>Random generator can be provided as contextual abstraction (given instance). It is used to initialise
+weights and biases for every layer.</li>
+<li>Generic <code>U</code> is a type of optimisation algorithm that we use in back-propagation part of the training cycle. Also given as type class instance.</li>
+<li><code>learningRate</code> and <code>batchSize</code> are hyper-parameters to be tuned externally.</li>
+<li><code>weightStack</code> is a function that construct list of initial layers based on the provided earlier Layer configuration via
+method <code>add</code>.  It is not supposed to be called manually. The <code>weightStack</code> function is called by <code>train</code> 
+method internally to create initial list of weights, if weights are empty. If they 
+are not empty, they are reused.</li>
+</ol>
+<p>This is how a user is supposed to use such API:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val accuracy =</span><span> accuracyMetric[</span><span style="color:#81a1c1;">Float</span><span>]
+</span><span>  
+</span><span style="color:#81a1c1;">val ann = </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">SimpleGD</span><span>](
+</span><span>  binaryCrossEntropy</span><span style="color:#eceff4;">,
+</span><span>  learningRate </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">05</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">,
+</span><span>  metric </span><span style="color:#81a1c1;">=</span><span> accuracy</span><span style="color:#eceff4;">,
+</span><span>  batchSize </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">32
+</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(relu</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">6</span><span>))
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(relu</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">6</span><span>))    
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(sigmoid))
+</span></code></pre>
+<p>There is a type <code>SimpleGD</code> that picks up a required instance of <code>Optimizer</code> implementation. See details below.</p>
+<h2 id="training-loop">Training loop</h2>
+<p><code>train</code> method runs <code>trainEpoch</code> multiple times, which is equal to <code>epochs</code> parameter. 
+Every training epoch returns new weights list, which is used again for the next epoch. This loop may run, for example, 100 times.
+Also, we collect a list of average loss values and print a user metric value. We have set <code>accuracy</code> metric as per code earlier.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">train</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>y: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>epochs: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Model</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">lazy val inputs =</span><span> x</span><span style="color:#81a1c1;">.</span><span>cols
+</span><span>  </span><span style="color:#81a1c1;">lazy val actualBatches =</span><span> y</span><span style="color:#81a1c1;">.</span><span>batches(batchSize)</span><span style="color:#81a1c1;">.</span><span>toArray
+</span><span>  </span><span style="color:#81a1c1;">lazy val xBatches =</span><span> x</span><span style="color:#81a1c1;">.</span><span>batches(batchSize)</span><span style="color:#81a1c1;">.</span><span>zip(actualBatches)</span><span style="color:#81a1c1;">.</span><span>toArray
+</span><span>  </span><span style="color:#81a1c1;">lazy val w =</span><span> getWeights(inputs)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">updatedWeights</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">epochLosses</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>    (</span><span style="color:#b48ead;">1</span><span> to epochs)</span><span style="color:#81a1c1;">.</span><span>foldLeft((w</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">List</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">T</span><span>])) {
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>((weights</span><span style="color:#eceff4;">, </span><span>losses)</span><span style="color:#eceff4;">, </span><span>epoch) </span><span style="color:#81a1c1;">=&gt;
+</span><span>        </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">w</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">avgLoss</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">metricValue</span><span>) </span><span style="color:#81a1c1;">=</span><span> trainEpoch(xBatches</span><span style="color:#eceff4;">,</span><span> weights)
+</span><span>        </span><span style="color:#81a1c1;">val metricAvg =</span><span> metric</span><span style="color:#81a1c1;">.</span><span>average(x</span><span style="color:#81a1c1;">.</span><span>length</span><span style="color:#eceff4;">,</span><span> metricValue)
+</span><span>        println(
+</span><span>          </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>epoch: $epoch/$epochs, avg. loss: $avgLoss, 
+</span><span>          ${metric</span><span style="color:#81a1c1;">.</span><span>name}: $metricAvg</span><span style="color:#a3be8c;">&quot;
+</span><span>        )
+</span><span>        (w</span><span style="color:#eceff4;">,</span><span> losses :+ avgLoss)
+</span><span>    }
+</span><span>  copy(weights </span><span style="color:#81a1c1;">=</span><span> updatedWeights</span><span style="color:#eceff4;">,</span><span> losses </span><span style="color:#81a1c1;">=</span><span> epochLosses)
+</span></code></pre>
+<p><code>trainEpoch</code> is implementing forward- and back-propagation for every data sample batch:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">trainEpoch</span><span>(
+</span><span>    batches: </span><span style="color:#8fbcbb;">Array</span><span>[(</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]])]</span><span style="color:#eceff4;">,
+</span><span>    weights: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">w</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">l</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">metricValue</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>    batches</span><span style="color:#81a1c1;">.</span><span>foldLeft(weights</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">List</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>) {
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>((weights</span><span style="color:#eceff4;">, </span><span>batchLoss</span><span style="color:#eceff4;">, </span><span>metricAcc)</span><span style="color:#eceff4;">, </span><span>(xBatch</span><span style="color:#eceff4;">, </span><span>yBatch)) </span><span style="color:#81a1c1;">=&gt;
+</span><span>        </span><span style="color:#616e88;">// forward
+</span><span>        </span><span style="color:#81a1c1;">val activations =</span><span> activate(xBatch</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> weights)
+</span><span>        </span><span style="color:#81a1c1;">val actual =</span><span> yBatch</span><span style="color:#81a1c1;">.</span><span>as2D          
+</span><span>        </span><span style="color:#81a1c1;">val predicted =</span><span> activations</span><span style="color:#81a1c1;">.</span><span>last</span><span style="color:#81a1c1;">.</span><span>a          
+</span><span>        </span><span style="color:#81a1c1;">val error =</span><span> predicted - actual          
+</span><span>        </span><span style="color:#81a1c1;">val loss =</span><span> lossFunc(actual</span><span style="color:#eceff4;">,</span><span> predicted)
+</span><span>
+</span><span>        </span><span style="color:#616e88;">// backward
+</span><span>        </span><span style="color:#81a1c1;">val updated =</span><span> summon[</span><span style="color:#8fbcbb;">Optimizer</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]]</span><span style="color:#81a1c1;">.</span><span>updateWeights(
+</span><span>          weights</span><span style="color:#eceff4;">,
+</span><span>          activations</span><span style="color:#eceff4;">,
+</span><span>          error</span><span style="color:#eceff4;">,
+</span><span>          learningRate
+</span><span>        )
+</span><span>        </span><span style="color:#81a1c1;">val metricValue =</span><span> metric</span><span style="color:#81a1c1;">.</span><span>calculate(actual</span><span style="color:#eceff4;">,</span><span> predicted)
+</span><span>        (updated</span><span style="color:#eceff4;">,</span><span> batchLoss :+ loss</span><span style="color:#eceff4;">,</span><span> metricAcc + metricValue)
+</span><span>    }    
+</span><span>  (w</span><span style="color:#eceff4;">,</span><span> getAvgLoss(l)</span><span style="color:#eceff4;">,</span><span> metricValue)
+</span></code></pre>
+<h3 id="gradient-descent-optimizer">Gradient Descent Optimizer</h3>
+<p>Now let's look at optimizer code. It implements standard gradient descent algorithm:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> Optimizer</span><span>[</span><span style="color:#8fbcbb;">U</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">updateWeights</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](
+</span><span>    weights: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>    activations: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>    error: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    learningRate: </span><span style="color:#8fbcbb;">T
+</span><span>  ): </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>
+</span><span style="color:#81a1c1;">type SimpleGD
+</span></code></pre>
+<p>In order to update weights an optimizer needs:</p>
+<ol>
+<li>the list of weights to update</li>
+<li>current activations for all layers</li>
+<li>calculated error: yHat vs. y</li>
+<li>learningRate parameter, which is static for the entire training cycle</li>
+</ol>
+<p><code>SimpleGD</code> type is a token to summon an optimizer instance. In future, we can extend optimizers with other algorithms.</p>
+<p>Data batching is happening outside of the optimizer, in the <code>train</code> method.
+We can select either full batch or mini-batch training by specifying a number of records in the batch. 
+So that is why this optimizer is not specific type of gradient descent (stochastic, mini-batch, batch), but just works with 
+whatever weights are given for updates.</p>
+<p>Actual implementation of the gradient descent optimization:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>given </span><span style="color:#8fbcbb;">Optimizer</span><span>[</span><span style="color:#8fbcbb;">SimpleGD</span><span>] with
+</span><span>  </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">updateWeights</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](
+</span><span>      weights: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>      activations: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>      error: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>      learningRate: </span><span style="color:#8fbcbb;">T
+</span><span>  ): </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">=      
+</span><span>    weights
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>zip(activations)
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>foldRight(
+</span><span>        </span><span style="color:#8fbcbb;">List</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">Weight</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>        error</span><span style="color:#eceff4;">,
+</span><span>        </span><span style="color:#8fbcbb;">None</span><span>: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>      ) {
+</span><span>        </span><span style="color:#81a1c1;">case </span><span>(
+</span><span>              (</span><span style="color:#8fbcbb;">Weight</span><span>(w</span><span style="color:#eceff4;">, </span><span>b</span><span style="color:#eceff4;">, </span><span>f</span><span style="color:#eceff4;">, </span><span>u)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Activation</span><span>(x</span><span style="color:#eceff4;">, </span><span>z</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">_</span><span>))</span><span style="color:#eceff4;">,
+</span><span>              (ws</span><span style="color:#eceff4;">, </span><span>prevDelta</span><span style="color:#eceff4;">, </span><span>prevWeight)
+</span><span>            ) </span><span style="color:#81a1c1;">=&gt;            
+</span><span>          </span><span style="color:#81a1c1;">val delta = </span><span>(prevWeight </span><span style="color:#81a1c1;">match </span><span>{
+</span><span>            </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Some</span><span>(pw) </span><span style="color:#81a1c1;">=&gt;</span><span> prevDelta * pw</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T
+</span><span>            </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">None     </span><span style="color:#81a1c1;">=&gt;</span><span> prevDelta
+</span><span>          }) multiply f</span><span style="color:#81a1c1;">.</span><span>derivative(z)
+</span><span>
+</span><span>          </span><span style="color:#81a1c1;">val partialDerivative =</span><span> x</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span> * delta
+</span><span>          </span><span style="color:#81a1c1;">val newWeight =</span><span> w - (learningRate * partialDerivative)
+</span><span>          </span><span style="color:#81a1c1;">val newBias =</span><span> b - (learningRate * delta</span><span style="color:#81a1c1;">.</span><span>sum)
+</span><span>          </span><span style="color:#81a1c1;">val updated = </span><span style="color:#8fbcbb;">Weight</span><span>(newWeight</span><span style="color:#eceff4;">,</span><span> newBias</span><span style="color:#eceff4;">,</span><span> f</span><span style="color:#eceff4;">,</span><span> u) +: ws
+</span><span>          (updated</span><span style="color:#eceff4;">,</span><span> delta</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Some</span><span>(w))
+</span><span>      }
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>_1
+</span></code></pre>
+<p>The weights update starts from tail and moves to the head of the list, i.e. from the last layer to the first hidden layer.
+<code>weights</code> and <code>activations</code> are equal in length, since the last one is produced via the weight list during the forward-propagation. </p>
+<p>The complex part is calculating the <code>delta</code> that we use for partial derivative. </p>
+<ol>
+<li>Initial <code>delta</code> is equal to <code>error</code>. Next layer is calculating <code>delta</code> on its own, which is a dot product of previous layer <code>delta</code> and <code>weights</code>.</li>
+<li>Last layer does not have previous weights.</li>
+<li>Every <code>delta</code> is then multiplied by activation function derivative: <code>f.derivative(z)</code>.</li>
+<li>The rest part is simpler and more or less linear. We calculate <code>partialDerivative</code> and update layer weights and biases.</li>
+<li>We pass current layer weight and delta to the next layer. Usage of <code>foldRight</code> helps us easily to pass these parameters to the next layer.</li>
+</ol>
+<p>This folding loop returns updated list of weights, which is, of course, has equal length comapre to the original list.</p>
+<h1 id="data-preparation">Data Preparation</h1>
+<p>Before we start learning, we need to prepare initial data for the training. 
+Unfortunately, data preparation requires us quite a lot of code to write. </p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createEncoders</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](
+</span><span>    data: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]
+</span><span>  ): </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">String</span><span>] </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val encoder = </span><span style="color:#8fbcbb;">LabelEncoder</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]()</span><span style="color:#81a1c1;">.</span><span>fit(data</span><span style="color:#81a1c1;">.</span><span>col(</span><span style="color:#b48ead;">2</span><span>))
+</span><span>  </span><span style="color:#81a1c1;">val hotEncoder = </span><span style="color:#8fbcbb;">OneHotEncoder</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">T</span><span>]()</span><span style="color:#81a1c1;">.</span><span>fit(data</span><span style="color:#81a1c1;">.</span><span>col(</span><span style="color:#b48ead;">1</span><span>))
+</span><span>  
+</span><span>  </span><span style="color:#81a1c1;">val label = </span><span>x </span><span style="color:#81a1c1;">=&gt;</span><span> encoder</span><span style="color:#81a1c1;">.</span><span>transform(x</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val hot = </span><span>x </span><span style="color:#81a1c1;">=&gt;</span><span> hotEncoder</span><span style="color:#81a1c1;">.</span><span>transform(x</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val typeTransform = </span><span>(x: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]) </span><span style="color:#81a1c1;">=&gt;</span><span> transform[</span><span style="color:#8fbcbb;">T</span><span>](x</span><span style="color:#81a1c1;">.</span><span>data)
+</span><span>  
+</span><span>  label andThen hot andThen typeTransform
+</span><span style="color:#616e88;">///////////////////////////////////////////////////////
+</span><span>
+</span><span style="color:#81a1c1;">val dataLoader = </span><span style="color:#8fbcbb;">TextLoader</span><span>(</span><span style="color:#8fbcbb;">Path</span><span style="color:#81a1c1;">.</span><span>of(</span><span style="color:#a3be8c;">&quot;data&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;Churn_Modelling.csv&quot;</span><span>))</span><span style="color:#81a1c1;">.</span><span>load()
+</span><span style="color:#81a1c1;">val data =</span><span> dataLoader</span><span style="color:#81a1c1;">.</span><span>cols[</span><span style="color:#8fbcbb;">String</span><span>](</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">val encoders =</span><span> createEncoders[</span><span style="color:#81a1c1;">Float</span><span>](data)
+</span><span style="color:#81a1c1;">val numericData =</span><span> encoders(data)
+</span><span style="color:#81a1c1;">val scaler = </span><span style="color:#8fbcbb;">StandardScaler</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]()</span><span style="color:#81a1c1;">.</span><span>fit(numericData)
+</span><span>
+</span><span style="color:#81a1c1;">val prepareData = </span><span>(d: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]) </span><span style="color:#81a1c1;">=&gt; </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">val numericData =</span><span> encoders(d)
+</span><span>  scaler</span><span style="color:#81a1c1;">.</span><span>transform(numericData)
+</span><span>}
+</span><span>
+</span><span style="color:#81a1c1;">val x =</span><span> prepareData(data)
+</span><span style="color:#81a1c1;">val y =</span><span> dataLoader</span><span style="color:#81a1c1;">.</span><span>cols[</span><span style="color:#81a1c1;">Float</span><span>](-</span><span style="color:#b48ead;">1</span><span>)
+</span></code></pre>
+<ol>
+<li>First, we load raw data from a CSV file, then we select all columns between 3-rd and last one (-1 means: length - 1).</li>
+<li>Initial data is of <code>String</code> type, later we choose numerical data type such as <code>Float</code>.</li>
+<li>We compose label, one-hot encoders and data type transformer into a function inside the <code>createEncoders</code> function. That allows us to use <code>prepareData</code> function later for validation dataset.</li>
+<li><code>y</code> data we take from the last column of the dataset.</li>
+</ol>
+<p>I am not going to describe the entire code of data preparation classes. The goal of encoders is to 
+prepare data for deep neural network training and inference. We normalise all columns as per their individual means and 
+standard deviations. Also, we encode categorical columns using <code>0</code> and <code>1</code> using <a href="https://en.wikipedia.org/wiki/One-hot">one-hot encoding</a> approach.</p>
+<h1 id="training-run">Training Run</h1>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val </span><span>((</span><span style="color:#81a1c1;">xTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">xTest</span><span>)</span><span style="color:#eceff4;">, </span><span>(</span><span style="color:#81a1c1;">yTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTest</span><span>)) </span><span style="color:#81a1c1;">= </span><span>(x</span><span style="color:#eceff4;">,</span><span> y)</span><span style="color:#81a1c1;">.</span><span>split(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">2</span><span style="color:#81a1c1;">f</span><span>)
+</span><span style="color:#81a1c1;">val model =</span><span> ann</span><span style="color:#81a1c1;">.</span><span>train(xTrain</span><span style="color:#eceff4;">,</span><span> yTrain</span><span style="color:#eceff4;">,</span><span> epochs </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">100</span><span>)
+</span></code></pre>
+<p>We split <code>x</code> and <code>y</code> data into 80% and 20% parts for training and testing accordingly.
+Finally, we execute the training for 100 <code>epochs</code>.</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">sbt:ann</span><span style="color:#81a1c1;">&gt;</span><span> run
+</span><span style="color:#88c0d0;">[info]</span><span> running starter
+</span><span style="color:#88c0d0;">epoch:</span><span> 1/100, avg. loss: 0.30220446, accuracy: 0.782
+</span><span style="color:#88c0d0;">epoch:</span><span> 2/100, avg. loss: 0.30736533, accuracy: 0.811375
+</span><span style="color:#88c0d0;">epoch:</span><span> 3/100, avg. loss: 0.30326372, accuracy: 0.818125
+</span><span style="color:#88c0d0;">epoch:</span><span> 4/100, avg. loss: 0.30306807, accuracy: 0.818875
+</span><span style="color:#88c0d0;">epoch:</span><span> 5/100, avg. loss: 0.3028989, accuracy: 0.820125
+</span><span style="color:#88c0d0;">epoch:</span><span> 6/100, avg. loss: 0.30242646, accuracy: 0.82025
+</span><span style="color:#88c0d0;">epoch:</span><span> 7/100, avg. loss: 0.3018655, accuracy: 0.8195
+</span><span style="color:#88c0d0;">epoch:</span><span> 8/100, avg. loss: 0.30157945, accuracy: 0.81975
+</span><span style="color:#88c0d0;">epoch:</span><span> 9/100, avg. loss: 0.3014126, accuracy: 0.819875
+</span><span style="color:#88c0d0;">epoch:</span><span> 10/100, avg. loss: 0.30122074, accuracy: 0.819625
+</span><span style="color:#88c0d0;">epoch:</span><span> 11/100, avg. loss: 0.3009277, accuracy: 0.81975
+</span><span style="color:#88c0d0;">epoch:</span><span> 12/100, avg. loss: 0.30088165, accuracy: 0.82
+</span><span style="color:#88c0d0;">epoch:</span><span> 13/100, avg. loss: 0.30078012, accuracy: 0.8205
+</span><span style="color:#88c0d0;">epoch:</span><span> 14/100, avg. loss: 0.30074772, accuracy: 0.8205
+</span><span style="color:#88c0d0;">epoch:</span><span> 15/100, avg. loss: 0.30070674, accuracy: 0.8205
+</span><span style="color:#88c0d0;">epoch:</span><span> 16/100, avg. loss: 0.30053124, accuracy: 0.82025
+</span><span style="color:#88c0d0;">epoch:</span><span> 17/100, avg. loss: 0.2976923, accuracy: 0.81975
+</span><span style="color:#88c0d0;">epoch:</span><span> 18/100, avg. loss: 0.2536276, accuracy: 0.84275
+</span><span style="color:#88c0d0;">epoch:</span><span> 19/100, avg. loss: 0.24473017, accuracy: 0.85675
+</span><span style="color:#88c0d0;">epoch:</span><span> 20/100, avg. loss: 0.24557488, accuracy: 0.857125
+</span><span style="color:#88c0d0;">epoch:</span><span> 21/100, avg. loss: 0.24528943, accuracy: 0.857875
+</span><span style="color:#88c0d0;">epoch:</span><span> 22/100, avg. loss: 0.2451054, accuracy: 0.857125
+</span><span style="color:#88c0d0;">epoch:</span><span> 23/100, avg. loss: 0.24494325, accuracy: 0.857375
+</span><span style="color:#88c0d0;">epoch:</span><span> 24/100, avg. loss: 0.24466132, accuracy: 0.857
+</span><span style="color:#88c0d0;">epoch:</span><span> 25/100, avg. loss: 0.24451153, accuracy: 0.857625
+</span><span style="color:#88c0d0;">epoch:</span><span> 26/100, avg. loss: 0.24442412, accuracy: 0.857375
+</span><span style="color:#88c0d0;">epoch:</span><span> 27/100, avg. loss: 0.24431105, accuracy: 0.857625
+</span><span style="color:#88c0d0;">epoch:</span><span> 28/100, avg. loss: 0.24418788, accuracy: 0.857375
+</span><span style="color:#88c0d0;">epoch:</span><span> 29/100, avg. loss: 0.2440211, accuracy: 0.85775
+</span><span style="color:#88c0d0;">epoch:</span><span> 30/100, avg. loss: 0.24400905, accuracy: 0.85725
+</span><span style="color:#88c0d0;">epoch:</span><span> 31/100, avg. loss: 0.24397133, accuracy: 0.85725
+</span><span style="color:#88c0d0;">epoch:</span><span> 32/100, avg. loss: 0.24386458, accuracy: 0.857375
+</span><span style="color:#88c0d0;">epoch:</span><span> 33/100, avg. loss: 0.24389265, accuracy: 0.8575
+</span><span style="color:#88c0d0;">epoch:</span><span> 34/100, avg. loss: 0.24378827, accuracy: 0.857375
+</span><span style="color:#88c0d0;">epoch:</span><span> 35/100, avg. loss: 0.24381112, accuracy: 0.857875
+</span><span style="color:#88c0d0;">epoch:</span><span> 36/100, avg. loss: 0.2437651, accuracy: 0.857875
+</span><span style="color:#88c0d0;">epoch:</span><span> 37/100, avg. loss: 0.24369456, accuracy: 0.85775
+</span><span style="color:#88c0d0;">epoch:</span><span> 38/100, avg. loss: 0.24377964, accuracy: 0.857625
+</span><span style="color:#88c0d0;">epoch:</span><span> 39/100, avg. loss: 0.2435442, accuracy: 0.85775
+</span><span style="color:#88c0d0;">epoch:</span><span> 40/100, avg. loss: 0.24363366, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 41/100, avg. loss: 0.24358764, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 42/100, avg. loss: 0.24355079, accuracy: 0.858375
+</span><span style="color:#88c0d0;">epoch:</span><span> 43/100, avg. loss: 0.24369176, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 44/100, avg. loss: 0.24361038, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 45/100, avg. loss: 0.24359651, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 46/100, avg. loss: 0.24361634, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 47/100, avg. loss: 0.24357627, accuracy: 0.858
+</span><span style="color:#88c0d0;">epoch:</span><span> 48/100, avg. loss: 0.24334462, accuracy: 0.85825
+</span><span style="color:#88c0d0;">epoch:</span><span> 49/100, avg. loss: 0.24335352, accuracy: 0.858
+</span><span style="color:#88c0d0;">epoch:</span><span> 50/100, avg. loss: 0.24341401, accuracy: 0.858375
+</span><span style="color:#88c0d0;">epoch:</span><span> 51/100, avg. loss: 0.24324806, accuracy: 0.8585
+</span><span style="color:#88c0d0;">epoch:</span><span> 52/100, avg. loss: 0.24296027, accuracy: 0.858
+</span><span style="color:#88c0d0;">epoch:</span><span> 53/100, avg. loss: 0.24271448, accuracy: 0.85775
+</span><span style="color:#88c0d0;">epoch:</span><span> 54/100, avg. loss: 0.24256946, accuracy: 0.85825
+</span><span style="color:#88c0d0;">epoch:</span><span> 55/100, avg. loss: 0.24257207, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 56/100, avg. loss: 0.24284393, accuracy: 0.8585
+</span><span style="color:#88c0d0;">epoch:</span><span> 57/100, avg. loss: 0.2430726, accuracy: 0.85825
+</span><span style="color:#88c0d0;">epoch:</span><span> 58/100, avg. loss: 0.2431463, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 59/100, avg. loss: 0.24277006, accuracy: 0.857625
+</span><span style="color:#88c0d0;">epoch:</span><span> 60/100, avg. loss: 0.2423336, accuracy: 0.8585
+</span><span style="color:#88c0d0;">epoch:</span><span> 61/100, avg. loss: 0.24251764, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 62/100, avg. loss: 0.24255769, accuracy: 0.858625
+</span><span style="color:#88c0d0;">epoch:</span><span> 63/100, avg. loss: 0.2427412, accuracy: 0.85825
+</span><span style="color:#88c0d0;">epoch:</span><span> 64/100, avg. loss: 0.2428449, accuracy: 0.85825
+</span><span style="color:#88c0d0;">epoch:</span><span> 65/100, avg. loss: 0.24228723, accuracy: 0.858625
+</span><span style="color:#88c0d0;">epoch:</span><span> 66/100, avg. loss: 0.24231568, accuracy: 0.85875
+</span><span style="color:#88c0d0;">epoch:</span><span> 67/100, avg. loss: 0.24237442, accuracy: 0.858125
+</span><span style="color:#88c0d0;">epoch:</span><span> 68/100, avg. loss: 0.24238351, accuracy: 0.8585
+</span><span style="color:#88c0d0;">epoch:</span><span> 69/100, avg. loss: 0.24219948, accuracy: 0.859125
+</span><span style="color:#88c0d0;">epoch:</span><span> 70/100, avg. loss: 0.24231845, accuracy: 0.858875
+</span><span style="color:#88c0d0;">epoch:</span><span> 71/100, avg. loss: 0.24243066, accuracy: 0.85875
+</span><span style="color:#88c0d0;">epoch:</span><span> 72/100, avg. loss: 0.2423754, accuracy: 0.859
+</span><span style="color:#88c0d0;">epoch:</span><span> 73/100, avg. loss: 0.24225388, accuracy: 0.8585
+</span><span style="color:#88c0d0;">epoch:</span><span> 74/100, avg. loss: 0.2420498, accuracy: 0.858875
+</span><span style="color:#88c0d0;">epoch:</span><span> 75/100, avg. loss: 0.24199313, accuracy: 0.858625
+</span><span style="color:#88c0d0;">epoch:</span><span> 76/100, avg. loss: 0.2420193, accuracy: 0.858875
+</span><span style="color:#88c0d0;">epoch:</span><span> 77/100, avg. loss: 0.24175513, accuracy: 0.85875
+</span><span style="color:#88c0d0;">epoch:</span><span> 78/100, avg. loss: 0.24191435, accuracy: 0.859625
+</span><span style="color:#88c0d0;">epoch:</span><span> 79/100, avg. loss: 0.2418117, accuracy: 0.85925
+</span><span style="color:#88c0d0;">epoch:</span><span> 80/100, avg. loss: 0.24193105, accuracy: 0.859125
+</span><span style="color:#88c0d0;">epoch:</span><span> 81/100, avg. loss: 0.24175763, accuracy: 0.859375
+</span><span style="color:#88c0d0;">epoch:</span><span> 82/100, avg. loss: 0.24183328, accuracy: 0.859375
+</span><span style="color:#88c0d0;">epoch:</span><span> 83/100, avg. loss: 0.24171984, accuracy: 0.85975
+</span><span style="color:#88c0d0;">epoch:</span><span> 84/100, avg. loss: 0.2419013, accuracy: 0.859125
+</span><span style="color:#88c0d0;">epoch:</span><span> 85/100, avg. loss: 0.24182202, accuracy: 0.859625
+</span><span style="color:#88c0d0;">epoch:</span><span> 86/100, avg. loss: 0.24179217, accuracy: 0.859875
+</span><span style="color:#88c0d0;">epoch:</span><span> 87/100, avg. loss: 0.2416485, accuracy: 0.859875
+</span><span style="color:#88c0d0;">epoch:</span><span> 88/100, avg. loss: 0.24175707, accuracy: 0.86
+</span><span style="color:#88c0d0;">epoch:</span><span> 89/100, avg. loss: 0.24161652, accuracy: 0.85975
+</span><span style="color:#88c0d0;">epoch:</span><span> 90/100, avg. loss: 0.24164297, accuracy: 0.8595
+</span><span style="color:#88c0d0;">epoch:</span><span> 91/100, avg. loss: 0.24179684, accuracy: 0.859625
+</span><span style="color:#88c0d0;">epoch:</span><span> 92/100, avg. loss: 0.2417788, accuracy: 0.859875
+</span><span style="color:#88c0d0;">epoch:</span><span> 93/100, avg. loss: 0.24164356, accuracy: 0.859875
+</span><span style="color:#88c0d0;">epoch:</span><span> 94/100, avg. loss: 0.24161309, accuracy: 0.8595
+</span><span style="color:#88c0d0;">epoch:</span><span> 95/100, avg. loss: 0.24144296, accuracy: 0.85975
+</span><span style="color:#88c0d0;">epoch:</span><span> 96/100, avg. loss: 0.24163213, accuracy: 0.85975
+</span><span style="color:#88c0d0;">epoch:</span><span> 97/100, avg. loss: 0.24149604, accuracy: 0.86
+</span><span style="color:#88c0d0;">epoch:</span><span> 98/100, avg. loss: 0.24137497, accuracy: 0.85925
+</span><span style="color:#88c0d0;">epoch:</span><span> 99/100, avg. loss: 0.24164252, accuracy: 0.859625
+</span><span style="color:#88c0d0;">epoch:</span><span> 100/100, avg. loss: 0.24153009, accuracy: 0.85975
+</span><span style="color:#88c0d0;">training</span><span> time: 5.654 in sec
+</span></code></pre>
+<p>We can see that <code>accuracy</code> is increasing quite quick. Also, loss value is becoming stable already after 20 epochs.</p>
+<p>Entire training for 8000 data samples takes less than 6 seconds.</p>
+<h1 id="testing">Testing</h1>
+<h2 id="single-test">Single Test</h2>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// Single test
+</span><span style="color:#81a1c1;">val example = </span><span style="color:#8fbcbb;">TextLoader</span><span>(
+</span><span>  </span><span style="color:#a3be8c;">&quot;n/a,n/a,n/a,600,France,Male,40,3,60000,2,1,1,50000,n/a&quot;
+</span><span>)</span><span style="color:#81a1c1;">.</span><span>cols[</span><span style="color:#8fbcbb;">String</span><span>](</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">val testExample =</span><span> prepareData(example)
+</span><span style="color:#81a1c1;">val exited = 
+</span><span>  predictedToBinary(model</span><span style="color:#81a1c1;">.</span><span>predict(testExample)</span><span style="color:#81a1c1;">.</span><span>as1D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>head) </span><span style="color:#81a1c1;">== </span><span style="color:#b48ead;">1
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Exited customer? $exited</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>We use <code>predict</code> method on the model to test prediction on the single data sample:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">Exited</span><span> customer</span><span style="color:#81a1c1;">?</span><span> false
+</span></code></pre>
+<h2 id="dataset-test">Dataset Test</h2>
+<p>We have left 20% of the initial data for testing purposes. So now we can check trained model accuracy on new data 
+that model had never seen before:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val testPredicted =</span><span> model</span><span style="color:#81a1c1;">.</span><span>predict(xTest)
+</span><span style="color:#81a1c1;">val value =</span><span> accuracy(yTest</span><span style="color:#eceff4;">,</span><span> testPredicted)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>test accuracy = $value</span><span style="color:#a3be8c;">&quot;</span><span>)  
+</span></code></pre>
+<p>Model accuracy on unseen data is quite as well:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">test</span><span> accuracy = 0.8625
+</span></code></pre>
+<h1 id="python-implementation">Python Implementation</h1>
+<p>Almost the same implementation in Python takes much longer to train the model. 
+Although, we are using a bit more advanced optimizer such as <code>Adam</code>.</p>
+<p>Here is the code snippet that starts model training:</p>
+<pre data-lang="python" style="background-color:#2e3440;color:#d8dee9;" class="language-python "><code class="language-python" data-lang="python"><span>ann</span><span style="color:#81a1c1;">.</span><span style="color:#88c0d0;">compile</span><span>(optimizer </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&#39;adam&#39;</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">\
+</span><span>  loss </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&#39;binary_crossentropy&#39;</span><span style="color:#eceff4;">, </span><span>metrics </span><span style="color:#81a1c1;">= </span><span>[</span><span style="color:#a3be8c;">&#39;accuracy&#39;</span><span>])
+</span><span>
+</span><span style="color:#81a1c1;">import </span><span>time
+</span><span>start </span><span style="color:#81a1c1;">= </span><span>time</span><span style="color:#81a1c1;">.</span><span style="color:#88c0d0;">process_time</span><span>()
+</span><span>ann</span><span style="color:#81a1c1;">.</span><span style="color:#88c0d0;">fit</span><span>(X_train</span><span style="color:#eceff4;">, </span><span>y_train</span><span style="color:#eceff4;">, </span><span>batch_size </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">32</span><span style="color:#eceff4;">, </span><span>epochs </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">100</span><span>)
+</span><span>end </span><span style="color:#81a1c1;">= </span><span>time</span><span style="color:#81a1c1;">.</span><span style="color:#88c0d0;">process_time</span><span>() </span><span style="color:#81a1c1;">- </span><span>start
+</span><span style="font-style:italic;color:#88c0d0;">print</span><span>(</span><span style="color:#81a1c1;">f</span><span style="color:#a3be8c;">&quot;training time = </span><span>{end}</span><span style="color:#a3be8c;"> sec&quot;</span><span>)
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">training</span><span> time = 24.495086
+</span></code></pre>
+<p>It is almost 5 times longer. I knew that Python is slow language.</p>
+<p>See full code here: <a href="https://github.com/novakov-alexey/tensorflow-ann-python/blob/main/artificial_neural_network.py">tensorflow-ann-python</a></p>
+<h1 id="summary">Summary</h1>
+<p>We have seen that Scala implementation looks very concise thanks to the great language design.
+It also works faster than Python implementation in Keras on CPU.</p>
+<p>Artificial Neural Network can be understood by newbies as magic, 
+but a closer look shows that basic building blocks are just math.</p>
+<p>Being a functional programmer in Scala, you may find that some of the code is not doing total functions, but partial functions by throwing erros. 
+Unfortunatelly, there are several possibilities where user may provide
+wrong inputs from math perspective, so that we could return an <a href="https://www.scala-lang.org/api/current/scala/util/Either.html">Either.Left</a> or something like that to mitigate this problem.</p>
+<p>Making a machine learning library is fun, since it is just algorithms and in-memory computations.
+You do not need to deal with that much I/O, networking or distributed systems programming.
+Main part even does not parallelise, so no concurrency and cognitive overhead related with it. 
+Of course, to make an ML library today for real life, you would require <a href="https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units">support of GPU</a> for faster, parallel computation.</p>
+<p><strong>Implemented code demonstrates two points:</strong></p>
+<ol>
+<li>ANN is an algorithm that you can implement yourself in any programming language. No magic is involved.</li>
+<li>Scala is a perfect language to implement libraries for data science and machine learning.</li>
+</ol>
+<h1 id="source-code">Source Code</h1>
+<p>Entire code of the Scala ANN implementation can be found here:</p>
+<p><a href="https://github.com/novakov-alexey/deep-learning-scala">https://github.com/novakov-alexey/deep-learning-scala</a></p>
+<h1 id="reference-links">Reference Links</h1>
+<ul>
+<li>
+<p><a href="https://www.bogotobogo.com/python/scikit-learn/Artificial-Neural-Network-ANN-4-Backpropagation.php">Artificial-Neural-Network-ANN-4-Backpropagation</a></p>
+</li>
+<li>
+<p><a href="https://riptutorial.com/machine-learning/example/31623/backpropagation---the-heart-of-neural-networks">backpropagation---the-heart-of-neural-networks</a></p>
+</li>
+<li>
+<p><a href="https://arxiv.org/pdf/1609.04747.pdf">An overview of gradient descent optimization algorithms</a></p>
+</li>
+</ul>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Artificial Neural Network in Scala - part 2' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Artificial Neural Network in Scala - part 2" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Artificial Neural Network in Scala - part 2" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-in-scala-2&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-tensor-library" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/ann-in-scala-2/#tensor-library">
+                Tensor Library
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-matmul" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-in-scala-2/#matmul">
+                    Matmul
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-neural-network-dsl" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#neural-network-dsl">
+                Neural Network DSL
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-model-initialisation" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-in-scala-2/#model-initialisation">
+                    Model initialisation
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-training-loop" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-in-scala-2/#training-loop">
+                    Training loop
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-data-preparation" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#data-preparation">
+                Data Preparation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-training-run" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#training-run">
+                Training Run
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-testing" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#testing">
+                Testing
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-single-test" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-in-scala-2/#single-test">
+                    Single Test
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-dataset-test" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-in-scala-2/#dataset-test">
+                    Dataset Test
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-python-implementation" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#python-implementation">
+                Python Implementation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-source-code" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#source-code">
+                Source Code
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-reference-links" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-in-scala-2/#reference-links">
+                Reference Links
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/ann-in-scala-2/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'ann-in-scala-2'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

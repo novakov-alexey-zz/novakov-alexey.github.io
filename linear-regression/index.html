@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Linear Regression with Gradient Descent
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Linear Regression with Gradient Descent
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-02-20'>February 20, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    9 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1670 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/linear-regression/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        linear regression
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>In this article we are going to use <a href="/ann-in-scala-2">Scala mini-library</a> for Deep Learning
+that we developed earlier in order to study basic linear regression task. 
+We will learn model weights using perceptron model, which will be our single unit network layer that emits target value. 
+This model will predict a target value <code>yHat</code> based on two trained parameters: weight and bias. Both are scalar numbers.
+Weights optimization is going to be based on implemented Gradient descent algorithm:</p>
+<ul>
+<li><a href="/ann-in-scala-1/#gradient-descent-optimization">Gradient Descent Optimization</a></li>
+<li><a href="/ann-in-scala-2/#training-loop">Training Loop</a></li>
+</ul>
+<p>Model equation:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>y </span><span style="color:#81a1c1;">=</span><span> bias + weight * x
+</span></code></pre>
+<span id="continue-reading"></span><h1 id="data-preparation">Data Preparation</h1>
+<p>Our goal is to show that perceptron model can learn the parameters, so that we can generate fake data using
+uniformly distributed random generator:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>util</span><span style="color:#81a1c1;">.</span><span>Random
+</span><span>
+</span><span style="color:#81a1c1;">val random = new </span><span style="color:#8fbcbb;">Random</span><span>()
+</span><span style="color:#81a1c1;">val weight =</span><span> random</span><span style="color:#81a1c1;">.</span><span>nextFloat()
+</span><span style="color:#81a1c1;">val bias =</span><span> random</span><span style="color:#81a1c1;">.</span><span>nextFloat()
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">batch</span><span>(batchSize: </span><span style="color:#81a1c1;">Int</span><span>): (</span><span style="color:#8fbcbb;">ArrayBuffer</span><span>[</span><span style="color:#81a1c1;">Double</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">ArrayBuffer</span><span>[</span><span style="color:#81a1c1;">Double</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val inputs = </span><span style="color:#8fbcbb;">ArrayBuffer</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#81a1c1;">Double</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">val outputs = </span><span style="color:#8fbcbb;">ArrayBuffer</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#81a1c1;">Double</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">noise </span><span style="color:#81a1c1;">=</span><span> random</span><span style="color:#81a1c1;">.</span><span>nextDouble / </span><span style="color:#b48ead;">5
+</span><span>  (</span><span style="color:#b48ead;">0</span><span> until batchSize)</span><span style="color:#81a1c1;">.</span><span>foldLeft(inputs</span><span style="color:#eceff4;">,</span><span> outputs) { </span><span style="color:#81a1c1;">case </span><span>((x</span><span style="color:#eceff4;">, </span><span>y)</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">_</span><span>) </span><span style="color:#81a1c1;">=&gt;        
+</span><span>      </span><span style="color:#81a1c1;">val rnd =</span><span> random</span><span style="color:#81a1c1;">.</span><span>nextDouble
+</span><span>      x += rnd + noise
+</span><span>      y += bias + weight * rnd + noise
+</span><span>      (x</span><span style="color:#eceff4;">,</span><span> y)
+</span><span>  }
+</span><span>
+</span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">xBatch</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yBatch</span><span>) </span><span style="color:#81a1c1;">=</span><span> batch(</span><span style="color:#b48ead;">10000</span><span>)
+</span><span style="color:#81a1c1;">val x = </span><span style="color:#8fbcbb;">Tensor1D</span><span>(xBatch</span><span style="color:#81a1c1;">.</span><span>toArray)
+</span><span style="color:#81a1c1;">val y = </span><span style="color:#8fbcbb;">Tensor1D</span><span>(yBatch</span><span style="color:#81a1c1;">.</span><span>toArray)
+</span><span style="color:#81a1c1;">val </span><span>((</span><span style="color:#81a1c1;">xTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">xTest</span><span>)</span><span style="color:#eceff4;">, </span><span>(</span><span style="color:#81a1c1;">yTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTest</span><span>)) </span><span style="color:#81a1c1;">= </span><span>(x</span><span style="color:#eceff4;">,</span><span> y)</span><span style="color:#81a1c1;">.</span><span>split(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">2</span><span style="color:#81a1c1;">f</span><span>)
+</span></code></pre>
+<p>We have just prepared two datasets: <code>8000</code> data samples for train and <code>2000</code> samples for test cycles.</p>
+<h1 id="model-training">Model Training</h1>
+<p>First, we initialise sequential model for just one dense layer with single unit which is going to be a perceptron model.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val ann = </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#81a1c1;">Double</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">SimpleGD</span><span>](
+</span><span>  meanSquareError</span><span style="color:#eceff4;">,
+</span><span>  learningRate </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">00005</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">,    
+</span><span>  batchSize </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">16</span><span style="color:#eceff4;">,
+</span><span>  gradientClipping </span><span style="color:#81a1c1;">=</span><span> clipByValue(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">d</span><span>)
+</span><span>)</span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>())
+</span></code></pre>
+<p>In order to avoid exploding gradient values, we also set <strong>grading clipping</strong> value, so that whenever our gradient is not
+in <code>-5;5</code> numeric range it will be clipped to left or right boundary accordingly.</p>
+<p>Let's start training and see if real weight and bias which we used to generate fake data are learnt by the 
+perceptron:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val model =</span><span> ann</span><span style="color:#81a1c1;">.</span><span>train(xTrain</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,</span><span> yTrain</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,</span><span> epochs </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">200</span><span>)
+</span><span>
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>current weight: ${model</span><span style="color:#81a1c1;">.</span><span>weights}</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>true weight: $weight</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>true bias: $bias</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>Output:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">epoch:</span><span> 1/200, avg. loss: 1.205505132675171
+</span><span style="color:#88c0d0;">epoch:</span><span> 2/200, avg. loss: 1.0070222616195679
+</span><span style="color:#88c0d0;">epoch:</span><span> 3/200, avg. loss: 0.737899661064148
+</span><span style="color:#88c0d0;">epoch:</span><span> 4/200, avg. loss: 0.46094685792922974
+</span><span style="color:#88c0d0;">epoch:</span><span> 5/200, avg. loss: 0.2417953610420227
+</span><span style="color:#88c0d0;">epoch:</span><span> 6/200, avg. loss: 0.10201635956764221
+</span><span style="color:#88c0d0;">epoch:</span><span> 7/200, avg. loss: 0.037492286413908005
+</span><span style="color:#88c0d0;">epoch:</span><span> 8/200, avg. loss: 0.014684454537928104
+</span><span style="color:#88c0d0;">epoch:</span><span> 9/200, avg. loss: 0.00778685137629509
+</span><span style="color:#88c0d0;">epoch:</span><span> 10/200, avg. loss: 0.005894653964787722
+</span><span style="color:#88c0d0;">....
+</span><span style="color:#88c0d0;">epoch:</span><span> 190/200, avg. loss: 0.005119443871080875
+</span><span style="color:#88c0d0;">epoch:</span><span> 191/200, avg. loss: 0.005119443871080875
+</span><span style="color:#88c0d0;">epoch:</span><span> 192/200, avg. loss: 0.005119443871080875
+</span><span style="color:#88c0d0;">epoch:</span><span> 193/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 194/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 195/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 196/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 197/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 198/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 199/200, avg. loss: 0.005119443405419588
+</span><span style="color:#88c0d0;">epoch:</span><span> 200/200, avg. loss: 0.005119443405419588
+</span></code></pre>
+<p>I have cut the middle part of the output, but it is not hard to see the progress.</p>
+<p>Latest model weights:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">weight</span><span> = sizes: 1x1, Tensor2D</span><span style="color:#81a1c1;">[</span><span>Double</span><span style="color:#81a1c1;">]</span><span>:
+</span><span style="color:#88c0d0;">[[0.690990393772042]]
+</span><span style="color:#88c0d0;">,
+</span><span style="color:#88c0d0;">bias</span><span> = sizes: 1, Tensor1D</span><span style="color:#81a1c1;">[</span><span>Double</span><span style="color:#81a1c1;">]</span><span>:
+</span><span style="color:#88c0d0;">[0.7804058255259821]
+</span></code></pre>
+<p>Original/true weights we used for data generation:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">true</span><span> weight: 0.7220096
+</span><span style="color:#88c0d0;">true</span><span> bias: 0.7346627
+</span></code></pre>
+<p>Numers are quite close to true numbers, but not exactly the same. 
+I have set small/slow <code>learningRate</code> as <code>0.00005f</code> by intention, so that our learning metrics
+will be smoother on the future plots. If we set <code>learningRate</code> to bigger value, it will be
+closer to true weights. </p>
+<p><em>When I write <code>weights</code> I often mean <code>bias</code> and <code>weight</code> parameters in the same time.</em></p>
+<h1 id="test-dataset">Test dataset</h1>
+<p>We have <code>2000</code> data samples for model testing, let's what the error on predicting target values using unseen data:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val testPredicted =</span><span> model</span><span style="color:#81a1c1;">.</span><span>predict(xTest)  
+</span><span style="color:#81a1c1;">val value =</span><span> meanSquareError[</span><span style="color:#81a1c1;">Double</span><span>]</span><span style="color:#81a1c1;">.</span><span>apply(yTest</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,</span><span> testPredicted)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>test meanSquareError = $value</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>Loss value on test is quite close to training loss, so the learnt model is fine and we can continue:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">test</span><span> meanSquareError = 0.005048050195478982
+</span></code></pre>
+<h1 id="visualization">Visualization</h1>
+<p>To visualize the loss function, I have decied to try <a href="https://acse-fk4517.github.io/picta-docs/index.html">Picta</a> library.
+It can be used in <a href="https://jupyter.org/">Jupyter notebook</a> via <a href="https://almond.sh/">Almond Scala kernel</a>, which is very cool.</p>
+<p>Before we try to use Picta's 2D or 3D <a href="https://acse-fk4517.github.io/picta-docs/canvas.html">Canvas API</a>, 
+we need to prepare metrics data. </p>
+<p><em>We could run the entire training code in Jupyter together with Picta around, but as of now Almond Scala kernel
+does not support Scala 3 which was used to write the Deep Learning code. So we will go with CSV files to 
+bridge two worlds.</em></p>
+<p>This is our plan:</p>
+<ol>
+<li>Store metrics data from existing Scala 3 code to CSV files</li>
+<li>Use CVS files in Jupyter with Scala 2.13</li>
+</ol>
+<h2 id="data-points-vs-model">Data points vs. Model</h2>
+<p>Saving data points and gradient history, i.e. weight and bias during the training:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val dataPoints =</span><span> xBatch</span><span style="color:#81a1c1;">.</span><span>zip(yBatch)</span><span style="color:#81a1c1;">.</span><span>map((x, y) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">List</span><span>(x</span><span style="color:#81a1c1;">.</span><span>toString</span><span style="color:#eceff4;">,</span><span> y</span><span style="color:#81a1c1;">.</span><span>toString))
+</span><span>store(</span><span style="color:#a3be8c;">&quot;metrics/datapoints.csv&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;x,y&quot;</span><span style="color:#eceff4;">,</span><span> dataPoints</span><span style="color:#81a1c1;">.</span><span>toList)
+</span><span>
+</span><span style="color:#81a1c1;">val gradientData =</span><span> model</span><span style="color:#81a1c1;">.</span><span>history</span><span style="color:#81a1c1;">.</span><span>weights</span><span style="color:#81a1c1;">.</span><span>zip(model</span><span style="color:#81a1c1;">.</span><span>history</span><span style="color:#81a1c1;">.</span><span>losses)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>map { (weights, l) </span><span style="color:#81a1c1;">=&gt; 
+</span><span>      weights</span><span style="color:#81a1c1;">.</span><span>headOption</span><span style="color:#81a1c1;">.</span><span>map(w </span><span style="color:#81a1c1;">=&gt; 
+</span><span>        </span><span style="color:#8fbcbb;">List</span><span>(w</span><span style="color:#81a1c1;">.</span><span>w</span><span style="color:#81a1c1;">.</span><span>as1D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>toString</span><span style="color:#eceff4;">,</span><span> w</span><span style="color:#81a1c1;">.</span><span>b</span><span style="color:#81a1c1;">.</span><span>as1D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>toString)
+</span><span>      )</span><span style="color:#81a1c1;">.</span><span>toList</span><span style="color:#81a1c1;">.</span><span>flatten :+ l</span><span style="color:#81a1c1;">.</span><span>toString
+</span><span>    }
+</span><span>store(</span><span style="color:#a3be8c;">&quot;metrics/gradient.csv&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;w,b,loss&quot;</span><span style="color:#eceff4;">,</span><span> gradientData)
+</span></code></pre>
+<p><code>store</code> function is just creating a CSV file out of data in the Scala list:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">store</span><span>(filename: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>header: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>data: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]]) </span><span style="color:#81a1c1;">=    
+</span><span>  </span><span style="color:#8fbcbb;">Using</span><span style="color:#81a1c1;">.</span><span>resource(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">PrintWriter</span><span>(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">File</span><span>(filename))) { w </span><span style="color:#81a1c1;">=&gt;
+</span><span>    w</span><span style="color:#81a1c1;">.</span><span>write(header)
+</span><span>    data</span><span style="color:#81a1c1;">.</span><span>foreach { row </span><span style="color:#81a1c1;">=&gt;      
+</span><span>      w</span><span style="color:#81a1c1;">.</span><span>write(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span style="color:#ebcb8b;">\n</span><span>${row</span><span style="color:#81a1c1;">.</span><span>mkString(</span><span style="color:#a3be8c;">&quot;,&quot;</span><span>)}</span><span style="color:#a3be8c;">&quot;</span><span>)        
+</span><span>    }
+</span><span>  }
+</span></code></pre>
+<p>Let's plot data points that we used to train the model as well the line that is based on learnt model parameters.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>carbonateresearch</span><span style="color:#81a1c1;">.</span><span>picta</span><span style="color:#81a1c1;">.</span><span>IO</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>carbonateresearch</span><span style="color:#81a1c1;">.</span><span>picta</span><span style="color:#81a1c1;">._
+</span><span>
+</span><span style="color:#81a1c1;">val filepath = </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$metricsDir/datapoints.csv</span><span style="color:#a3be8c;">&quot;
+</span><span style="color:#81a1c1;">val data =</span><span> readCSV(filepath)
+</span><span style="color:#81a1c1;">val x =</span><span> data(</span><span style="color:#a3be8c;">&quot;x&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)
+</span><span style="color:#81a1c1;">val y =</span><span> data(</span><span style="color:#a3be8c;">&quot;y&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)
+</span><span style="color:#81a1c1;">val gradientData =</span><span> readCSV(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$metricsDir/gradient.csv</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span style="color:#81a1c1;">val w =</span><span> gradientData(</span><span style="color:#a3be8c;">&quot;w&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>toDouble
+</span><span style="color:#81a1c1;">val b =</span><span> gradientData(</span><span style="color:#a3be8c;">&quot;b&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>head</span><span style="color:#81a1c1;">.</span><span>toDouble
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">model</span><span>(x: </span><span style="color:#81a1c1;">Double</span><span>) </span><span style="color:#81a1c1;">=</span><span> w * x + b
+</span><span style="color:#81a1c1;">val m1 = </span><span style="color:#8fbcbb;">Array</span><span>(-</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">d</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">3</span><span style="color:#81a1c1;">d</span><span>)
+</span><span style="color:#81a1c1;">val m2 = </span><span style="color:#8fbcbb;">List</span><span>(model(m1(</span><span style="color:#b48ead;">0</span><span>))</span><span style="color:#eceff4;">,</span><span> model(m1(</span><span style="color:#b48ead;">1</span><span>)))
+</span><span>
+</span><span style="color:#81a1c1;">val inputData = </span><span style="color:#8fbcbb;">XY</span><span>(x</span><span style="color:#eceff4;">,</span><span> y)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">SCATTER</span><span>)</span><span style="color:#81a1c1;">.</span><span>setName(</span><span style="color:#a3be8c;">&quot;Input Data&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>drawStyle(</span><span style="color:#8fbcbb;">MARKERS</span><span>)
+</span><span style="color:#81a1c1;">val modelData = </span><span style="color:#8fbcbb;">XY</span><span>(m1</span><span style="color:#81a1c1;">.</span><span>toList</span><span style="color:#eceff4;">,</span><span> m2)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">SCATTER</span><span>)</span><span style="color:#81a1c1;">.</span><span>setName(</span><span style="color:#a3be8c;">&quot;Model&quot;</span><span>)
+</span><span style="color:#81a1c1;">val chart = </span><span style="color:#8fbcbb;">Chart</span><span>()</span><span style="color:#81a1c1;">.</span><span>addSeries(inputData</span><span style="color:#eceff4;">,</span><span> modelData)</span><span style="color:#81a1c1;">.</span><span>setTitle(</span><span style="color:#a3be8c;">&quot;Data points vs. Trained model&quot;</span><span>)
+</span><span>
+</span><span>chart</span><span style="color:#81a1c1;">.</span><span>plotInline
+</span></code></pre>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;26102615817a882400.png" class="center-image"/>
+<br/><br/>
+<p>Our model crosses the data points almost in the middle as expected.</p>
+<h2 id="loss-metric-per-epoch">Loss metric per epoch</h2>
+<p>Creating a CSV file that contains loss value per training epoch.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val lossData =</span><span> model</span><span style="color:#81a1c1;">.</span><span>losses</span><span style="color:#81a1c1;">.</span><span>zipWithIndex</span><span style="color:#81a1c1;">.</span><span>map((l,i) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">List</span><span>(i</span><span style="color:#81a1c1;">.</span><span>toString</span><span style="color:#eceff4;">,</span><span> l</span><span style="color:#81a1c1;">.</span><span>toString))
+</span><span>store(</span><span style="color:#a3be8c;">&quot;metrics/lr.csv&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;epoch,loss&quot;</span><span style="color:#eceff4;">,</span><span> lossData)
+</span></code></pre>
+<pre data-lang="csv" style="background-color:#2e3440;color:#d8dee9;" class="language-csv "><code class="language-csv" data-lang="csv"><span style="color:#81a1c1;">epoch,loss
+</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">1.205505132675171
+</span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">1.0070222616195679
+</span><span style="color:#b48ead;">2</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">0.737899661064148
+</span><span style="color:#b48ead;">3</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">0.46094685792922974
+</span><span style="color:#b48ead;">4</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">0.2417953610420227
+</span><span style="color:#b48ead;">...
+</span></code></pre>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val metricsDir =</span><span> getWorkingDirectory + </span><span style="color:#a3be8c;">&quot;/../metrics&quot;
+</span><span style="color:#81a1c1;">val data =</span><span> readCSV(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$metricsDir/lr.csv</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span style="color:#81a1c1;">val epochs =</span><span> data(</span><span style="color:#a3be8c;">&quot;epoch&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toInt)
+</span><span style="color:#81a1c1;">val losses =</span><span> data(</span><span style="color:#a3be8c;">&quot;loss&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)
+</span><span>
+</span><span style="color:#81a1c1;">val series = </span><span style="color:#8fbcbb;">XY</span><span>(epochs</span><span style="color:#eceff4;">,</span><span> losses)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">SCATTER</span><span>)</span><span style="color:#81a1c1;">.</span><span>drawStyle(</span><span style="color:#8fbcbb;">LINES</span><span>)
+</span><span style="color:#81a1c1;">val chart = </span><span style="color:#8fbcbb;">Chart</span><span>()
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>addSeries(series</span><span style="color:#81a1c1;">.</span><span>setName(</span><span style="color:#a3be8c;">&quot;Learning loss&quot;</span><span>))
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>setTitle(</span><span style="color:#a3be8c;">&quot;Linear Regression Example: Loss vs. Epoch&quot;</span><span>)
+</span><span>chart</span><span style="color:#81a1c1;">.</span><span>plotInline
+</span></code></pre>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;3fd5595877b93cf100.png" class="center-image"/>
+<br/><br/><h2 id="loss-function-surface-gradient-history">Loss Function Surface &amp; Gradient History</h2>
+<p><code>Picta</code> can also draw 3D plots, so that we can generate loss surface based on weight and bias parameters (<code>x</code> and <code>y</code> axis) and loss value as <code>z</code> axis.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val weights = for </span><span>(i </span><span style="color:#81a1c1;">&lt;- </span><span style="color:#b48ead;">0</span><span> until </span><span style="color:#b48ead;">100</span><span>) </span><span style="color:#81a1c1;">yield</span><span> i/</span><span style="color:#b48ead;">100</span><span style="color:#81a1c1;">d
+</span><span style="color:#81a1c1;">val biases =</span><span> weights </span><span style="color:#616e88;">// we use the same range for bias
+</span><span>  
+</span><span style="color:#81a1c1;">val losses =</span><span> weights</span><span style="color:#81a1c1;">.</span><span>par</span><span style="color:#81a1c1;">.</span><span>map { w </span><span style="color:#81a1c1;">=&gt;
+</span><span>  </span><span style="color:#81a1c1;">val wT =</span><span> w</span><span style="color:#81a1c1;">.</span><span>as2D
+</span><span>  biases</span><span style="color:#81a1c1;">.</span><span>foldLeft(</span><span style="color:#8fbcbb;">ArrayBuffer</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#81a1c1;">Double</span><span>]) { (acc, b) </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#81a1c1;">val loss =</span><span> ann</span><span style="color:#81a1c1;">.</span><span>loss(x</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,</span><span> y</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#8fbcbb;">Weight</span><span>(wT</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#81a1c1;">.</span><span>as1D)))  
+</span><span>    acc :+ loss
+</span><span>  }
+</span><span>}
+</span><span> 
+</span><span style="color:#81a1c1;">val metricsData =</span><span> weights</span><span style="color:#81a1c1;">.</span><span>zip(biases)</span><span style="color:#81a1c1;">.</span><span>zip(losses)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>map { </span><span style="color:#81a1c1;">case </span><span>((w</span><span style="color:#eceff4;">, </span><span>b)</span><span style="color:#eceff4;">, </span><span>l) </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#8fbcbb;">List</span><span>(w</span><span style="color:#81a1c1;">.</span><span>toString</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#81a1c1;">.</span><span>toString</span><span style="color:#eceff4;">,</span><span> l</span><span style="color:#81a1c1;">.</span><span>mkString(</span><span style="color:#a3be8c;">&quot;</span><span style="color:#ebcb8b;">\&quot;</span><span style="color:#a3be8c;">&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;,&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;</span><span style="color:#ebcb8b;">\&quot;</span><span style="color:#a3be8c;">&quot;</span><span>)) 
+</span><span>  }
+</span><span>  
+</span><span>store(</span><span style="color:#a3be8c;">&quot;metrics/lr-surface.csv&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;w,b,l&quot;</span><span style="color:#eceff4;">,</span><span> metricsData</span><span style="color:#81a1c1;">.</span><span>toList)
+</span></code></pre>
+<pre data-lang="csv" style="background-color:#2e3440;color:#d8dee9;" class="language-csv "><code class="language-csv" data-lang="csv"><span style="color:#81a1c1;">w,b,l
+</span><span style="color:#b48ead;">0.0</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">0.0</span><span style="color:#81a1c1;">,</span><span style="color:#a3be8c;">&quot;</span><span style="color:#b48ead;">1.4736275893057016</span><span style="color:#81a1c1;">,</span><span style="color:#b48ead;">... </span><span style="color:#81a1c1;">// here come </span><span style="color:#b48ead;">100 </span><span style="color:#81a1c1;">values for column `l` which stands for loss.
+</span><span style="color:#b48ead;">...
+</span></code></pre>
+<p>Last column is going to be used in 3D plot as <code>Z</code> axis. It is a list rather than a scalar value. This way we can draw
+a surface in Picta later.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val data =</span><span> readCSV(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$metricsDir/lr-surface.csv</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span style="color:#81a1c1;">val w =</span><span> data(</span><span style="color:#a3be8c;">&quot;w&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val b =</span><span> data(</span><span style="color:#a3be8c;">&quot;b&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val loss =</span><span> data(</span><span style="color:#a3be8c;">&quot;l&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>split(</span><span style="color:#a3be8c;">&quot;,&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble))</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val surface = </span><span style="color:#8fbcbb;">XYZ</span><span>(x</span><span style="color:#81a1c1;">=</span><span>w</span><span style="color:#eceff4;">,</span><span> y</span><span style="color:#81a1c1;">=</span><span>b</span><span style="color:#eceff4;">,</span><span> z</span><span style="color:#81a1c1;">=</span><span>loss</span><span style="color:#81a1c1;">.</span><span>flatten</span><span style="color:#eceff4;">,</span><span> n</span><span style="color:#81a1c1;">=</span><span>loss(</span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#81a1c1;">.</span><span>length)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">SURFACE</span><span>)</span><span style="color:#81a1c1;">.</span><span>setName(</span><span style="color:#a3be8c;">&quot;Loss&quot;</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">val gradientData =</span><span> readCSV(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$metricsDir/gradient.csv</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span style="color:#81a1c1;">val gw =</span><span> gradientData(</span><span style="color:#a3be8c;">&quot;w&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val gb =</span><span> gradientData(</span><span style="color:#a3be8c;">&quot;b&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val gLoss =</span><span> gradientData(</span><span style="color:#a3be8c;">&quot;loss&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>toDouble)</span><span style="color:#81a1c1;">.</span><span>reverse
+</span><span style="color:#81a1c1;">val gradient = </span><span style="color:#8fbcbb;">XYZ</span><span>(x</span><span style="color:#81a1c1;">=</span><span>gw</span><span style="color:#eceff4;">,</span><span> y</span><span style="color:#81a1c1;">=</span><span>gb</span><span style="color:#eceff4;">,</span><span> z</span><span style="color:#81a1c1;">=</span><span>gLoss)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">SCATTER3D</span><span>)</span><span style="color:#81a1c1;">.</span><span>setName(</span><span style="color:#a3be8c;">&quot;Gradient&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>drawLinesMarkers
+</span><span>
+</span><span style="color:#81a1c1;">val surfaceChart = </span><span style="color:#8fbcbb;">Chart</span><span>()
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>addSeries(gradient</span><span style="color:#eceff4;">,</span><span> surface)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>setTitle(</span><span style="color:#a3be8c;">&quot;Loss Function Surface&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>addAxes(</span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">X</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;w&quot;</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">Y</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;b&quot;</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">Z</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;loss&quot;</span><span>))
+</span><span>surfaceChart</span><span style="color:#81a1c1;">.</span><span>plotInline
+</span></code></pre>
+<p>Second plot <code>gradient</code> is for gradient history.</p>
+<p>I have created several print-screens just to show you this beatiful surface from different angles:</p>
+<p>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;98e687393c69966800.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;83ae3ba394e5fee000.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;50a38d4f4961da4c00.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;a2d7dfb64a838f5000.png" class="center-image"/>
+<br/><br/></p>
+<p>Dotted line is gradient descent trace: <code>z</code> axis is loss value which is moving to the local minimum with every epoch.
+It is moving according to its <code>w</code> and <code>b</code>, which are plotted on <code>x</code> and <code>y</code> axis accordingly.</p>
+<h3 id="contour-chart">Contour Chart</h3>
+<p>One more fancy chart from <code>Picta</code> is contour chart, which sometimes can be useful for analysis.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val contour = </span><span style="color:#8fbcbb;">XYZ</span><span>(x</span><span style="color:#81a1c1;">=</span><span>w</span><span style="color:#eceff4;">,</span><span> y</span><span style="color:#81a1c1;">=</span><span>b</span><span style="color:#eceff4;">,</span><span> z</span><span style="color:#81a1c1;">=</span><span>loss</span><span style="color:#81a1c1;">.</span><span>flatten</span><span style="color:#eceff4;">,</span><span> n</span><span style="color:#81a1c1;">=</span><span>loss(</span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#81a1c1;">.</span><span>length)</span><span style="color:#81a1c1;">.</span><span>asType(</span><span style="color:#8fbcbb;">CONTOUR</span><span>)
+</span><span style="color:#81a1c1;">val contourChart = </span><span style="color:#8fbcbb;">Chart</span><span>()</span><span style="color:#81a1c1;">.</span><span>addSeries(contour)</span><span style="color:#81a1c1;">.</span><span>setTitle(</span><span style="color:#a3be8c;">&quot;Loss Contour&quot;</span><span>)
+</span><span>             </span><span style="color:#81a1c1;">.</span><span>addAxes(</span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">X</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;w&quot;</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">Y</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;b&quot;</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Axis</span><span>(</span><span style="color:#8fbcbb;">Z</span><span style="color:#eceff4;">,</span><span> title </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;loss&quot;</span><span>))
+</span><span>
+</span><span>contourChart</span><span style="color:#81a1c1;">.</span><span>plotInline
+</span></code></pre>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;f4616749ad2dc16e00.png" class="center-image"/>
+<br/><br/>
+<p>Just for you to prove that this was drawn in Jupyter actually :-)</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;a4484a5b6c3d8ed700.png" class="center-image"/>
+<br/><br/>
+<p>Again big thanks to <a href="https://github.com/almond-sh/almond">Almond project</a> that made Scala easily runnable in Jupyter.</p>
+<h1 id="summary">Summary</h1>
+<p>We have seen that our perceptron model is able to learn weights very quick for simple 1 input variable.
+So it proves that gradient descent algorithm implemented earlier is working fine.</p>
+<p>Also, we could visualise loss metrics using Picta and Almond Jupyter kernel for Scala quite easily. 
+Such visualisation can help us to tune model training in real life use cases.</p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Linear Regression with Gradient Descent' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Linear Regression with Gradient Descent" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Linear Regression with Gradient Descent" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;linear-regression&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-data-preparation" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/linear-regression/#data-preparation">
+                Data Preparation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-model-training" class="toc is-size-7 " href="https://novakov-alexey.github.io/linear-regression/#model-training">
+                Model Training
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-test-dataset" class="toc is-size-7 " href="https://novakov-alexey.github.io/linear-regression/#test-dataset">
+                Test dataset
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-visualization" class="toc is-size-7 " href="https://novakov-alexey.github.io/linear-regression/#visualization">
+                Visualization
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-data-points-vs-model" class="toc is-size-7" href="https://novakov-alexey.github.io/linear-regression/#data-points-vs-model">
+                    Data points vs. Model
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-loss-metric-per-epoch" class="toc is-size-7" href="https://novakov-alexey.github.io/linear-regression/#loss-metric-per-epoch">
+                    Loss metric per epoch
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-loss-function-surface-gradient-history" class="toc is-size-7" href="https://novakov-alexey.github.io/linear-regression/#loss-function-surface-gradient-history">
+                    Loss Function Surface &amp; Gradient History
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/linear-regression/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/linear-regression/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'linear-regression'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

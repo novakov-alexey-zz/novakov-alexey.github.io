@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Algorithms: Largest Sum Contiguous Subarray
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Algorithms: Largest Sum Contiguous Subarray
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2020-08-13'>August 13, 2020</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    3 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    480 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/algorithms/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        algorithms
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Most of the algorithmic tasks are related to iterating over arrays of data. They often can be expressed as a function which takes some input and returns some single value or an array of values. For instance:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">maxSum</span><span>(a: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Int</span><span>]): </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= ???
+</span></code></pre>
+<span id="continue-reading"></span>
+<p>Let's solve next task using Scala's elegant and concise syntax.</p>
+<h3 id="find-the-max-sum-in-the-given-array">Find the max sum in the given array</h3>
+<p>It is one of the interesting task that I met first time at one of my past job 5 years ago. It was an internal meetup of developers learning new languages as well as training themselves in programming for fun.</p>
+<p>Later I use this task in Scala pet-project, called <a href="https://github.com/novakov-alexey/devgym">DevGym</a>. Project idea was similar to well-known Codility web-site.</p>
+<h3 id="task">Task</h3>
+<p>There is one array as input and another array as output. See test examples below:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// Given
+</span><span style="color:#8fbcbb;">Array</span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">4</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">10</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">11</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">100</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">8</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>) 
+</span><span>
+</span><span style="color:#616e88;">// Then
+</span><span>       </span><span style="color:#8fbcbb;">Array</span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">10</span><span>)
+</span></code></pre>
+<p>2 - 1 + 3 - 3 + 10 = 11</p>
+<p>Since <code>11</code> is the max sum we could find within the input array</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">//Given
+</span><span style="color:#8fbcbb;">Array</span><span>(-</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">4</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">4</span><span>)
+</span><span style="color:#616e88;">//Then
+</span><span>           </span><span style="color:#8fbcbb;">Array</span><span>(</span><span style="color:#b48ead;">4</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)
+</span></code></pre>
+<p>4 - 1 + 2 + 1 = 6</p>
+<p><code>6</code> is the max sum.</p>
+<h3 id="solution">Solution</h3>
+<p>In general, we can solve this problem in O(n) complexity. By using intermediate variables to 
+accumulate current sum as well as max sum, we can find <code>left</code> and <code>right</code> indices, which can be used
+to return a sub-array.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">maxSum</span><span>(a: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Int</span><span>]): </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>currentSum </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>maxSum </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>left</span><span style="color:#eceff4;">,</span><span> right</span><span style="color:#eceff4;">,</span><span> maxLeft</span><span style="color:#eceff4;">,</span><span> maxRight </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>maxI </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0 </span><span style="color:#616e88;">//used when all negatives in the array
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">for </span><span>(i </span><span style="color:#81a1c1;">&lt;-</span><span> a</span><span style="color:#81a1c1;">.</span><span>indices) {
+</span><span>    currentSum += a(i)
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">if </span><span>(currentSum &gt; </span><span style="color:#b48ead;">0</span><span>) {    
+</span><span>      </span><span style="color:#616e88;">// in case current sum is getting greater,
+</span><span>      </span><span style="color:#616e88;">// then we found next right index with the max sum so far
+</span><span>      </span><span style="color:#81a1c1;">if </span><span>(currentSum &gt; maxSum) {        
+</span><span>        maxSum </span><span style="color:#81a1c1;">=</span><span> currentSum
+</span><span>        right </span><span style="color:#81a1c1;">=</span><span> i
+</span><span>        maxRight </span><span style="color:#81a1c1;">=</span><span> right
+</span><span>        maxLeft </span><span style="color:#81a1c1;">=</span><span> left
+</span><span>      }
+</span><span>    } </span><span style="color:#81a1c1;">else </span><span>{
+</span><span>      </span><span style="color:#616e88;">// in case new sum is lower than or equal 0, 
+</span><span>      </span><span style="color:#616e88;">// then we need to move left and right index further  
+</span><span>      </span><span style="color:#616e88;">// and continue the search
+</span><span>      left </span><span style="color:#81a1c1;">=</span><span> i + </span><span style="color:#b48ead;">1
+</span><span>      right </span><span style="color:#81a1c1;">=</span><span> left
+</span><span>      currentSum </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span>      </span><span style="color:#81a1c1;">if </span><span>(a(i) &gt; a(maxI)) maxI </span><span style="color:#81a1c1;">=</span><span> i
+</span><span>    }
+</span><span>  }
+</span><span>  </span><span style="color:#616e88;">// at this point we found left and right
+</span><span>  </span><span style="color:#616e88;">// indices to capture sub-array with max sum
+</span><span>  </span><span style="color:#81a1c1;">if </span><span>(maxLeft </span><span style="color:#81a1c1;">==</span><span> a</span><span style="color:#81a1c1;">.</span><span>length) </span><span style="color:#8fbcbb;">Array</span><span>(a(maxI))
+</span><span>  </span><span style="color:#81a1c1;">else</span><span> a</span><span style="color:#81a1c1;">.</span><span>slice(maxLeft</span><span style="color:#eceff4;">,</span><span> maxRight + </span><span style="color:#b48ead;">1</span><span>)
+</span><span>}
+</span></code></pre>
+<p>Above algorithm can be even shorter, if we return only final sum, i.e. without tracking left and right indices.</p>
+<h1 id="summary">Summary</h1>
+<p>Scala is a nice language to solve different algorithmic tasks. Try your next project in Scala, you will be surprised how fun to write code in it. </p>
+<p>See my other blog-posts for algorithms in Scala:</p>
+<ol>
+<li><a href="https://medium.com/se-notes-by-alexey-novakov/algorithms-in-scala-dijkstra-shortest-path-78c4291dd8ab">Dijkstra shortest path</a></li>
+<li><a href="https://medium.com/se-notes-by-alexey-novakov/rolling-sum-in-scala-6bc9a5a82e75">Rolling Sum</a></li>
+</ol>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Algorithms: Largest Sum Contiguous Subarray' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Algorithms: Largest Sum Contiguous Subarray" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Algorithms: Largest Sum Contiguous Subarray" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;algorithms-max-sum-in-array&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-find-the-max-sum-in-the-given-array" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/algorithms-max-sum-in-array/#find-the-max-sum-in-the-given-array">
+                Find the max sum in the given array
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-task" class="toc is-size-7 " href="https://novakov-alexey.github.io/algorithms-max-sum-in-array/#task">
+                Task
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-solution" class="toc is-size-7 " href="https://novakov-alexey.github.io/algorithms-max-sum-in-array/#solution">
+                Solution
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/algorithms-max-sum-in-array/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/algorithms-max-sum-in-array/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'algorithms-max-sum-in-array'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

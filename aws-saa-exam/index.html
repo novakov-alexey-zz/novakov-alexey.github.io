@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Path to AWS Solution Architect Certification
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Path to AWS Solution Architect Certification
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2020-12-08'>December 08, 2020</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    11 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    2099 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/cloud/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        cloud
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/aws/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        aws
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        learning
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Earlier this year I started learning few Udemy courses for <a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/">AWS Solution Architect Associate Certification</a>. My initial plan was just to get some basic knowledge about AWS services, not the certification itself. Before starting the course, I did not have any experience with native AWS services. I never used EC2 instances to launch something in production. However, I used EC2 fleet of instances to deploy Kubernetes cluster. I started my path to cloud-native tools with Docker and shifted later to Kubernetes and OpenShift. Pure AWS services were never on my radar. I think the experience of deploying Kubernetes on top of the EC2 instances is one thing, but using different AWS services like ELB, EBS, EFS, EC2 and S3 is completely another story. So I decided it is time to get to know what are those AWS main services. After coming to the end of the Udemy course, I realised it worth to go for certification to make a final point in my AWS education. As I already spent so much time. </p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;31ae93a412bfd67700.png" class="center-image"/>
+<br/><br/><span id="continue-reading"></span>
+<p>Eventually I got certification after 7 <strong>calendar</strong> months. During that time, I did several pauses for vacation and other activities at work, when
+learning AWS was too hard to keep in my head. Perhaps, pure learning time was from 3 to 4 months.</p>
+<h1 id="preparation">Preparation</h1>
+<p>The final path I followed looks likes this:</p>
+<ol>
+<li>Main Udemy preparation courses:
+<ul>
+<li>AWS Certified Solutions Architect Associate - 2020 SAA-C02 from Neal Davis</li>
+<li>Ultimate AWS Certified Solutions Architect Associate 2020 from Stephane Maarek</li>
+</ul>
+</li>
+<li>AWS Free Video Courses</li>
+<li>AWS related project at work ;-) </li>
+<li>Udemy SAA Practise Exams from Neal Davis</li>
+<li>Udemy AWS VPC and Networking in Depth from Chetan Agrawal</li>
+</ol>
+<p>The best learning was in a project at work. However, theoretical knowledge helped quiet a lot to be fast in practise. </p>
+<h1 id="how-to-pass-the-exam">How to pass the exam</h1>
+<p>Every Udemy preparation course contains a series of labs almost for every lecture. Let's say a block on AWS VPC (Virtual Public Cloud) has 15 lectures, then there are around 10 labs that you need to practise on your own.</p>
+<p>Composition of the theoretical and practical labs at platform like Udemy plus real experience at work
+gives you a high chance to pass the certification for &quot;Associate&quot; level. Recommended practical experience from Amazon to pass &quot;Associate&quot; level is 1 year.
+I spent several times less with regards to practical experience. I believe those who already has practical experience of 1 year with AWS can easily
+watch one of the MOOC course and straight away go for certification exam. If you want to go for certification in relaxed mode, then take your time
+by working on some project at work related to AWS.</p>
+<p>The hardest thing is to motivate yourself to go for certification after one or more years of working with AWS. I think some people will eventually loose the 
+motivation in certification, since they are already so professional that they might think the certification is just waist of time. 
+By end the day, the certification exam is also a stressful exercise. You either have to go to a certification centre in your city or go for online exam at home or office. So it gives you some headache.</p>
+<h1 id="recommendations">Recommendations</h1>
+<h2 id="take-notes">Take notes</h2>
+<p>After watching and practising with topic number 10 out of 25 topics I quickly realised that I should have been taking some summary notes for
+lecture I watched and practised before. So that I could quickly review my notes and recall those topics I learnt earlier. I started making an AWS mind map.
+Since I was using mind maps for almost 10 years already, it was natural choice for me. The mind mapping software I use called <a href="https://www.xmind.net/">XMind</a>. </p>
+<p>So I started to do mind map in the middle of the first course, then I fulfilled the missing topics while watching second course, so that it covers
+all possible topics related to Solution Architect Associate certification. Eventually, I got around 1600 nodes in my mind map tree. XMind software
+performance is not good on my old 8 GB RAM laptop. It is probably not good practise to create such big mind maps. I could probably go with a separate mind map
+per AWS topic or separate tab in the same map, but then I would ended up with 20 different maps or tabs. 
+A text search across different mind maps would be a nightmare then. If you know a solution for big mind map problem, please let me know.</p>
+<p>Below picture show some part of the AWS mind map I created as summary notes:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;c04dc82bebd6cd5f00.png" class="center-image"/>
+<br/><br/>
+<p>My mind map became so big that I can't really print it easily, if I would want that.</p>
+<p>You can go with your own way of making notes. The important thing is to do them, rather than trying to keep everything in your head. Some people say
+that hand-written notes are the best way to remember a lot in your head. I am always struggling with handwritten notes to transfer them into digital format.
+There are some tools for that, but it is not straightforward. So I abandoned an idea of paper or tablet handwritten notes until some time in future.</p>
+<p>One thing with regards to mind map, I think a mind map is useful only for the mind map author. If I read someone else's mind map, I can't remember it nor learn something with it. A mind map is a personal tool like personal notes in a notebook. There is only you who can understand your notes, since it reflects your brain work.</p>
+<h2 id="youtube">Youtube</h2>
+<p>Do not waste time by watching free videos on youtube for AWS certification, since it is not going to be a complete course. They will probably not provide
+practise test after each topic nor test exams with 65 questions each. This is the state of 2020 year. Maybe in future the things get change on Youtube, 
+so that we will be able to do full blown MOOCs there as well. We will see.</p>
+<h1 id="exam-topics">Exam Topics</h1>
+<p>I am software developer by trade. Back in my university I had no any strong focus on computer networking. This topic was the most difficult for me at AWS
+certification. All those Sys Admin related things like block storage, VPN, firewall (security groups, network ACL), network file systems, encryption, DNS
+took me several iteration until I finally learnt that. </p>
+<p>Below is a list of topics which are required from you to learn to pass the certification exam.</p>
+<h2 id="1-vpc">1. VPC</h2>
+<p>It is huge block that includes many things to get familiar with:</p>
+<ul>
+<li>IP ranges / CIDRs</li>
+<li>Gateway Endpoint</li>
+<li>VPC endpoint</li>
+<li>Security group, Network ACL</li>
+<li>Subnet</li>
+<li>NAT Gateway, Instance</li>
+<li>Site-to-Site VPN</li>
+<li>Direct Connect</li>
+<li>Transit Gateway</li>
+<li>Route table</li>
+<li>VPC flow logs</li>
+<li>Private Link</li>
+<li>VPC peering</li>
+<li>VPN CloudHub</li>
+<li>Interface endpoint</li>
+</ul>
+<p>This topic was the most difficult for me. All that I listed above you need to know well before going to Solution Architect certification.</p>
+<h2 id="2-ec2">2. EC2</h2>
+<p>It is also quite large and popular topic on the exam. Requires to know:</p>
+<ul>
+<li>Pricing Models: Reserved, On-Demand, Dedicated, Scheduled, etc.</li>
+<li>Relation to AMIs (VM images), location of AMIs, etc.</li>
+<li>Placement groups: cluster, spread, partition</li>
+<li>IP address types: private public, Elastic IP</li>
+<li>HPC features: EFA, Enhanced Networking</li>
+<li>EC2 instance lifecycle</li>
+<li>EC2 API: user, meta data</li>
+</ul>
+<p>This topic was tricky for me as well, after being working for several years with Kubernetes. I did not care what underlying infrastructure was used.
+VMs or bare-metal servers. Anyway, I found EC2 topic as important as VPC. Basically, it is one of the building block of the AWS. You must know
+this topic very well.</p>
+<h2 id="3-elb-route53-cdn">3. ELB, Route53, CDN</h2>
+<p>Elastic Load Balancing is popular topic too. </p>
+<ul>
+<li>General idea is to know how different load balancers can be used with EC2 instances, Target Groups.</li>
+<li>Different target types: EC2, IP, Lambda function</li>
+<li>When to use ALB, NLB or CLB</li>
+<li>Auto Scaling group connection with ELB and Target Groups</li>
+<li>Relation to CloudWatch and EC2 metrics</li>
+<li>Different features like Global Accelerator, HA setup using Availability Zones, stick sessions. multi-VPC balancing</li>
+<li>WAF</li>
+<li>DNS record sets</li>
+<li>Route 53 DNS policies (latency, failover, geo-proximity, etc.)</li>
+<li>CloudFront</li>
+</ul>
+<h2 id="4-security">4. Security</h2>
+<ul>
+<li>KMS: key types from management perspective, supported encryption algorithms</li>
+<li>S3 data encryption types at rest (quite popular topic)</li>
+<li>Encryption support per data storage and database service: EBS, EFS, RDS, etc.</li>
+<li>High-level knowledge on different services for security like Certification Manager, Shield, Artefact</li>
+</ul>
+<h2 id="5-databases-data-processing">5. Databases &amp; Data Processing</h2>
+<ul>
+<li>RDS master and replica encryption. There are several lifecycle transitions to remember like how to make encrypted database from unencrypted database.</li>
+<li>Aurora, Serverless, Global</li>
+<li>DynamoDB</li>
+<li>Kinesis, Firehose</li>
+<li>RedShift</li>
+<li>Athena</li>
+<li>Glue</li>
+<li>EMR</li>
+<li>Data Migration Service</li>
+<li>ElasticCache: difference between Redis and Memcached</li>
+<li>DataSync</li>
+<li>Neptune</li>
+</ul>
+<p>RDS, DynamoDB are the most popular topics on the exam. However, you need to know main capabilities of other databases/tools.</p>
+<h2 id="6-integration">6. Integration</h2>
+<ul>
+<li>SQS</li>
+<li>SNS</li>
+<li>Amazon MQ</li>
+<li>Step Functions</li>
+<li>System Manager Parameter Store</li>
+<li>SWF</li>
+<li>AppSync</li>
+</ul>
+<p>You need to know the difference between SQS versus SNS very well.</p>
+<h2 id="7-iam">7. IAM</h2>
+<ul>
+<li>Users, Groups, Roles, Policies</li>
+<li>Authentication types</li>
+<li>Organization and SCP</li>
+<li>Resource Access Manager</li>
+</ul>
+<h2 id="8-storage">8. Storage</h2>
+<p>As I mention, it was quite hard topic for me, since you need to remember the IOPS per each disk type,
+storage class durability, availability, minimum storage period, retrieval period, prices
+There are many sub-options to keep in mind. It is quite large topic and as popular on the exam as VPC and EC2.</p>
+<ul>
+<li>EBS</li>
+<li>EFS</li>
+<li>S3</li>
+<li>Instance Store</li>
+<li>Storage Gateway</li>
+<li>FSx for Windows, Lustre</li>
+</ul>
+<h2 id="9-dev-tools">9. Dev Tools</h2>
+<ul>
+<li>Lambda</li>
+<li>API Gateway</li>
+<li>SAM</li>
+<li>ECS, ECR, Fargate, EKS</li>
+<li>CodeCommit, CodeBuild, CodeDeploy, CodePipeline (just know what they are offering)</li>
+</ul>
+<h2 id="10-operations">10. Operations</h2>
+<ul>
+<li>OpsWorks</li>
+<li>Cloud Formation</li>
+<li>Server Migration Service</li>
+<li>Recovery strategies: Backup and Restore, Pilot light, Warm Standby, Multi Site</li>
+</ul>
+<h2 id="11-monitoring-auditing">11. Monitoring, Auditing</h2>
+<ul>
+<li>CloudWatch Logs, Alarms, Events</li>
+<li>CloudTrail</li>
+<li>TrustedAdvisor</li>
+<li>AWS Config </li>
+</ul>
+<p>Those service that I have not commented above you just need high-level understanding what they do and that is enough.</p>
+<h1 id="when-and-how-to-go-for-exam">When and How to go for Exam</h1>
+<p>Once you feel it is time to get a certification exam, make sure you have passed through any test / simulation exam at Udemy, anywhere you can find them.
+Check sample questions at AWS training web-site. </p>
+<p>In my case, it was very helpful to study right answers for failed questions at Udemy test exams.
+Basically, these simulation tests already show you a percentage result whether you can pass real exam and how close you are to 72% of right answers.
+I think if you above 80% right answers you can go for exam.</p>
+<p>These days everything is happening remotely as well as certification at AWS. You can schedule an exam by make an order at &quot;aws.training / certmetrics&quot; web-sites.
+Chose exam provider and day for an exam. </p>
+<p>In my case, I could schedule an exam on next day I checked the available time slots, so there is
+no long time waiting to schedule an exam.</p>
+<p>If you feel that you are already overloaded with the theory while preparing for an exam, then it is a sign that you are ready to for the certification.
+Of course, need to try all possible test exams and see if you get good percentage of right answers. Some people do not pass from the first time, but
+most of the time pass from the second attempt. So do not bother if you did not pass first time, it is going to be a good rehearsal since you will be able
+to see real questions and get familiar with level of complexity. As for me, it was very important to know how difficult those real exam questions.
+Once I started the exam I realised that I can cope with the real questions. </p>
+<p>One last recommendation, do not stay too long on one question during the real exam. I would say 1.5 minute per question
+should be enough. Some questions can be answered within 10 seconds. It highly depends on the question length. Udemy test exams have lengthy question and that is quite close to reality.</p>
+<h1 id="summary">Summary</h1>
+<p>Although it requires quite a lot of time and efforts to go for any certification, it worth to do just because you will really learn a lot.
+I would not learn that amount of knowledge in case I would just watch the video course. Also, certification may help you
+to win a good project if you are working in a company or for yourself as a contractor. </p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Path to AWS Solution Architect Certification' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Path to AWS Solution Architect Certification" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Path to AWS Solution Architect Certification" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;aws-saa-exam&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-preparation" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/aws-saa-exam/#preparation">
+                Preparation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-how-to-pass-the-exam" class="toc is-size-7 " href="https://novakov-alexey.github.io/aws-saa-exam/#how-to-pass-the-exam">
+                How to pass the exam
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-recommendations" class="toc is-size-7 " href="https://novakov-alexey.github.io/aws-saa-exam/#recommendations">
+                Recommendations
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-take-notes" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#take-notes">
+                    Take notes
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-youtube" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#youtube">
+                    Youtube
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-exam-topics" class="toc is-size-7 " href="https://novakov-alexey.github.io/aws-saa-exam/#exam-topics">
+                Exam Topics
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-1-vpc" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#1-vpc">
+                    1. VPC
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-2-ec2" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#2-ec2">
+                    2. EC2
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-3-elb-route53-cdn" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#3-elb-route53-cdn">
+                    3. ELB, Route53, CDN
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-4-security" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#4-security">
+                    4. Security
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-5-databases-data-processing" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#5-databases-data-processing">
+                    5. Databases &amp; Data Processing
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-6-integration" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#6-integration">
+                    6. Integration
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-7-iam" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#7-iam">
+                    7. IAM
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-8-storage" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#8-storage">
+                    8. Storage
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-9-dev-tools" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#9-dev-tools">
+                    9. Dev Tools
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-10-operations" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#10-operations">
+                    10. Operations
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-11-monitoring-auditing" class="toc is-size-7" href="https://novakov-alexey.github.io/aws-saa-exam/#11-monitoring-auditing">
+                    11. Monitoring, Auditing
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-when-and-how-to-go-for-exam" class="toc is-size-7 " href="https://novakov-alexey.github.io/aws-saa-exam/#when-and-how-to-go-for-exam">
+                When and How to go for Exam
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/aws-saa-exam/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/aws-saa-exam/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'aws-saa-exam'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

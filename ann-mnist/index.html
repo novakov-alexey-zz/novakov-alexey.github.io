@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | MNIST image recognition using Deep Feed Forward Network
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            MNIST image recognition using Deep Feed Forward Network
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-03-12'>March 12, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    16 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    3170 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/mnist/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        MNIST
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/images/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        images
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Deep Feed Forward Neural Network is one of the type of Artificial Neural Networks, which is also able to classify computer images.
+In order to feed pixel data into the neural net in RBG/Greyscale/other format one can map every pixel to network inputs.
+That means every pixel becomes a feature. It may sound scary and highly inefficient to feed, let's say, 28 hieght on 28 width image size, which is 784 features to learn from.
+However, neural networks can learn from the pixel data successfully and classify unseen data. We are going to prove this.</p>
+<p>Please note, there are additional type of networks which are more efficient in image classification such as Convolutional Neural Network, but we are going to talk about that next time.</p>
+<h1 id="dataset">Dataset</h1>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/2/27/MnistExamples.png" alt="Wikipedia MnistExamples" /></p>
+<span id="continue-reading"></span>
+<p><a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST dataset</a> is a &quot;Hello, World!&quot; dataset in the field of Deep Learning. 
+It consists of thousands of grey-scaled images which represent hand-written digits from 0 to 9,
+so 10 labels. This dataset is used by many researches in the field to evaluate their discoveries and test that on well-known dataset. 
+However, MNIST dataset should not be a panacea. There are other public datasets with images like ImageNet, AlexNet, etc., 
+which are more advanced as they have more objects than just hand-written digits.
+Nevertheless, MNIST made important contribution to the history of Deep Learning and still helps people to learn this field by playing with this dataset.</p>
+<h1 id="loading-data">Loading Data</h1>
+<p>MNIST dataset can be taken from Yann LeCun web-site: <a href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>. If it is unavailable, you can easily find
+a copy of this dataset in numerous GitHub repositories, since it is not big in size (for example <a href="https://github.com/turkdogan/mnist-data-reader/tree/master/data">here</a>). I have downloaded the following 4 archives and put into the folder <code>images</code>. </p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">9.5M</span><span> train-images-idx3-ubyte.gz
+</span><span style="color:#88c0d0;">28K</span><span>  train-labels-idx1-ubyte.gz
+</span><span>
+</span><span style="color:#88c0d0;">1.6M</span><span> t10k-images-idx3-ubyte.gz
+</span><span style="color:#88c0d0;">4.4K</span><span> t10k-labels-idx1-ubyte.gz
+</span></code></pre>
+<p>First two files is training dataset. Bigger file is for images and smaller is for labels. There are 60000 training images and labels for them.
+Next two files are for model testing following the same concept (images, labels). There are 10000 testing images and labels.</p>
+<p>In order to load these files into the  memory we need to follow MNIST file format specification.
+For each file we need to do:</p>
+<ol>
+<li>Read first magic number and compare it with MNIST expected number, which is:</li>
+</ol>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val LabelFileMagicNumber = </span><span style="color:#b48ead;">2049
+</span><span style="color:#81a1c1;">val ImageFileMagicNumber = </span><span style="color:#b48ead;">2051
+</span></code></pre>
+<ol start="2">
+<li>Read next number for number of rows </li>
+<li>Read next number for number of columns</li>
+<li>Read images and labels in the loop based on the number of rows and columns</li>
+</ol>
+<p>We are going to implement MNIST classification on top of the existing <a href="https://github.com/novakov-alexey/deep-learning-scala">mini-libary for Deep Learning</a>.
+Here is how we can load MNIST dataset:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>collection</span><span style="color:#81a1c1;">.</span><span>mutable</span><span style="color:#81a1c1;">.</span><span>ArrayBuffer
+</span><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>reflect</span><span style="color:#81a1c1;">.</span><span>ClassTag
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>{DataInputStream</span><span style="color:#eceff4;">,</span><span> BufferedInputStream</span><span style="color:#eceff4;">,</span><span> FileInputStream}
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>nio</span><span style="color:#81a1c1;">.</span><span>file</span><span style="color:#81a1c1;">.</span><span>{Files</span><span style="color:#eceff4;">,</span><span> Path}
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>util</span><span style="color:#81a1c1;">.</span><span>zip</span><span style="color:#81a1c1;">.</span><span>GZIPInputStream
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">loadDataset</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](images: </span><span style="color:#8fbcbb;">Path</span><span style="color:#eceff4;">, </span><span>labels: </span><span style="color:#8fbcbb;">Path</span><span>)(
+</span><span>    using n: </span><span style="color:#8fbcbb;">Numeric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  ): (</span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val imageStream = new </span><span style="color:#8fbcbb;">GZIPInputStream</span><span>(</span><span style="color:#8fbcbb;">Files</span><span style="color:#81a1c1;">.</span><span>newInputStream(images))
+</span><span>  </span><span style="color:#81a1c1;">val imageInputStream = new </span><span style="color:#8fbcbb;">DataInputStream</span><span>(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">BufferedInputStream</span><span>(imageStream))
+</span><span>  </span><span style="color:#81a1c1;">val magicNumber =</span><span> imageInputStream</span><span style="color:#81a1c1;">.</span><span>readInt()
+</span><span>  
+</span><span>  assert(magicNumber </span><span style="color:#81a1c1;">== </span><span style="color:#8fbcbb;">ImageFileMagicNumber</span><span style="color:#eceff4;">, 
+</span><span>    </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Images magic number is incorrect, expected $ImageFileMagicNumber, 
+</span><span>    but was $magicNumber</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val numberOfImages =</span><span> imageInputStream</span><span style="color:#81a1c1;">.</span><span>readInt()
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">nRows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">nCols</span><span>) </span><span style="color:#81a1c1;">= </span><span>(imageInputStream</span><span style="color:#81a1c1;">.</span><span>readInt()</span><span style="color:#eceff4;">,</span><span> imageInputStream</span><span style="color:#81a1c1;">.</span><span>readInt())
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val labelStream = new </span><span style="color:#8fbcbb;">GZIPInputStream</span><span>(</span><span style="color:#8fbcbb;">Files</span><span style="color:#81a1c1;">.</span><span>newInputStream(labels))
+</span><span>  </span><span style="color:#81a1c1;">val labelInputStream = new </span><span style="color:#8fbcbb;">DataInputStream</span><span>(</span><span style="color:#81a1c1;">new </span><span style="color:#8fbcbb;">BufferedInputStream</span><span>(labelStream))  
+</span><span>  </span><span style="color:#81a1c1;">val labelMagicNumber =</span><span> labelInputStream</span><span style="color:#81a1c1;">.</span><span>readInt()
+</span><span>
+</span><span>  assert(labelMagicNumber </span><span style="color:#81a1c1;">== </span><span style="color:#8fbcbb;">LabelFileMagicNumber</span><span style="color:#eceff4;">, 
+</span><span>    </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Labels magic number is incorrect, expected $LabelFileMagicNumber, 
+</span><span>    but was $labelMagicNumber</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val numberOfLabels =</span><span> labelInputStream</span><span style="color:#81a1c1;">.</span><span>readInt()
+</span><span>
+</span><span>  assert(numberOfImages </span><span style="color:#81a1c1;">==</span><span> numberOfLabels)
+</span><span>  
+</span><span>  </span><span style="color:#81a1c1;">val labelsTensor =</span><span> labelInputStream</span><span style="color:#81a1c1;">.</span><span>readAllBytes</span><span style="color:#81a1c1;">.</span><span>map(l </span><span style="color:#81a1c1;">=&gt;</span><span> n</span><span style="color:#81a1c1;">.</span><span>fromInt(l))</span><span style="color:#81a1c1;">.</span><span>as1D
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val singeImageSize =</span><span> nRows * nCols
+</span><span>  </span><span style="color:#81a1c1;">val imageArray = </span><span style="color:#8fbcbb;">ArrayBuffer</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> i &lt;- (</span><span style="color:#b48ead;">0</span><span> until numberOfImages) </span><span style="color:#81a1c1;">do
+</span><span>    </span><span style="color:#81a1c1;">val image = </span><span>(</span><span style="color:#b48ead;">0</span><span> until singeImageSize)
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_ =&gt;</span><span> n</span><span style="color:#81a1c1;">.</span><span>fromInt(imageInputStream</span><span style="color:#81a1c1;">.</span><span>readUnsignedByte()))</span><span style="color:#81a1c1;">.</span><span>toArray      
+</span><span>    imageArray += image
+</span><span>
+</span><span>  (imageArray</span><span style="color:#81a1c1;">.</span><span>toArray</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> labelsTensor)
+</span></code></pre>
+<h1 id="preparing-data">Preparing data</h1>
+<p>Before we construct a neural network to train it on MNIST dataset, we need to transform it a bit.</p>
+<h2 id="feature-normalisation">Feature normalisation</h2>
+<p>In order to be more efficient when learning weights we need to scale X data to be in [0, 1] data range.
+We know that every image is encoded as a matrix of pixels 28 x 28. If print one of the
+image data into the console with line breaks after 28-th element, then it will look like this:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0  84 185 159 151  60  36   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0 222 254 254 254 254 241 198 198 198 198 198 198 198 198 170  52   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0  67 114  72 114 163 227 254 225 254 254 254 250 229 254 254 140   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0  17  66  14  67  67  67  59  21 236 254 106   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  83 253 209  18   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  22 233 255  83   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 129 254 238  44   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  59 249 254  62   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 133 254 187   5   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   9 205 248  58   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0 126 254 182   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0  75 251 240  57   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0  19 221 254 166   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   3 203 254 219  35   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0  38 254 254  77   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0  31 224 254 115   1   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0 133 254 254  52   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0  61 242 254 254  52   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0 121 254 254 219  40   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0 121 254 207  18   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span><span style="color:#88c0d0;">0</span><span>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+</span></code></pre>
+<p>Above output corresponds to digit &quot;7&quot;.</p>
+<p>Data in 0-255 numeric range will explode our network gradient if we do not apply any optimization technique on
+gradient or weight values. The easiest way is to scale the input data.</p>
+<p>First we load data using previously defined function with one more case class as a wrapper:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val dataset = </span><span style="color:#8fbcbb;">MnistLoader</span><span style="color:#81a1c1;">.</span><span>loadData[</span><span style="color:#81a1c1;">Double</span><span>](</span><span style="color:#a3be8c;">&quot;images&quot;</span><span>)
+</span></code></pre>
+<p>where <code>dataset</code> is wrapped into a case class:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> MnistDataset</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](
+</span><span>  trainImage: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>  trainLabels: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>  testImages: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>  testLabels: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>])
+</span></code></pre>
+<p>Then we simply divide every value by 255, that gives data in [0,1] range format.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val xData =</span><span> dataset</span><span style="color:#81a1c1;">.</span><span>trainImage</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> / </span><span style="color:#b48ead;">255</span><span style="color:#81a1c1;">d</span><span>)  
+</span></code></pre>
+<h2 id="target-encoding">Target Encoding</h2>
+<p>Our model is going to predict one label over multi-class dataset. In order to make our neural network 
+to predict something we need to encode label tensor with <code>One-Hot encoder</code>, so that every scalar label becomes as
+a vector of zeros and a single <code>1</code>. Index of <code>1</code> corresponds to the digit that this label stores.</p>
+<p>MNIST data is currently a vector of numbers, where number is a label for hand-written digit. For example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>[7</span><span style="color:#eceff4;">,</span><span>5</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>1]
+</span></code></pre>
+<p>Once we one-hot encode it, it will look like:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>[0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>1</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0]
+</span><span>[0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>1</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0]
+</span><span>[1</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0]
+</span><span>[0</span><span style="color:#eceff4;">,</span><span>1</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0</span><span style="color:#eceff4;">,</span><span>0]
+</span></code></pre>
+<p>We can reuse <a href="https://novakov-alexey.github.io/ann-in-scala-2/#data-preparation">OneHotEncoder</a> implemented earlier:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val encoder = </span><span style="color:#8fbcbb;">OneHotEncoder</span><span>(classes </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#b48ead;">0</span><span> to </span><span style="color:#b48ead;">9</span><span>)</span><span style="color:#81a1c1;">.</span><span>map(i </span><span style="color:#81a1c1;">=&gt; </span><span>(i</span><span style="color:#81a1c1;">.</span><span>toDouble</span><span style="color:#eceff4;">,</span><span> i</span><span style="color:#81a1c1;">.</span><span>toDouble))</span><span style="color:#81a1c1;">.</span><span>toMap)
+</span><span style="color:#81a1c1;">val yData =</span><span> encoder</span><span style="color:#81a1c1;">.</span><span>transform(dataset</span><span style="color:#81a1c1;">.</span><span>trainLabels</span><span style="color:#81a1c1;">.</span><span>as1D)
+</span></code></pre>
+<h2 id="common-preparation">Common preparation</h2>
+<p>Let's wrap both transformation into one function:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">prepareData</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#81a1c1;">Double</span><span>]</span><span style="color:#eceff4;">, </span><span>y: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#81a1c1;">Double</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val xData =</span><span> x</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> / </span><span style="color:#b48ead;">255</span><span style="color:#81a1c1;">d</span><span>) </span><span style="color:#616e88;">// normalize to [0,1] range
+</span><span>  </span><span style="color:#81a1c1;">val yData =</span><span> encoder</span><span style="color:#81a1c1;">.</span><span>transform(y</span><span style="color:#81a1c1;">.</span><span>as1D)
+</span><span>  (xData</span><span style="color:#eceff4;">,</span><span> yData)
+</span></code></pre>
+<p>Now we can call it like this:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">xTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTrain</span><span>) </span><span style="color:#81a1c1;">=</span><span> prepareData(dataset</span><span style="color:#81a1c1;">.</span><span>trainImage</span><span style="color:#eceff4;">,</span><span> dataset</span><span style="color:#81a1c1;">.</span><span>trainLabels)
+</span></code></pre>
+<h1 id="model-construction">Model construction</h1>
+<p>Our model is going to be designed/trained with:</p>
+<ul>
+<li>nodes: 784 x 100 x 10</li>
+<li>activation: ReLU, Softmax</li>
+<li>loss: cross-entropy</li>
+<li>accuracy: via argmax</li>
+<li>initialisation: <a href="https://arxiv.org/abs/1502.01852">Kaiming</a></li>
+<li>optimizer: Adam</li>
+</ul>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val ann = </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#81a1c1;">Double</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Adam</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">HeNormal</span><span>](
+</span><span>  crossEntropy</span><span style="color:#eceff4;">,
+</span><span>  learningRate </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">001</span><span style="color:#eceff4;">,
+</span><span>  metrics </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">List</span><span>(accuracy)</span><span style="color:#eceff4;">,
+</span><span>  batchSize </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">128</span><span style="color:#eceff4;">,
+</span><span>  gradientClipping </span><span style="color:#81a1c1;">=</span><span> clipByValue(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">d</span><span>)
+</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(relu</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">100</span><span>))      
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(softmax</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">10</span><span>))
+</span></code></pre>
+<p><a href="/adam-optimizer/">Adam</a> optimizer gets better results on MNIST data, so we stick to it, rather than with standard Stochastic Gradient Descent.</p>
+<h2 id="activations">Activations</h2>
+<p>We have already seen <code>ReLU</code> activation function, but let's recall its definition:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">relu</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>])(using n: </span><span style="color:#8fbcbb;">Numeric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  x</span><span style="color:#81a1c1;">.</span><span>map(t </span><span style="color:#81a1c1;">=&gt;</span><span> max(n</span><span style="color:#81a1c1;">.</span><span>zero</span><span style="color:#eceff4;">,</span><span> t))
+</span></code></pre>
+<p>Important note here that it is applied element-wise, i.e. for every element of <code>z</code> matrix in the layer.</p>
+<p>However, <code>softmax</code> activation function is <strong>applied across nodes</strong> of the layer to get the probability which sums up to <code>1</code>.
+This activation function is a typical choice for multi-class problem type. When we feed input data sample into the network, 
+we want to get an output as vector with probabilities for each class.</p>
+<p>Coming back to MNIST target, below representation shows that most likely the target value is digit &quot;4&quot;, 
+because the highest argument is &quot;0.5&quot; at index [4].</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>scala&gt; </span><span style="color:#8fbcbb;">List</span><span>(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">01</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">01</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">02</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">03</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">01</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">02</span><span>)</span><span style="color:#81a1c1;">.</span><span>sum
+</span><span style="color:#81a1c1;">val res0</span><span>: </span><span style="color:#81a1c1;">Double = </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0
+</span></code></pre>
+<p>This is how we can implement <code>softmax</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val toleration =</span><span> castFromTo[</span><span style="color:#81a1c1;">Double</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">T</span><span>](</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">4E-15</span><span style="color:#81a1c1;">d</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">softmax</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=       
+</span><span>  </span><span style="color:#81a1c1;">val applied =</span><span> x</span><span style="color:#81a1c1;">.</span><span>mapRow { row </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#81a1c1;">val max =</span><span> row</span><span style="color:#81a1c1;">.</span><span>max        
+</span><span>    </span><span style="color:#81a1c1;">val expNorm =</span><span> row</span><span style="color:#81a1c1;">.</span><span>map(v </span><span style="color:#81a1c1;">=&gt;</span><span> exp(v - max))         
+</span><span>    </span><span style="color:#81a1c1;">val sum =</span><span> expNorm</span><span style="color:#81a1c1;">.</span><span>sum        
+</span><span>    expNorm</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> / sum)
+</span><span>  }
+</span><span>  
+</span><span>  </span><span style="color:#616e88;">// rest is an extra defence against numeric overflow
+</span><span>  </span><span style="color:#81a1c1;">val appliedSum =</span><span> applied</span><span style="color:#81a1c1;">.</span><span>sumCols</span><span style="color:#81a1c1;">.</span><span>map( v </span><span style="color:#81a1c1;">=&gt; 
+</span><span>    </span><span style="color:#81a1c1;">if</span><span> v</span><span style="color:#81a1c1;">.</span><span>abs - toleration &gt; n</span><span style="color:#81a1c1;">.</span><span>one 
+</span><span>    then v 
+</span><span>    </span><span style="color:#81a1c1;">else</span><span> n</span><span style="color:#81a1c1;">.</span><span>one
+</span><span>  )
+</span><span>  </span><span style="color:#81a1c1;">val totalSum =</span><span> appliedSum</span><span style="color:#81a1c1;">.</span><span>sumRows</span><span style="color:#81a1c1;">.</span><span>as0D</span><span style="color:#81a1c1;">.</span><span>data      
+</span><span>  assert(totalSum </span><span style="color:#81a1c1;">==</span><span> x</span><span style="color:#81a1c1;">.</span><span>length</span><span style="color:#eceff4;">, 
+</span><span>    </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Softmax distribution sum is not equal to 1 at some activation, but</span><span style="color:#ebcb8b;">\n</span><span>${appliedSum}</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>  
+</span><span>  applied
+</span></code></pre>
+<p>It is obviously more complicated than <code>relu</code>. This is what the above code is doing:</p>
+<ol>
+<li>For each <code>row: Array[T]</code> of the <code>x</code> Tensor we find a max value and substract it from each value of this row to get stable values in the vector.
+<a href="https://stats.stackexchange.com/a/338293">The reason</a> to subtract <code>max</code> is to avoid numeric overflow.</li>
+<li>Apply exponent to each value right after the <code>max</code> subtraction.</li>
+<li>Make a sum of exponents.</li>
+<li>Finally, use exponent vector to divide each value by the <code>sum</code>.</li>
+<li>Additionally, we raise an error if a sum of individual values in
+the vector is not equal to <code>1</code>. Such situation may happen 
+due to numeric overflow. If it happens, then we may end up with exploding gradient (as a result bad training outcome).
+However, we tolerate numeric difference of <code>0.4E-15d</code>, i.e. it should be no more than <code>1.0000000000000004</code>.</li>
+</ol>
+<p>In order to perform back-propagation with gradient descent we need <code>softmax</code> derivative as well. 
+This is simplest version of softmax derivative:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">derivative</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=       
+</span><span>  </span><span style="color:#81a1c1;">val sm =</span><span> softmax(x)      
+</span><span>  sm</span><span style="color:#81a1c1;">.</span><span>multiply(n</span><span style="color:#81a1c1;">.</span><span>one - sm) </span><span style="color:#616e88;">// element-wise multiplication, NOT dot product
+</span></code></pre>
+<h2 id="loss-function">Loss function</h2>
+<p><code>Cross-entropy</code> can then be used to calculate the difference between the two probability distributions and 
+typical choice for multi-class classification. It can written in code as:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">crossEntropy</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](y: </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span>yHat: </span><span style="color:#8fbcbb;">T</span><span>): </span><span style="color:#8fbcbb;">T </span><span style="color:#81a1c1;">= 
+</span><span>  y * log(yHat)
+</span></code></pre>
+<p>It will return some value as a as difference. Example of input vectors:</p>
+<pre data-lang="text" style="background-color:#2e3440;color:#d8dee9;" class="language-text "><code class="language-text" data-lang="text"><span>some random yHat = [0.1, 0.1, 0, 0.8, ...] - it will be length of 10 in our MNIST case
+</span><span>        actual y = [0, 0, 0, 1, ........ ] - length 10
+</span></code></pre>
+<p>To get an idea whey cross-entropy is a usefull loss function to our problem, please have a look at this <a href="https://machinelearningmastery.com/cross-entropy-for-machine-learning/">blog-post</a>.</p>
+<h2 id="accuracy">Accuracy</h2>
+<p>Before we calculate a number of correct predictions, we need to not just compare <code>y</code> and <code>yHat</code> vectors, 
+but first need to find an index of the max element in the <code>y</code> and <code>yHat</code> vectors.</p>
+<p>So we need to help the existing algorithm to extract from the <code>yHat</code> vector the value of the label, i.e. predicted digit. 
+Function called <code>argmax</code> can be used for this task:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">accuracyMnist</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Ordering</span><span>](using n: </span><span style="color:#8fbcbb;">Numeric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">= new </span><span style="color:#8fbcbb;">Metric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]:
+</span><span>  </span><span style="color:#81a1c1;">val name = </span><span style="color:#a3be8c;">&quot;accuracy&quot;
+</span><span>  
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">matches</span><span>(actual: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>predicted: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#81a1c1;">Int =      
+</span><span>    </span><span style="color:#81a1c1;">val predictedArgMax =</span><span> predicted</span><span style="color:#81a1c1;">.</span><span>argMax      
+</span><span>    actual</span><span style="color:#81a1c1;">.</span><span>argMax</span><span style="color:#81a1c1;">.</span><span>equalRows(predictedArgMax)
+</span><span>
+</span><span style="color:#81a1c1;">val accuracy =</span><span> accuracyMnist[</span><span style="color:#81a1c1;">Double</span><span>]
+</span></code></pre>
+<p>Accuracy is a <code>Metric</code> type-class that has <code>matches</code> method to return a number of correct predictions.</p>
+<p>The <code>argMax</code> itself as generic tensor function:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">argMax</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](t: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>])(using n: </span><span style="color:#8fbcbb;">Numeric</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">maxIndex</span><span>(a: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">= 
+</span><span>    n</span><span style="color:#81a1c1;">.</span><span>fromInt(a</span><span style="color:#81a1c1;">.</span><span>indices</span><span style="color:#81a1c1;">.</span><span>maxBy(a))
+</span><span>
+</span><span>  t </span><span style="color:#81a1c1;">match
+</span><span>    </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Tensor2D</span><span>(data) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Tensor1D</span><span>(data</span><span style="color:#81a1c1;">.</span><span>map(maxIndex))
+</span><span>    </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Tensor1D</span><span>(data) </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Tensor0D</span><span>(maxIndex(data))
+</span><span>    </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Tensor0D</span><span>(</span><span style="color:#81a1c1;">_</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> t
+</span></code></pre>
+<h2 id="weight-initialisation">Weight Initialisation</h2>
+<p>Weight initialisation approach is important factor in Deep Learning to converge model training faster or even to avoid <a href="https://en.wikipedia.org/wiki/Vanishing_gradient_problem">vanished or exploded gradient</a>.</p>
+<p><code>Kaiming</code> weight initialisation is helping to address above problems. So let's use that as well:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>given [</span><span style="color:#8fbcbb;">T</span><span>: </span><span style="color:#8fbcbb;">ClassTag</span><span>: </span><span style="color:#8fbcbb;">Numeric</span><span>]: </span><span style="color:#8fbcbb;">ParamsInitializer</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">HeNormal</span><span>] with    
+</span><span>  </span><span style="color:#81a1c1;">val rnd = new </span><span style="color:#8fbcbb;">Random</span><span>() 
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">gen</span><span>(lenght: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">T </span><span style="color:#81a1c1;">= 
+</span><span>    castFromTo[</span><span style="color:#81a1c1;">Double</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">T</span><span>]{
+</span><span>      </span><span style="color:#81a1c1;">val v =</span><span> rnd</span><span style="color:#81a1c1;">.</span><span>nextGaussian + </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">001</span><span style="color:#81a1c1;">d </span><span style="color:#616e88;">// value shift is optional
+</span><span>      v * math</span><span style="color:#81a1c1;">.</span><span>sqrt(</span><span style="color:#b48ead;">2</span><span style="color:#81a1c1;">d</span><span> / lenght</span><span style="color:#81a1c1;">.</span><span>toDouble)
+</span><span>    }
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">weights</span><span>(rows: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span>cols: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    </span><span style="color:#8fbcbb;">Tensor2D</span><span>(</span><span style="color:#8fbcbb;">Array</span><span style="color:#81a1c1;">.</span><span>fill(rows)(</span><span style="color:#8fbcbb;">Array</span><span style="color:#81a1c1;">.</span><span>fill[</span><span style="color:#8fbcbb;">T</span><span>](cols)(gen(rows))))
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">biases</span><span>(length: </span><span style="color:#81a1c1;">Int</span><span>): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= 
+</span><span>    zeros(length)
+</span></code></pre>
+<p>We initialise biases to zeros. Weight matrices are initialised using random generator with normal distribution. Every random number then
+multiplied by <code>sqrt(2 / n)</code>, where n is a number of input nodes for this particular layer.</p>
+<h1 id="model-training">Model Training</h1>
+<p>Now we are ready to start training process.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val model =</span><span> ann</span><span style="color:#81a1c1;">.</span><span>train(xTrain</span><span style="color:#eceff4;">,</span><span> yTrain</span><span style="color:#eceff4;">,</span><span> epochs </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">15</span><span style="color:#eceff4;">,</span><span> shuffle </span><span style="color:#81a1c1;">= true</span><span>)
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span> </span><span style="color:#88c0d0;">epoch:</span><span> 1/15, avg. loss: 0.04434336993179046, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.8785666666666667</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 2/15, avg. loss: 0.024939809896450383, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9350166666666667</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 3/15, avg. loss: 0.02028075875579972, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9478833333333333</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 4/15, avg. loss: 0.017196840063260558, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9560833333333333</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 5/15, avg. loss: 0.01491209973340988, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9625666666666667</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 6/15, avg. loss: 0.01350024657628137, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9671833333333333</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 7/15, avg. loss: 0.01222168129663168, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9699</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 8/15, avg. loss: 0.011222418180870991, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9729833333333333</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 9/15, avg. loss: 0.010388172803460627, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9752833333333333</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 10/15, avg. loss: 0.009549474708521941, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.97765</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 11/15, avg. loss: 0.008920235294999721, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9787</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 12/15, avg. loss: 0.008214811390229967, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9806833333333334</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 13/15, avg. loss: 0.0077112882811408694, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9824</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 14/15, avg. loss: 0.0071559669134910325, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.98405</span><span style="color:#81a1c1;">]
+</span><span> </span><span style="color:#88c0d0;">epoch:</span><span> 15/15, avg. loss: 0.006797865863855411, metrics: </span><span style="color:#81a1c1;">[</span><span>accuracy: 0.9848</span><span style="color:#81a1c1;">]
+</span></code></pre>
+<p>We have gotten quite good accuracy on training. 
+98.4% correct predictions, which is 1.6% errors.</p>
+<p>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;4f3b9a8e761a66ce00.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;512bd7357981350e00.png" class="center-image"/>
+<br/><br/></p>
+<h1 id="model-testing">Model Testing</h1>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">xTest</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTest</span><span>) </span><span style="color:#81a1c1;">=</span><span> prepareData(dataset</span><span style="color:#81a1c1;">.</span><span>testImages</span><span style="color:#eceff4;">,</span><span> dataset</span><span style="color:#81a1c1;">.</span><span>testLabels)
+</span><span style="color:#81a1c1;">val testPredicted =</span><span> model(xTest)
+</span><span style="color:#81a1c1;">val value =</span><span> accuracy(yTest</span><span style="color:#eceff4;">,</span><span> testPredicted)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>test accuracy = $value</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>Accuracy on test data is quite close to the train accuracy:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">test</span><span> accuracy = 0.9721
+</span></code></pre>
+<p>We can also try to run a single test on the first image from the test dataset:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val singleTestImage =</span><span> dataset</span><span style="color:#81a1c1;">.</span><span>testImages</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>head
+</span><span style="color:#81a1c1;">val label =</span><span> dataset</span><span style="color:#81a1c1;">.</span><span>testLabels</span><span style="color:#81a1c1;">.</span><span>as1D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>head </span><span style="color:#616e88;">// this must be &quot;7&quot; 
+</span><span style="color:#81a1c1;">val predicted =</span><span> model(singleTestImage</span><span style="color:#81a1c1;">.</span><span>as2D)</span><span style="color:#81a1c1;">.</span><span>argMax</span><span style="color:#81a1c1;">.</span><span>as0D</span><span style="color:#81a1c1;">.</span><span>data  
+</span><span>
+</span><span>assert(label </span><span style="color:#81a1c1;">==</span><span> predicted</span><span style="color:#eceff4;">, 
+</span><span>  </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Predicted label is not equal to expected &#39;$label&#39; label, but was &#39;$predicted&#39;</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>predicted = $predicted</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>predicted </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">7</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0
+</span></code></pre>
+<h1 id="summary">Summary</h1>
+<p>We have seen that even one hidden layer is able to classify MNIST dataset with quite low error rate. 
+Key takeaways when classifying images are:</p>
+<ul>
+<li>make sure that gradient is not going to explode or vanish. For that, we can use proper weight initialisation, 
+clipping gradient by value or norm any other weight normalisation during the training. Also scale or normalise the input data</li>
+<li>use one-hot encoding for your target variable in case of multi-class classification</li>
+<li>in case of single label prediction, use <code>argmax</code> function</li>
+<li>use <code>softmax</code> activation at the last layer to distribute probabilities across classes.</li>
+</ul>
+<p>Try <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network">Convolutional Neural Network</a> as a next step in image classification problem.</p>
+<h1 id="links">Links</h1>
+<ol>
+<li><a href="https://github.com/novakov-alexey/deep-learning-scala">Source code of mini-library: deep-learning-scala</a></li>
+<li><a href="https://towardsdatascience.com/mnist-handwritten-digits-classification-from-scratch-using-python-numpy-b08e401c4dab">MNIST Handwritten digits classification from scratch using Python Numpy</a></li>
+<li><a href="https://github.com/eliben/deep-learning-samples/blob/d5ca86c5db664fabfb302cbbc231c50ec3d6a103/softmax/softmax.py#L84">softmax.py eliben/deep-learning-samples</a></li>
+</ol>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='MNIST image recognition using Deep Feed Forward Network' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="MNIST image recognition using Deep Feed Forward Network" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="MNIST image recognition using Deep Feed Forward Network" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;ann-mnist&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-dataset" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/ann-mnist/#dataset">
+                Dataset
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-loading-data" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#loading-data">
+                Loading Data
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-preparing-data" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#preparing-data">
+                Preparing data
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-feature-normalisation" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#feature-normalisation">
+                    Feature normalisation
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-target-encoding" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#target-encoding">
+                    Target Encoding
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-common-preparation" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#common-preparation">
+                    Common preparation
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-model-construction" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#model-construction">
+                Model construction
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-activations" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#activations">
+                    Activations
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-loss-function" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#loss-function">
+                    Loss function
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-accuracy" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#accuracy">
+                    Accuracy
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-weight-initialisation" class="toc is-size-7" href="https://novakov-alexey.github.io/ann-mnist/#weight-initialisation">
+                    Weight Initialisation
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-model-training" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#model-training">
+                Model Training
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-model-testing" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#model-testing">
+                Model Testing
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-links" class="toc is-size-7 " href="https://novakov-alexey.github.io/ann-mnist/#links">
+                Links
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/ann-mnist/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'ann-mnist'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

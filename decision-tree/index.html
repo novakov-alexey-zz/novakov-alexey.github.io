@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Decision Tree from scratch
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Decision Tree from scratch
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-12-21'>December 21, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    8 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1538 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/algorithms/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        algorithms
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p><strong>Cropped view of one the region in the middle of the tree we will build further</strong>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;6c7bd171163d1c7700.png" class="center-image"/>
+<br/><br/></p>
+<p>Decision Tree classifier is one the simplest algorithm to implement from scratch. One of the benefit of this algorithm is it can be trained without
+spending too much efforst on data preparation and it is fast comparing to more complex algorithms like Neural Networks. 
+In this blog post we are going to implement CART algorithm, which stands for Classification and Regression trees. There are many other algorithms in decision trees space, 
+but we will not describe them in this blog post.</p>
+<p>Data science practitioners often use decision tree algorithms to compare their performance with more advanced algorithms. 
+Although decision tree is fast to train, its accuracy metric usually lower than accuracy on the other algorithms like deep feed forward networks 
+or something more advanced using the same dataset. However, you do not always need high accuracy value, 
+so using CART and other decision tree ensemble algorithms may be enough for solving particular problem.</p>
+<span id="continue-reading"></span><h1 id="cart-algorithm">CART Algorithm</h1>
+<p>The whole algorithm can be described in several steps:</p>
+<ol>
+<li>
+<p>Building in-memory tree data structure based on input training tabular data:</p>
+<p>a. Find the best split question to divide input rows into two branches</p>
+<p>b. Repeat split for both branches recursively</p>
+</li>
+<li>
+<p>Using in-memory tree data structure to classify unseen data samples.</p>
+</li>
+</ol>
+<p>Below is a decision tree in different scales we will build further. 
+See a link to GitHub repo, which contains code store a decision tree as JSON file, so that you can visualize stoted JSON objects using any online JSON tree visualizer tool.</p>
+<p>Fit-to-sreen view of further implemented decision tree:
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;b797b256c794d86500.png" class="center-image"/>
+<br/><br/></p>
+<p>Zoomed view to read some tree questions:
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;7123a5b73ccf547800.png" class="center-image"/>
+<br/><br/></p>
+<h1 id="building-blocks">Building Blocks</h1>
+<p>We need several auxiliary data types to implement <code>CART</code> algorithms:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">object</span><span style="color:#8fbcbb;"> Types</span><span>:
+</span><span>  </span><span style="color:#616e88;">// Label will be always a string type
+</span><span>  </span><span style="color:#81a1c1;">type Label = </span><span style="color:#8fbcbb;">String
+</span><span>  </span><span style="color:#616e88;">// will support only 3 different types as data type for input features
+</span><span>  </span><span style="color:#81a1c1;">type Data = Int </span><span style="color:#8fbcbb;">| </span><span style="color:#81a1c1;">Float </span><span style="color:#8fbcbb;">| String
+</span><span>  </span><span style="color:#616e88;">// every sample row is an Array of Data
+</span><span>  </span><span style="color:#81a1c1;">type Features = </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Data</span><span>]
+</span><span>  </span><span style="color:#616e88;">// every sample row contains different features and target label 
+</span><span>  </span><span style="color:#81a1c1;">type Row = </span><span>(</span><span style="color:#8fbcbb;">Features</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Label</span><span>)
+</span><span>  </span><span style="color:#616e88;">// input data structure is an array of array i.e. matrix
+</span><span>  </span><span style="color:#81a1c1;">type Rows = </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Row</span><span>]
+</span></code></pre>
+<p>Decision Tree object will be built using the following types:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// contains column index and its column value at this index from the input data row
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Question</span><span>(col: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span>value: </span><span style="color:#8fbcbb;">Data</span><span>)
+</span><span>
+</span><span style="color:#616e88;">// recursive data structure
+</span><span>enum </span><span style="color:#8fbcbb;">DecisionTree</span><span>:
+</span><span>  </span><span style="color:#616e88;">// contains predicted label and number of rows which are classified to a single label
+</span><span>  </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Leaf</span><span>(predictions: </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">Label</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>])
+</span><span>
+</span><span>  </span><span style="color:#616e88;">// main building block that eventually terminates with `Leaf` nodes
+</span><span>  </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Node</span><span>(
+</span><span>      q: </span><span style="color:#8fbcbb;">Question</span><span style="color:#eceff4;">,
+</span><span>      trueBranch: </span><span style="color:#8fbcbb;">DecisionTree</span><span style="color:#eceff4;">,
+</span><span>      falseBranch: </span><span style="color:#8fbcbb;">DecisionTree
+</span><span>  )
+</span></code></pre>
+<h1 id="tree-assembling">Tree assembling</h1>
+<p><a href="https://en.wikipedia.org/wiki/Predictive_analytics#Classification_and_regression_trees_.28CART.29">CART algorithm</a> is using <code>Gini impurity</code> and <code>Information Gain</code> metrics in order to build efficient tree.</p>
+<p><a href="https://en.wikipedia.org/wiki/Decision_tree_learning#Gini_impurity">Gini impurity</a> from Wikipedia:</p>
+<pre style="background-color:#2e3440;color:#d8dee9;"><code><span>Gini impurity (named after Italian mathematician Corrado Gini) is a measure of how often a randomly chosen element from the set would be incorrectly labeled if it was randomly labeled according to the distribution of labels in the subset.
+</span></code></pre>
+<p><a href="https://en.wikipedia.org/wiki/Decision_tree_learning#Information_gain">Information gain</a> from Wikipedia:</p>
+<pre style="background-color:#2e3440;color:#d8dee9;"><code><span>Information gain is used to decide which feature to split on at each step in building the tree. Simplicity is best, so we want to keep our tree small. To do so, at each step we should choose the split that results in the most consistent child nodes.
+</span></code></pre>
+<p>Let's encode this in programming language:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">classCounts</span><span>(rows: </span><span style="color:#8fbcbb;">Rows</span><span>): </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  rows</span><span style="color:#81a1c1;">.</span><span>groupMapReduce(</span><span style="color:#81a1c1;">_.</span><span>_2)(</span><span style="color:#81a1c1;">_ =&gt; </span><span style="color:#b48ead;">1</span><span>)(</span><span style="color:#81a1c1;">_</span><span> + </span><span style="color:#81a1c1;">_</span><span>)
+</span><span>
+</span><span style="color:#616e88;">// math formula: 1 - Sum(p(i) ** 2), where i from 1 to J, J is number of classes
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">gini</span><span>(data: </span><span style="color:#8fbcbb;">Rows</span><span>): </span><span style="color:#81a1c1;">Float =
+</span><span>  </span><span style="color:#81a1c1;">val counts =</span><span> classCounts(data)
+</span><span>  counts</span><span style="color:#81a1c1;">.</span><span>keys</span><span style="color:#81a1c1;">.</span><span>foldLeft(</span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">f</span><span>) { (impurity, label) </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#81a1c1;">val labelProb =</span><span> counts(label) / data</span><span style="color:#81a1c1;">.</span><span>size</span><span style="color:#81a1c1;">.</span><span>toFloat
+</span><span>    impurity - math</span><span style="color:#81a1c1;">.</span><span>pow(labelProb</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span>)</span><span style="color:#81a1c1;">.</span><span>toFloat
+</span><span>  }
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">infoGain</span><span>(left: </span><span style="color:#8fbcbb;">Rows</span><span style="color:#eceff4;">, </span><span>right: </span><span style="color:#8fbcbb;">Rows</span><span style="color:#eceff4;">, </span><span>currentUncertainty: </span><span style="color:#81a1c1;">Float</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val p =</span><span> left</span><span style="color:#81a1c1;">.</span><span>length</span><span style="color:#81a1c1;">.</span><span>toFloat / (left</span><span style="color:#81a1c1;">.</span><span>length + right</span><span style="color:#81a1c1;">.</span><span>length)
+</span><span>  currentUncertainty - p * gini(left) - (</span><span style="color:#b48ead;">1</span><span> - p) * gini(right)  
+</span></code></pre>
+<p>In order to find the best question and make an efficient split for remaining rows, we need to implement a function like <code>rows: Rows =&gt; (Float, Option[Question])</code>.
+The first member of the tuple is <code>info gain</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">isNumeric</span><span>(value: </span><span style="color:#8fbcbb;">Data</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  value </span><span style="color:#81a1c1;">match
+</span><span>    </span><span style="color:#81a1c1;">case _</span><span>: </span><span style="color:#8fbcbb;">String </span><span style="color:#81a1c1;">=&gt; false
+</span><span>    </span><span style="color:#81a1c1;">case _         =&gt; true
+</span><span>
+</span><span style="color:#616e88;">// helper function to detect whether data sample macthes to a question, i.e. return true or false
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">matches</span><span>(q: </span><span style="color:#8fbcbb;">Question</span><span style="color:#eceff4;">, </span><span>example: </span><span style="color:#8fbcbb;">Features</span><span>): </span><span style="color:#81a1c1;">Boolean =
+</span><span>  </span><span style="color:#81a1c1;">val exampleVal =</span><span> example(q</span><span style="color:#81a1c1;">.</span><span>col)
+</span><span>  </span><span style="color:#81a1c1;">if</span><span> isNumeric(exampleVal) then
+</span><span>    (exampleVal</span><span style="color:#eceff4;">,</span><span> q</span><span style="color:#81a1c1;">.</span><span>value) </span><span style="color:#81a1c1;">match
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>(i: </span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span>i2: </span><span style="color:#81a1c1;">Int</span><span>)     </span><span style="color:#81a1c1;">=&gt;</span><span> i &gt;= i2
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>(f: </span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">, </span><span>f2: </span><span style="color:#81a1c1;">Float</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> f &gt;= f2
+</span><span>      </span><span style="color:#81a1c1;">case _                     =&gt; false
+</span><span>  </span><span style="color:#81a1c1;">else</span><span> exampleVal </span><span style="color:#81a1c1;">==</span><span> q</span><span style="color:#81a1c1;">.</span><span>value
+</span><span>
+</span><span style="color:#616e88;">// helper function to partition rows by Question
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">partition</span><span>(data: </span><span style="color:#8fbcbb;">Rows</span><span style="color:#eceff4;">, </span><span>q: </span><span style="color:#8fbcbb;">Question</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  data</span><span style="color:#81a1c1;">.</span><span>partition((features, </span><span style="color:#81a1c1;">_</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> matches(q</span><span style="color:#eceff4;">,</span><span> features))
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">findBestSplit</span><span>(rows: </span><span style="color:#8fbcbb;">Rows</span><span>): (</span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Question</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>bestGain </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f
+</span><span>  </span><span style="color:#81a1c1;">var </span><span>bestQuestion </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Option</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">Question</span><span>]
+</span><span>  </span><span style="color:#81a1c1;">val currentUncertainty =</span><span> gini(rows)
+</span><span>  </span><span style="color:#81a1c1;">val featureCount =</span><span> rows</span><span style="color:#81a1c1;">.</span><span>headOption</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>_1</span><span style="color:#81a1c1;">.</span><span>length - </span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#81a1c1;">.</span><span>getOrElse(</span><span style="color:#b48ead;">0</span><span>)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> col &lt;- </span><span style="color:#b48ead;">0</span><span> until featureCount </span><span style="color:#81a1c1;">do
+</span><span>    </span><span style="color:#81a1c1;">val uniqueVals =</span><span> rows</span><span style="color:#81a1c1;">.</span><span>map((row, </span><span style="color:#81a1c1;">_</span><span>) </span><span style="color:#81a1c1;">=&gt;</span><span> row(col))</span><span style="color:#81a1c1;">.</span><span>toSet
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">for</span><span> value &lt;- uniqueVals </span><span style="color:#81a1c1;">do
+</span><span>      </span><span style="color:#81a1c1;">val question = </span><span style="color:#8fbcbb;">Question</span><span>(col</span><span style="color:#eceff4;">,</span><span> value)
+</span><span>      </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">trueRows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">falseRows</span><span>) </span><span style="color:#81a1c1;">=</span><span> partition(rows</span><span style="color:#eceff4;">,</span><span> question)
+</span><span>      </span><span style="color:#616e88;">// Skip this split if it doesn&#39;t divide the dataset.
+</span><span>      </span><span style="color:#81a1c1;">if</span><span> trueRows</span><span style="color:#81a1c1;">.</span><span>nonEmpty &amp;&amp; falseRows</span><span style="color:#81a1c1;">.</span><span>nonEmpty then
+</span><span>        </span><span style="color:#616e88;">// Calculate the information gain from this split
+</span><span>        </span><span style="color:#81a1c1;">val gain =</span><span> infoGain(trueRows</span><span style="color:#eceff4;">,</span><span> falseRows</span><span style="color:#eceff4;">,</span><span> currentUncertainty)
+</span><span>        </span><span style="color:#616e88;">// You actually can use &#39;&gt;&#39; instead of &#39;&gt;=&#39; here        
+</span><span>        </span><span style="color:#81a1c1;">if</span><span> gain &gt;= bestGain then
+</span><span>          bestGain </span><span style="color:#81a1c1;">=</span><span> gain
+</span><span>          bestQuestion </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(question)
+</span><span>
+</span><span>  (bestGain</span><span style="color:#eceff4;">,</span><span> bestQuestion)
+</span></code></pre>
+<p>At this point we have all pieces to compose and get the CART algorithm done:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">leaf</span><span>(data: </span><span style="color:#8fbcbb;">Rows</span><span>): </span><span style="color:#8fbcbb;">Leaf </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#8fbcbb;">Leaf</span><span>(classCounts(data))
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">buildTree</span><span>(rows: </span><span style="color:#8fbcbb;">Rows</span><span>): </span><span style="color:#8fbcbb;">DecisionTree </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">gain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">question</span><span>) </span><span style="color:#81a1c1;">=</span><span> findBestSplit(rows)
+</span><span>  question </span><span style="color:#81a1c1;">match
+</span><span>    </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">None </span><span style="color:#81a1c1;">=&gt;</span><span> leaf(rows)
+</span><span>    </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Some</span><span>(q) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#81a1c1;">if</span><span> gain </span><span style="color:#81a1c1;">== </span><span style="color:#b48ead;">0</span><span> then leaf(rows)
+</span><span>      </span><span style="color:#81a1c1;">else
+</span><span>        </span><span style="color:#616e88;">// If we reach here, we have found a useful feature / value to partition on.                
+</span><span>        </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">trueRows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">falseRows</span><span>) </span><span style="color:#81a1c1;">=</span><span> partition(rows</span><span style="color:#eceff4;">,</span><span> q)
+</span><span>        </span><span style="color:#81a1c1;">val trueBranch =</span><span> buildTree(trueRows)
+</span><span>        </span><span style="color:#81a1c1;">val falseBranch =</span><span> buildTree(falseRows)
+</span><span>        </span><span style="color:#8fbcbb;">Node</span><span>(q</span><span style="color:#eceff4;">,</span><span> trueBranch</span><span style="color:#eceff4;">,</span><span> falseBranch)
+</span></code></pre>
+<h1 id="decision-tree-classifier">Decision Tree Classifier</h1>
+<p>In order to use built Decision Tree data structure we need one more function <code>classify</code>. 
+It goes through the tree by using input data sample until it reaches terminal <code>Leaf</code> node:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>extension (node: </span><span style="color:#8fbcbb;">DecisionTree</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">classify</span><span>(input: </span><span style="color:#8fbcbb;">Features</span><span>): </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>    @tailrec
+</span><span>    </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">loop</span><span>(
+</span><span>        input: </span><span style="color:#8fbcbb;">Features</span><span style="color:#eceff4;">,
+</span><span>        node: </span><span style="color:#8fbcbb;">DecisionTree
+</span><span>    ): </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>      node </span><span style="color:#81a1c1;">match
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Leaf</span><span>(predictions) </span><span style="color:#81a1c1;">=&gt;</span><span> predictions
+</span><span>        </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Node</span><span>(question</span><span style="color:#eceff4;">, </span><span>trueBranch</span><span style="color:#eceff4;">, </span><span>falseBranch) </span><span style="color:#81a1c1;">=&gt;
+</span><span>          </span><span style="color:#81a1c1;">if</span><span> matches(question</span><span style="color:#eceff4;">,</span><span> input) then loop(input</span><span style="color:#eceff4;">,</span><span> trueBranch)
+</span><span>          </span><span style="color:#81a1c1;">else</span><span> loop(input</span><span style="color:#eceff4;">,</span><span> falseBranch)
+</span><span>
+</span><span>    loop(input</span><span style="color:#eceff4;">,</span><span> node)
+</span></code></pre>
+<h1 id="demo-on-custom-churn-dataset">Demo on Custom Churn Dataset</h1>
+<p>We are going to use <code>Customer Churn</code> dataset, which I already used in <a href="../ann-in-scala-1#dataset">Artificial Neural Networks blog post</a>.</p>
+<p>Input features of this dataset are:</p>
+<pre data-lang="csv" style="background-color:#2e3440;color:#d8dee9;" class="language-csv "><code class="language-csv" data-lang="csv"><span style="color:#81a1c1;">CreditScore,
+</span><span style="color:#81a1c1;">Geography,
+</span><span style="color:#81a1c1;">Gender,
+</span><span style="color:#81a1c1;">Age,
+</span><span style="color:#81a1c1;">Tenure,
+</span><span style="color:#81a1c1;">Balance,
+</span><span style="color:#81a1c1;">NumOfProducts,
+</span><span style="color:#81a1c1;">HasCrCard,
+</span><span style="color:#81a1c1;">IsActiveMember,
+</span><span style="color:#81a1c1;">EstimatedSalary
+</span></code></pre>
+<p>Let's load it from CSV file and split into two sub-sets for training and testing phases. Dataset consists of <code>10 000</code> data samples, so we get <code>8000</code> samples for training
+and <code>2000</code> samples for testing:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">splitArray</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](
+</span><span>    fraction: </span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">,
+</span><span>    data: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>): (</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val count =</span><span> data</span><span style="color:#81a1c1;">.</span><span>length * fraction
+</span><span>  </span><span style="color:#81a1c1;">val countOrZero = if</span><span> count &lt; </span><span style="color:#b48ead;">1</span><span> then </span><span style="color:#b48ead;">0 </span><span style="color:#81a1c1;">else</span><span> count
+</span><span>  data</span><span style="color:#81a1c1;">.</span><span>splitAt(data</span><span style="color:#81a1c1;">.</span><span>length - countOrZero</span><span style="color:#81a1c1;">.</span><span>toInt)
+</span><span>
+</span><span style="color:#81a1c1;">val textData =
+</span><span>    </span><span style="color:#8fbcbb;">DataLoader</span><span>(</span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(</span><span style="color:#a3be8c;">&quot;data&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;Churn_Modelling.csv&quot;</span><span>))</span><span style="color:#81a1c1;">.</span><span>load(</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">val rows =
+</span><span>  textData</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>map((features, label) </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Data</span><span>](
+</span><span>      features(</span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">2</span><span>)</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">3</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">4</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">5</span><span>)</span><span style="color:#81a1c1;">.</span><span>toFloat</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">6</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">7</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">8</span><span>)</span><span style="color:#81a1c1;">.</span><span>toInt</span><span style="color:#eceff4;">,
+</span><span>      features(</span><span style="color:#b48ead;">9</span><span>)</span><span style="color:#81a1c1;">.</span><span>toFloat
+</span><span>    ) -&gt; label
+</span><span>  )
+</span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">trainData</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">testData</span><span>) </span><span style="color:#81a1c1;">=</span><span> splitArray(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">,</span><span> rows)
+</span></code></pre>
+<p>Using training data to build in-memory decision tree:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val classifier =</span><span> buildTree(trainData)
+</span></code></pre>
+<p>Now we can use it to classify test dataset and calculate accuracy metric in the same time:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">accuracy</span><span>(
+</span><span>    classifier: </span><span style="color:#8fbcbb;">DecisionTree</span><span style="color:#eceff4;">,
+</span><span>    data: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Row</span><span>]    
+</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  data</span><span style="color:#81a1c1;">.</span><span>map { (input, label) </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#81a1c1;">val predictions =</span><span> classifier</span><span style="color:#81a1c1;">.</span><span>classify(input)
+</span><span>    </span><span style="color:#81a1c1;">if</span><span> predictions</span><span style="color:#81a1c1;">.</span><span>contains(label) then </span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">f            
+</span><span>    </span><span style="color:#81a1c1;">else </span><span style="color:#b48ead;">0
+</span><span>  }</span><span style="color:#81a1c1;">.</span><span>sum * </span><span style="color:#b48ead;">100</span><span> / data</span><span style="color:#81a1c1;">.</span><span>size 
+</span><span>
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>test accuracy: ${accuracy(classifier</span><span style="color:#eceff4;">,</span><span> testData)} %</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#81a1c1;">&gt;</span><span> test </span><span style="color:#88c0d0;">accuracy:</span><span> 79.85 </span><span style="color:#81a1c1;">% 
+</span></code></pre>
+<p>Program has been completed tree generation from training data and test data classification in roughly <code>10 seconds</code>.
+Accuracy on test data is <code>79.85 %</code>. If we compare with ANN algorithm accuracy, which is <code>85.97 %</code>, CART algorithm accuracy is worse.</p>
+<h1 id="summary">Summary</h1>
+<p>We have implemented one of the decision tree algorithm CART, which is able to predict categorial or numeric target variable. 
+This algorithm assembles tree data structure based on training data features by finding best question to ask for current set of data samples. 
+Set of input data samples is getting smaller on every question split, so that all rows eventually get their predicted label. Once tree is built,
+we can use it to classify new data.</p>
+<p>CART algorithm is easy to understand and it can be useful in certain data classification problems. This algorithm is fast and easy to train, since it does not require hyper-parameters or
+any other additional tuning techniques. It is also fast to train comparing to neural networks training efforts (GPU acceleration, lots of data, vanishing gradient).</p>
+<p>If you need full project code, then check this GitHub repository: </p>
+<p><a href="https://github.com/novakov-alexey/decision-trees">https://github.com/novakov-alexey/decision-trees</a></p>
+<p>The entire blog-post is based on this example:</p>
+<ul>
+<li>Youtube video: <a href="https://www.youtube.com/watch?v=LDRbO9a6XPU&amp;list=LL&amp;index=6">https://www.youtube.com/watch?v=LDRbO9a6XPU&amp;list=LL&amp;index=6</a></li>
+<li>Python code: <a href="https://github.com/random-forests/tutorials/blob/master/decision_tree.py">https://github.com/random-forests/tutorials/blob/master/decision_tree.py</a></li>
+</ul>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Decision Tree from scratch' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Decision Tree from scratch" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Decision Tree from scratch" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;decision-tree&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-cart-algorithm" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/decision-tree/#cart-algorithm">
+                CART Algorithm
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-building-blocks" class="toc is-size-7 " href="https://novakov-alexey.github.io/decision-tree/#building-blocks">
+                Building Blocks
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-tree-assembling" class="toc is-size-7 " href="https://novakov-alexey.github.io/decision-tree/#tree-assembling">
+                Tree assembling
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-decision-tree-classifier" class="toc is-size-7 " href="https://novakov-alexey.github.io/decision-tree/#decision-tree-classifier">
+                Decision Tree Classifier
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-demo-on-custom-churn-dataset" class="toc is-size-7 " href="https://novakov-alexey.github.io/decision-tree/#demo-on-custom-churn-dataset">
+                Demo on Custom Churn Dataset
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/decision-tree/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/decision-tree/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'decision-tree'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

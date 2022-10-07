@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+	<title>Alexey Novakov Notes - math</title>
+	<subtitle>Alexey Novakov: Software Engineering Notes</subtitle>
+	<link href="https://novakov-alexey.github.io/categories/math/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://novakov-alexey.github.io"/>
+	<generator uri="https://www.getzola.org/">Zola</generator>
+	<updated>2021-02-04T00:00:00+00:00</updated>
+	<id>https://novakov-alexey.github.io/categories/math/atom.xml</id>
+	<entry xml:lang="en">
+		<title>Artificial Neural Network in Scala - part 1</title>
+		<published>2021-02-04T00:00:00+00:00</published>
+		<updated>2021-02-04T00:00:00+00:00</updated>
+		<link rel="alternate" href="https://novakov-alexey.github.io/ann-in-scala-1/" type="text/html"/>
+		<id>https://novakov-alexey.github.io/ann-in-scala-1/</id>
+		<content type="html">
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;abea8c08f62bf88e00.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;
+&lt;p&gt;&lt;em&gt;Deep Learning&lt;&#x2F;em&gt; is a group of machine learning methods which are based on artificial neural networks. Some of the deep learning architectures are deep neural networks.
+Deep neural network is an artificial neural network (ANN further) with multiple layers between the input and output layers. There are different types of neural networks, but they always have
+neurons, synapses, weights, biases and functions.&lt;&#x2F;p&gt;
+&lt;span id=&quot;continue-reading&quot;&gt;&lt;&#x2F;span&gt;
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;bc33a3f4d471e38a00.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.scala-lang.org&#x2F;&quot;&gt;Scala&lt;&#x2F;a&gt; is a full-stack multi-paradigm programming language. Scala is famous for its innovations in JVM eco-system and
+ambitious language syntax features leaving all other JVM-based languages for years behind. 
+Scala is also popular language thanks to Apache Spark, Kafka and Flink projects which are mainly implemented in it. &lt;&#x2F;p&gt;
+&lt;h1 id=&quot;scope&quot;&gt;Scope&lt;&#x2F;h1&gt;
+&lt;p&gt;This tutorial is divided into 2 articles. &lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;In this article we will go through the theory of ANN implementation. I will guide you through the basic calculus such as linear algebra and a little bit of differential calculus, which you need to know to implement neural network training and optimization algorithms.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;In &lt;a href=&quot;..&#x2F;ann-in-scala-2&quot;&gt;the second aritcle&lt;&#x2F;a&gt; we are going to implement ANN from scratch in Scala. 
+You can jump into second part directly, if you are familiar with the theory. But first look at the ANN Jargon table, if you decided to switch to second part.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h1 id=&quot;ann-jargon&quot;&gt;ANN Jargon&lt;&#x2F;h1&gt;
+&lt;p&gt;I assume you are a bit familiar with Machine Learning or Deep Learning. Nevertheless, below table will be useful to match 
+Deep Learning terminology with further Scala implementation. Some of the variable names in Scala code will be directly based 
+on the Deep learning name definitions, so that it is important to know why some variable is named as &lt;code&gt;z&lt;&#x2F;code&gt; and another one as &lt;code&gt;w&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Code Symbol &#x2F; Type&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: center&quot;&gt;Description&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: center&quot;&gt;Encoded as&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;x&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;input data for each neuron&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;2-dimensional tensor, i.e. matrix&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;y , actual&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;target data we know in advance from the training dataset&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;1-d tensor, i.e. vector&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;yHat , predicted&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;output of the neural network during the training or single prediction&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;1-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;w&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;layer weight, a.k.a model parameters&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;2-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;b&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;layer bias, part of the layer parameters&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;1-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;z&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;layer activation, calculated as &lt;br&#x2F;&gt; &lt;code&gt;x * w + b&lt;&#x2F;code&gt;&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;2-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;f&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;activation function to activate neuron. Specific implementation: sigmoid, relu&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;Scala function&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;a&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;layer activity, calculated as f(z)&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;2-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;error&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;it is result of yHat - y&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;1-d tensor&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;lossFunc&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;loss function to calculate error rate on training&#x2F;validation (example: mean squared error)&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;Scala function&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;epochs&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;number of iterations to train ANN&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;&lt;code&gt;integer&lt;&#x2F;code&gt; &amp;gt; 0&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;accuracy&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;% of correct predictions on train or test data sets&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;&lt;code&gt;double&lt;&#x2F;code&gt; number, between 0 and 1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;learningRate&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;numeric parameter used in weights update&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: center&quot;&gt;&lt;code&gt;double&lt;&#x2F;code&gt; number, usually between 0.01 and 0.1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;h1 id=&quot;tensor&quot;&gt;Tensor&lt;&#x2F;h1&gt;
+&lt;p&gt;Deep Learning is all about tensor calculus. Tensor in computer science is a generic abstraction for N-dimensional array. 
+In our ANN implementation, we are going to use scalar numbers which are encoded as 0-dimension tensor, vector - encoded as 1-d tensor and
+finally matrix - encoded as 2-d tensor. Vector and matrix are the most used building blocks for Deep Learning calculus. All tensor shapes we will
+use are going to be rectangular - every element is the same size along each axis.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;dataset&quot;&gt;Dataset&lt;&#x2F;h1&gt;
+&lt;p&gt;We will take _Churn Modelling dataset which predicts whether a customer is going to leave the bank or not. 
+This dataset is traveling across many tutorials at the Internet, 
+so that you can find a couple different code implementations among dozens of articles using the same data, so do I.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;csv&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-csv &quot;&gt;&lt;code class=&quot;language-csv&quot; data-lang=&quot;csv&quot;&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;RowNumber,CustomerId,Surname,CreditScore,Geography,Gender,Age,Tenure,Balance,NumOfProducts,HasCrCard,IsActiveMember,EstimatedSalary,Exited
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;15634602&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,Hargrave,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;619&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,France,Female,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;42&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;101348.88&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;15647311&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,Hill,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;608&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,Spain,Female,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;41&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;83807.86&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;112542.58&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;15619304&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,Onio,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;502&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,France,Female,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;42&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;159660.8&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;113931.57&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;15701354&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,Boni,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;699&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,France,Female,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;39&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;93826.63&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The last column is &lt;code&gt;y&lt;&#x2F;code&gt;, i.e. the value we want our ANN to predict between 0 and 1. Rest of the columns are &lt;code&gt;x&lt;&#x2F;code&gt; data, also known as features. We drop 
+first 3 columns and the last column &lt;code&gt;y&lt;&#x2F;code&gt; before we use them as &lt;code&gt;x&lt;&#x2F;code&gt; matrix. Remaining columns:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;csv&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-csv &quot;&gt;&lt;code class=&quot;language-csv&quot; data-lang=&quot;csv&quot;&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;CreditScore,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;Geography,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;Gender,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;Age,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;Tenure,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;Balance,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;NumOfProducts,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;HasCrCard,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;IsActiveMember,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;EstimatedSalary
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h1 id=&quot;network-topology&quot;&gt;Network Topology&lt;&#x2F;h1&gt;
+
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;17388142498b32cd00.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;
+&lt;p&gt;Above picture describes a network we are going to implement.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;N&lt;&#x2F;em&gt; is a number of features, i.e. remaining columns from the input dataset.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Each layer is fully connected with next layer. I draw each layer by skipping middle neurons to get smaller visual overhead.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Between each layer we have weights which form linear equations via dot product &lt;code&gt;x&lt;&#x2F;code&gt; * &lt;code&gt;w&lt;&#x2F;code&gt; + &lt;code&gt;bias&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Each layer has its own activation functions. We use ReLU (Rectified Linear Unit) and Sigmoid functions.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h1 id=&quot;forward-propagation&quot;&gt;Forward Propagation&lt;&#x2F;h1&gt;
+&lt;p&gt;Basic idea of neural network implementation is to leverage math principals for matrix and vector multiplication. As neural network is going to be fully connected from layer to layer, we can represent learning and optimization algorithms as following:&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;dimensions&quot;&gt;Dimensions&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;single-training-example&quot;&gt;Single training example&lt;&#x2F;h3&gt;
+&lt;p&gt;It is one data record:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;x: 12 input columns as 1 x 12 matrix&lt;&#x2F;li&gt;
+&lt;li&gt;w1: 12 x 6 matrix + 6 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;w2: 6 x 6 matrix + 6 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;w3: 6 x 1 matrix + 1 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;yHat: scalar number&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;An amount of hidden layers and neurons are parameters to be tuned by an expert, i.e. externally to the main algorithm. 
+We set 2 hidden layers with 6 neurons each. Our last layer
+is single neuron that produces final prediction, which we will treat as &lt;code&gt;yes&lt;&#x2F;code&gt; or &lt;code&gt;no&lt;&#x2F;code&gt; to answer customer churn question.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;multiple-training-examples&quot;&gt;Multiple training examples&lt;&#x2F;h3&gt;
+&lt;p&gt;Mini-batch approach, i.e. multiple training examples at once. Batch size to be tuned externally as well. Let&#x27;s take 16 as batch size:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;x: 16 x 12 matrix&lt;&#x2F;li&gt;
+&lt;li&gt;w1: 12 x 6 matrix + 6 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;w2: 6 x 6 matrix + 6 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;w3: 6 x 1 matrix + 1 x 1 matrix for biases&lt;&#x2F;li&gt;
+&lt;li&gt;yHat: 16 x 1 matrix&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;As you can see, our matrices are equal in rows at input and output layers.
+That means we can input any number of rows through the neural network at once when we do training or prediction.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;math-of-the-forward-propagation&quot;&gt;Math of the Forward propagation&lt;&#x2F;h2&gt;
+&lt;p&gt;When we train neural network, we use input data and parameters on all hidden layers to reach output layer, so that we get the prediction value(s).
+First part of the ANN implementation that calculates predictions, i.e. &lt;code&gt;yHat&lt;&#x2F;code&gt; is called _forward propagation.&lt;&#x2F;p&gt;
+&lt;p&gt;Linear algebra helps us to feed data into the network and get the result using matrix multiplication principals. That makes the entire training and single
+prediction quite generic, so that we can easily program that in any programming language. &lt;&#x2F;p&gt;
+&lt;p&gt;In a nutshell, our 12 x 6 x 6 x 1 network will form the following expressions for every training batch:&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;first-hidden-layer&quot;&gt;First Hidden Layer&lt;&#x2F;h3&gt;
+
+
+&lt;img src=&quot;https:&amp;#x2F;&amp;#x2F;novakov-alexey.github.io&amp;#x2F;processed_images&amp;#x2F;1a1854767478e60400.png&quot; class=&quot;center-image&quot;&#x2F;&gt;
+&lt;br&#x2F;&gt;&lt;br&#x2F;&gt;
+&lt;p&gt;Above picture shows activations for the neurons of the first hidden layer. In fact, next layers are calculated in similar way.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;X&lt;&#x2F;em&gt; is a matrix where each row is a data sample. Every column is a particular feature&#x2F;column from the initial dataset. Usually, input column is scaled&#x2F;encoded (see second article).&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;We use dot product operation for &lt;em&gt;X&lt;&#x2F;em&gt; and &lt;em&gt;W&lt;&#x2F;em&gt;. 
+Resulting matrix is used to add biases using element-wise addition. b1 will be added to each element of the first row of that resulting matrix,
+then b2 to the second row and so on.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;second-hidden-layer&quot;&gt;Second Hidden Layer&lt;&#x2F;h3&gt;
+&lt;p&gt;The &lt;code&gt;x&lt;&#x2F;code&gt; of the second layer is an &lt;code&gt;a&lt;&#x2F;code&gt; we calculated on the previous layer. We will call it &lt;code&gt;a1&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;a1&lt;&#x2F;span&gt;&lt;span&gt; (16 x 6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; w2 (6 x 6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b2 (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;z2&lt;&#x2F;span&gt;&lt;span&gt; (16 x 6)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(z2) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;a2&lt;&#x2F;span&gt;&lt;span&gt; (16 x 6)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Above pseudo-code shows matrix dimensions in the parenthesis.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;output-layer&quot;&gt;Output Layer&lt;&#x2F;h3&gt;
+&lt;p&gt;Input data is a2. Here we get out prediction at the end:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;a2&lt;&#x2F;span&gt;&lt;span&gt; (16 x 6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; w3 (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt; b3 (1 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;z3&lt;&#x2F;span&gt;&lt;span&gt; (16 x 1)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(z3) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;a3&lt;&#x2F;span&gt;&lt;span&gt; (16 x 1)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;a3&lt;&#x2F;code&gt; a.k.a yHat represents a prediction for each data sample in the batch. Prediction values are probabilities between 0 and 1. &lt;&#x2F;p&gt;
+&lt;p&gt;If you are confused with above explanation, I recommend to check great video series on Deep Learning: &lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=aircAruvnKk&quot;&gt;But what is a Neural Network? | Deep learning, chapter 1&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;batch-tracing&quot;&gt;Batch Tracing&lt;&#x2F;h2&gt;
+&lt;p&gt;In order to see what is going on with the state of neural network, let&#x27;s feed one single batch into it.&lt;&#x2F;p&gt;
+&lt;p&gt;There are different strategies for initial weights and biases initialisation. In our implementation we will follow:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;weight matrices are initialised using uniform-random&lt;&#x2F;li&gt;
+&lt;li&gt;bias vectors are initialised with zeros&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Later they will be updated via optimization algorithm.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;x-input&quot;&gt;x - input&lt;&#x2F;h3&gt;
+&lt;p&gt;Below matrix is our &lt;code&gt;x&lt;&#x2F;code&gt;, which is our input data from the training or test set. The values it contains is a result of 
+data preparation step, which I will explain in details further:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 16x12, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[-0.032920357,1.1368092,-0.579135,-0.6694619,-0.9335201,0.3765018,-1.0295835,-1.0824665,-0.9476086,0.7312724,0.8284169,-0.05904571]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.12171035,-0.86240697,-0.579135,1.464448,-0.9335201,0.26486462,-1.3750359,0.2695743,-0.9476086,-1.340666,0.8284169,0.1443363]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.97732306,1.1368092,-0.579135,-0.6694619,-0.9335201,0.3765018,1.0431306,1.4932814,2.0728939,0.7312724,-1.1834527,0.16957337]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.6128251,1.1368092,-0.579135,-0.6694619,-0.9335201,0.041590314,-1.3750359,-1.0824665,0.5626426,-1.340666,-1.1834527,-0.19572]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[1.8316696,-0.86240697,-0.579135,1.464448,-0.9335201,0.48813897,-1.0295835,0.94235253,-0.9476086,0.7312724,0.8284169,-0.463582]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.17694691,-0.86240697,-0.579135,1.464448,1.0502101,0.59977615,1.0431306,0.7527129,0.5626426,0.7312724,-1.1834527,0.82049227]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[1.6056587,1.1368092,-0.579135,-0.6694619,1.0502101,1.2695991,0.69767827,-1.0824665,0.5626426,0.7312724,0.8284169,-1.7176533]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-1.9943721,-0.86240697,1.6928561,-0.6694619,-0.9335201,-1.0747813,-0.33867878,0.7735395,3.583145,0.7312724,-1.1834527,0.267966]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.9853949,1.1368092,-0.579135,-0.6694619,1.0502101,0.59977615,-0.33867878,1.20919,0.5626426,-1.340666,0.8284169,-0.5388685]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.49174783,1.1368092,-0.579135,-0.6694619,1.0502101,-1.2980556,-1.0295835,1.0890474,-0.9476086,0.7312724,0.8284169,-0.5972788]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.7674558,1.1368092,-0.579135,-0.6694619,1.0502101,-0.85150695,0.35222593,0.563331,0.5626426,-1.340666,-1.1834527,-0.44364995]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-1.0176822,-0.86240697,-0.579135,1.464448,1.0502101,-1.6329671,-0.68413115,-1.0824665,0.5626426,0.7312724,-1.1834527,-0.5125319]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-1.1871903,1.1368092,-0.579135,-0.6694619,-0.9335201,-0.5165955,1.7340354,-1.0824665,0.5626426,0.7312724,-1.1834527,-1.4233431]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.5979476,1.1368092,-0.579135,-0.6694619,-0.9335201,-1.52133,0.0067735757,-1.0824665,0.5626426,-1.340666,-1.1834527,1.5672718]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.09622873,-0.86240697,-0.579135,1.464448,-0.9335201,-0.40495834,0.69767827,-1.0824665,0.5626426,0.7312724,0.8284169,-0.70219]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.05713581,-0.86240697,1.6928561,-0.6694619,1.0502101,0.71141326,-0.68413115,1.2265866,0.5626426,-1.340666,0.8284169,-0.731704]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;w1-between-input-and-1st-hidden-layers&quot;&gt;w1 - between input and 1st hidden layers&lt;&#x2F;h3&gt;
+&lt;p&gt;weight:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 12x6, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[0.0031250487,0.6230519,0.41888618,0.89568454,0.6927525,0.7887961]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.30450296,0.75655645,0.075620584,0.898596,0.66731954,0.06079619]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.21693613,0.89243406,0.6251479,0.080811165,0.30963784,0.87972105]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.006676915,0.05886997,0.88085854,0.29817313,0.19820364,0.6823392]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.73550576,0.49408147,0.99867696,0.71354216,0.9676805,0.09009225]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.19121544,0.021707054,0.53959745,0.74587476,0.16132912,0.08185377]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.2528674,0.562563,0.17039675,0.7291027,0.41844574,0.4336123]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8275197,0.5867702,0.1692482,0.102723576,0.8936942,0.12275006]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.15337862,0.55374163,0.7993138,0.73106086,0.29611018,0.6279454]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.15933406,0.5840742,0.42520604,0.44090283,0.13000321,0.25581995]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8168607,0.25407365,0.6668799,0.277898,0.13848923,0.94559854]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.61593276,0.8569094,0.83978665,0.12022303,0.097834654,0.9559516]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;bias:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,0.0,0.0,0.0,0.0]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;w2-between-1st-and-2nd-hidden-layers&quot;&gt;w2 - between 1st and 2nd hidden layers&lt;&#x2F;h3&gt;
+&lt;p&gt;weight:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6x6, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[0.77492374,0.20006068,0.8301353,0.8226056,0.726444,0.54590976]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8728169,0.83197665,0.5453676,0.7730933,0.77980715,0.20573096]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8222075,0.94630164,0.29234344,0.7667057,0.3600455,0.26467463]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.5196553,0.3935514,0.23351222,0.18136671,0.01824836,0.25099826]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8864608,0.64109814,0.3031471,0.18872173,0.5463185,0.26470202]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.102771536,0.92541504,0.21454614,0.8614344,0.10369446,0.76455885]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;bias:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,0.0,0.0,0.0,0.0]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;w3-between-2nd-hidden-and-output-layers&quot;&gt;w3 - between 2nd hidden and output layers&lt;&#x2F;h3&gt;
+&lt;p&gt;weight:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6x1, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[0.63033116]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.6078242]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.022346135]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.62451136]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.89858407]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.5960952]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;bias:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 1, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;yhat-output-layer&quot;&gt;yHat - Output layer&lt;&#x2F;h3&gt;
+&lt;p&gt;Predictions for the input batch:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 16, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.8810671,0.49800232,0.86774874,0.49800232,0.99999976,0.83703655,0.49800232,0.49800232,0.9976035,0.49800232,0.9999994,0.49800232,0.8031284,0.49800232,0.9775441,0.86094683]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Above trace is for the first training batch at the very first epoch. You should not try understand these digits in weights, biases and outputs matrices.
+They are going to change their values a lot after running training loop 100 times (epochs) with N batches each.&lt;&#x2F;p&gt;
+&lt;h1 id=&quot;backward-propagation&quot;&gt;Backward Propagation&lt;&#x2F;h1&gt;
+&lt;p&gt;Initial weights and biases are not going to give us right equations to predict our &lt;em&gt;y&lt;&#x2F;em&gt;. Even if we propagate the entire dataset through the network.
+Obviously, someone needs to update these parameters based on some feedback. This feedback is calculated via &lt;code&gt;loss&lt;&#x2F;code&gt; function. 
+In the science literature, &lt;code&gt;loss function&lt;&#x2F;code&gt; is also called as &lt;code&gt;cost function&lt;&#x2F;code&gt;. We are going to use &lt;code&gt;loss&lt;&#x2F;code&gt; and &lt;code&gt;cost&lt;&#x2F;code&gt; here as synonymous.&lt;&#x2F;p&gt;
+&lt;p&gt;There are different loss functions in Deep Learning we can use. We will go with &lt;code&gt;binary-cross-entropy&lt;&#x2F;code&gt; as we predict binary value. 
+Our loss value will show how good we are updating the network weights at specific training epoch. However, updates will be done using Gradient
+Descent optimization algorithm.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;gradient-descent-optimization&quot;&gt;Gradient Descent optimization&lt;&#x2F;h2&gt;
+&lt;p&gt;Model prediction is calculated through the forward propagation of the input data sample(s). 
+If weights and biases are trained well, then our predictions will be accurate as well. In order to say whether our model performs well,
+we check &lt;code&gt;loss&lt;&#x2F;code&gt; value on every training cycle as well as &lt;code&gt;accuracy&lt;&#x2F;code&gt; metric. Accuracy is number of &lt;code&gt;correct predictions&lt;&#x2F;code&gt; divided by &lt;code&gt;total number&lt;&#x2F;code&gt; of data samples during the training or validation.&lt;&#x2F;p&gt;
+&lt;p&gt;You might ask yourself - how can I train model parameters well? In other words how to update them in right direction, so that they give accurate predictions? &lt;&#x2F;p&gt;
+&lt;p&gt;Here we meet &lt;em&gt;Gradient Descent.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;As &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Gradient_descent&quot;&gt;per Wikipedia&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+  Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function&lt;br &#x2F;&gt;
+  
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Gradient descent is a way to minimise an objective loss function for neural network parameters. In other words, it helps to find best parameters by
+minimising loss function. &lt;em&gt;Smaller loss, better overall network accuracy.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Using Gradient Descent, we are finding proper change rate on every training cycle. 
+So that we can update our weights and biases to get the best model performance. &lt;&#x2F;p&gt;
+&lt;p&gt;How exactly the Gradient Descent algorithm calculates that change?&lt;&#x2F;p&gt;
+&lt;p&gt;There are thousands of articles explaining that visually. In short, we are trying to find steepest descent of the derivative function.
+Using small coefficient &lt;code&gt;learningRate&lt;&#x2F;code&gt; we subtract the gradient value from the initial parameter. That allows us to find best parameter and
+minimise the loss function. One of the good visual explanation for linear regression problem with gradient descent is &lt;a href=&quot;https:&#x2F;&#x2F;www.mygreatlearning.com&#x2F;blog&#x2F;gradient-descent&#x2F;&quot;&gt;here&lt;&#x2F;a&gt;. It also works well for multiple linear regression like in our case, we got 12 features, so 12 independent variables.&lt;&#x2F;p&gt;
+&lt;p&gt;Coming back to our back-propagation implementation. &lt;code&gt;f&#x27;(x)&lt;&#x2F;code&gt;is a derivative function of the layer&#x27;s activation function. We use derivative function to update all weights except the last one, i.e. &lt;code&gt;w1&lt;&#x2F;code&gt; and &lt;code&gt;w2&lt;&#x2F;code&gt;, not &lt;code&gt;w3&lt;&#x2F;code&gt;. To update &lt;code&gt;w3&lt;&#x2F;code&gt;, we use delta based on the &lt;code&gt;error&lt;&#x2F;code&gt;, i.e. predicted - actual. 
+Layers &lt;code&gt;w1&lt;&#x2F;code&gt; and &lt;code&gt;w2&lt;&#x2F;code&gt; are using &lt;code&gt;relu&lt;&#x2F;code&gt; as activation function. Derivative of the &lt;code&gt;relu&lt;&#x2F;code&gt; function is following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;scala&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-scala &quot;&gt;&lt;code class=&quot;language-scala&quot; data-lang=&quot;scala&quot;&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(x &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;0 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;else &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Such derivative function is applied element-wise to &lt;code&gt;z&lt;&#x2F;code&gt; matrix in the step #6 of the back propagation part (see second article for Scala reference implementation).&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;math-of-the-backward-propagation&quot;&gt;Math of the Backward propagation&lt;&#x2F;h2&gt;
+&lt;p&gt;Back-propagation part of ANN is a bit more complicated than forward propagation part. 
+In &lt;em&gt;Gradient Descent Optimization&lt;&#x2F;em&gt; algorithm, we calculate derivatives to calculate &lt;code&gt;yHat&lt;&#x2F;code&gt; rate of change with respect to last &lt;code&gt;z&lt;&#x2F;code&gt;, in our case it is &lt;code&gt;z3&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;high-level-steps-of-the-gradient-descent-algorithm&quot;&gt;High-level steps of the Gradient Descent algorithm&lt;&#x2F;h3&gt;
+&lt;ol start=&quot;0&quot;&gt;
+&lt;li&gt;Calculate error based on actual &lt;code&gt;y&lt;&#x2F;code&gt; and on predicted &lt;code&gt;yHat&lt;&#x2F;code&gt;. It will be called &lt;code&gt;delta&lt;&#x2F;code&gt; further and in the code.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;delta&lt;&#x2F;span&gt;&lt;span&gt; = (yHat - y) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;multiply&lt;&#x2F;span&gt;&lt;span&gt; f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;#39;(z)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;result is a 16 x 1 matrix
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;where:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;    - &amp;quot;f`&amp;quot; is a derivative to activation function on the current layer.   
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;    - &amp;quot;z&amp;quot; is current layer activation.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;    - &amp;quot;multiply&amp;quot; is Hadamard product, a.k.a. element-wise multiplication. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;      Note: it is not the same as dot product.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol&gt;
+&lt;li&gt;Iterate list of weights matrices from end to start, i.e. backwards.
+Let&#x27;s take &amp;quot;i&amp;quot; as layer index&lt;&#x2F;li&gt;
+&lt;li&gt;Calculate partial derivative as:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;partialDerivativeN&lt;&#x2F;span&gt;&lt;span&gt; = xi.T &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; delta
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;where:     
+&lt;&#x2F;span&gt;&lt;span&gt;     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;T&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt; is a matrix transpose operation,
+&lt;&#x2F;span&gt;&lt;span&gt;     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;*&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt; is dot product operation.    
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;Update weights of &lt;code&gt;i&lt;&#x2F;code&gt; layer via:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;wi&lt;&#x2F;span&gt;&lt;span&gt; = wi - learningRate &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; partialDerivative_i 
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;where:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;learningRate&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt; is a scalar number. 
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;partialDerivative_i&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt; is a matrix, so &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;quot;*&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt; is dot product here as well.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol start=&quot;4&quot;&gt;
+&lt;li&gt;Update bias of &lt;code&gt;i&lt;&#x2F;code&gt; layer via:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;bi&lt;&#x2F;span&gt;&lt;span&gt; = bi - sum(delta)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;Pass updated weight &lt;code&gt;wi&lt;&#x2F;code&gt; and &lt;code&gt;delta&lt;&#x2F;code&gt; to previous layer, i.e. to &lt;code&gt;wi - 1&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;Now starting &lt;code&gt;wi - 1&lt;&#x2F;code&gt; weight update, we calculate &lt;code&gt;delta&lt;&#x2F;code&gt; differently.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;delta&lt;&#x2F;span&gt;&lt;span&gt; = (previousDelta &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; previousW) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;multiply&lt;&#x2F;span&gt;&lt;span&gt; f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&amp;#39;(z)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;where:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;   - &amp;quot;previousDelta&amp;quot; is delta from previous step, i.e. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;      it is from layer next to the right, because we go backward. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;   - &amp;quot;previousW&amp;quot; - is a weight matrix from the previous step as well.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;em&gt;If i &amp;gt; 0, then:&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;decrement &lt;code&gt;i&lt;&#x2F;code&gt; via &lt;code&gt;i&lt;&#x2F;code&gt; = &lt;code&gt;i&lt;&#x2F;code&gt; -1 and then repeat steps from 2 to 5. &lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;otherwise:&lt;&#x2F;em&gt; &lt;&#x2F;p&gt;
+&lt;p&gt;we finished back-propagation for a specific batch or a single data sample (in case of stochastic gradient descent).&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;back-propagation-tracing&quot;&gt;Back-propagation tracing&lt;&#x2F;h3&gt;
+&lt;h4 id=&quot;w3-between-2nd-hidden-and-output-layers-1&quot;&gt;w3 - between 2nd hidden and output layers&lt;&#x2F;h4&gt;
+&lt;p&gt;Delta (error):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 16, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.5,0.5,-2.336502E-5,0.5,0.99982685,0.0,1.0,-0.27220798,0.9981591,0.99999166,0.5142617,0.5,0.5,0.5,0.5,0.9999994]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;x transpose:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6x16, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[0.0,0.0,2.3540525,0.0,1.1964836,4.380693,6.6140265,0.44490784,1.8534858,2.7576103,0.007678177,0.0,0.0,0.0,0.0,3.0259452]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,1.4293345,0.0,1.9171724,5.341193,5.351874,0.52522117,1.888961,3.053475,0.0014958136,0.0,0.0,0.0,0.0,4.647504]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,2.901132,0.0,3.4634292,6.8469305,9.681695,0.16261059,1.7458743,4.406227,0.0116603775,0.0,0.0,0.0,0.0,3.5064058]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,2.2631726,0.0,1.4329143,5.5888605,7.362318,0.16618003,1.1314285,2.040889,0.023946803,0.0,0.0,0.0,0.0,2.7598464]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,3.2273922,0.0,2.8001034,8.964131,10.323663,0.10813884,1.4567397,2.918638,0.013493502,0.0,0.0,0.0,0.0,3.6922505]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.0,0.0,3.2367752,0.0,2.513441,9.055562,10.566048,0.26056617,1.7771944,3.133051,0.015981253,0.0,0.0,0.0,0.0,4.64655]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;partialDerivative3 = x.T * (delta multiply f`(z)):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6x1, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[15.326693]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[16.712915]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[22.761444]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[14.692074]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[21.16563]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[22.569763]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Weight = w - learningRate * partialDerivative3 :&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 6x1, Tensor2D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[[0.6776238]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.29685247]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.496793]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.95105153]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.824897]
+&lt;&#x2F;span&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[0.64518374]]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Bias = b - learningRate * sum(delta) :&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;sizes:&lt;&#x2F;span&gt;&lt;span&gt; 1, Tensor1D&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span&gt;Float&lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;]&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;[-0.0077400077]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;w2-between-1st-and-2nd-hidden-layers-1&quot;&gt;w2 - between 1st and 2nd hidden layers&lt;&#x2F;h4&gt;
+&lt;p&gt;current delta:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;delta&lt;&#x2F;span&gt;&lt;span&gt; (16x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;previous&lt;&#x2F;span&gt;&lt;span&gt; delta &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; previous w) multiply f`(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;z&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;current derivative:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;partialDerivative2&lt;&#x2F;span&gt;&lt;span&gt; (6 x 6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;x.T&lt;&#x2F;span&gt;&lt;span&gt; (6 x 16) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; delta (16 x 6)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Weight:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;w2&lt;&#x2F;span&gt;&lt;span&gt; (6x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;w2&lt;&#x2F;span&gt;&lt;span&gt; (6x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; learningRate &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; partialDerivative2 (6 x 6)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Bias:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;b2&lt;&#x2F;span&gt;&lt;span&gt; (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;b2&lt;&#x2F;span&gt;&lt;span&gt; (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; learningRate &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; sum(delta)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;w1-between-input-and-1st-hidden-layers-1&quot;&gt;w1 - between input and 1st hidden layers&lt;&#x2F;h4&gt;
+&lt;p&gt;current delta:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;delta&lt;&#x2F;span&gt;&lt;span&gt; (16x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;previous&lt;&#x2F;span&gt;&lt;span&gt; delta &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; previous w) multiply f`(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;z&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;current derivative:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;partialDerivative1&lt;&#x2F;span&gt;&lt;span&gt; (12 x 6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;x.T&lt;&#x2F;span&gt;&lt;span&gt; (12 x 16) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; delta (16 x 6)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Weight:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;w1&lt;&#x2F;span&gt;&lt;span&gt; (12x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;w2&lt;&#x2F;span&gt;&lt;span&gt; (12x6) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; learningRate &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; partialDerivative1 (12 x 6)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;updated Bias:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2e3440;color:#d8dee9;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;b1&lt;&#x2F;span&gt;&lt;span&gt; (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;b1&lt;&#x2F;span&gt;&lt;span&gt; (6 x 1) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#88c0d0;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt; learningRate &lt;&#x2F;span&gt;&lt;span style=&quot;color:#81a1c1;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span&gt; sum(delta)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h1 id=&quot;wrapping-up&quot;&gt;Wrapping up&lt;&#x2F;h1&gt;
+&lt;p&gt;We have finished with theoretical part and ready to continue with the second article &lt;a href=&quot;..&#x2F;ann-in-scala-2&quot;&gt;ANN in Scala: implementation&lt;&#x2F;a&gt;.
+In case you have not gotten how the ANN is actually working in theory, then I encourage you to search for other articles and 
+videos. It is important to understand this part before looking at actual implementation in code.&lt;&#x2F;p&gt;
+</content>
+	</entry>
+</feed>

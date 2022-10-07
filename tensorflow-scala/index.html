@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | TensorFlow Scala - Linear Regression via ANN
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            TensorFlow Scala - Linear Regression via ANN
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-02-13'>February 13, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    12 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    2310 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/tensorflow/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        tensorflow
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p><img src="https://raw.githubusercontent.com/eaplatanios/tensorflow_scala/master/docs/images/logo.svg?sanitize=true" alt="TensorFlow Scala logo" /></p>
+<p><a href="https://github.com/eaplatanios/tensorflow_scala">TensorFlow Scala</a> is a strongly-typed Scala API for TensorFlow core C++ library developed by <a href="https://github.com/eaplatanios">Anthony Platanios</a>. This library
+integrates with native TensorFlow library via <a href="https://en.wikipedia.org/wiki/Java_Native_Interface">JNI</a>, so no intermediate official/non-official Java libraries are used.</p>
+<span id="continue-reading"></span>
+<p>In this article we will implement &quot;multiple linear
+regression&quot; from the <a href="ann-in-scala-2/">previous article</a> about Customer Churn using TensorFlow.</p>
+<h1 id="setup-project">Setup Project</h1>
+<p>I am going to use SBT, but you can also use any other Scala-aware build tool.</p>
+<p>New SBT project configuration:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">lazy val tensorFlowScalaVer = </span><span style="color:#a3be8c;">&quot;0.5.10&quot; 
+</span><span>
+</span><span style="color:#81a1c1;">lazy val root = </span><span>(project in file(</span><span style="color:#a3be8c;">&quot;.&quot;</span><span>))
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>settings(
+</span><span>    name := </span><span style="color:#a3be8c;">&quot;tensorflow-scala-example&quot;</span><span style="color:#eceff4;">,
+</span><span>    libraryDependencies ++= </span><span style="color:#8fbcbb;">Seq</span><span>(
+</span><span>      </span><span style="color:#a3be8c;">&quot;org.platanios&quot;</span><span> %% </span><span style="color:#a3be8c;">&quot;tensorflow-data&quot;</span><span> % tensorFlowScalaVer</span><span style="color:#eceff4;">,
+</span><span>      </span><span style="color:#a3be8c;">&quot;org.platanios&quot;</span><span> %% </span><span style="color:#a3be8c;">&quot;tensorflow&quot;</span><span> % tensorFlowScalaVer classifier </span><span style="color:#a3be8c;">&quot;darwin&quot;
+</span><span>    )
+</span><span>  )
+</span></code></pre>
+<p>In order to add <code>TensorFlow Scala</code> to existing project, just add two library dependencies from above configuration. <code>tensorflow-data</code> module is optional, but we are going to use it
+in this article as well.</p>
+<p><strong>Important:</strong> I am using OSX, so my classifier is <code>darwin</code>. In case you use Linux or Windows, please <strong>change classifier</strong> value to currently available classifiers for those platforms, check it here to be sure: <a href="https://repo1.maven.org/maven2/org/platanios/tensorflow_2.13/0.5.10/">https://repo1.maven.org/maven2/org/platanios/tensorflow_2.13/0.5.10/</a>.</p>
+<h1 id="tensor-api">Tensor API</h1>
+<p>Before start implementing an Artificial Neural Network with TensorFlow, let's
+briefly look at how we can load data into a tensor. </p>
+<p>We would need to create matrices, so we can use Scala collections and map
+Arrays to Tensors and put them as rows into another Tensor. For example:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>platanios</span><span style="color:#81a1c1;">.</span><span>tensorflow</span><span style="color:#81a1c1;">.</span><span>api</span><span style="color:#81a1c1;">._
+</span><span>
+</span><span style="color:#81a1c1;">val t1 = </span><span style="color:#8fbcbb;">Tensor</span><span>(</span><span style="color:#8fbcbb;">Tensor</span><span>(</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">4</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Tensor</span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">5</span><span>))
+</span><span>println(t1</span><span style="color:#81a1c1;">.</span><span>summarize())
+</span></code></pre>
+<p>will print:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">Tensor[Int, </span><span style="color:#81a1c1;">[</span><span>2, 3</span><span style="color:#81a1c1;">]</span><span>]
+</span><span style="color:#88c0d0;">[[1,</span><span> 4, 0],
+</span><span> </span><span style="color:#88c0d0;">[2,</span><span> 3, 5]]
+</span></code></pre>
+<h1 id="data-preparation">Data Preparation</h1>
+<p><code>TensorFlow Scala</code> also has data API to load datasets. We will use that API 
+partly. Unfortunately, current documentation does not give an idea how to use Data API, so that we will use partly. Most of data preparation code I took from previous article.</p>
+<h2 id="custom-code">Custom Code</h2>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">type Matrix</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]
+</span><span>
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">createEncoders</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](data: </span><span style="color:#8fbcbb;">Matrix</span><span>[</span><span style="color:#8fbcbb;">String</span><span>])
+</span><span>  : </span><span style="color:#8fbcbb;">Matrix</span><span>[</span><span style="color:#8fbcbb;">String</span><span>] </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Matrix</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val encoder = </span><span style="color:#8fbcbb;">LabelEncoder</span><span style="color:#81a1c1;">.</span><span>fit[</span><span style="color:#8fbcbb;">String</span><span>](</span><span style="color:#8fbcbb;">TextLoader</span><span style="color:#81a1c1;">.</span><span>column(data</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span>))
+</span><span>  </span><span style="color:#81a1c1;">val hotEncoder = </span><span style="color:#8fbcbb;">OneHotEncoder</span><span style="color:#81a1c1;">.</span><span>fit[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">T</span><span>](</span><span style="color:#8fbcbb;">TextLoader</span><span style="color:#81a1c1;">.</span><span>column(data</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>))
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val label = </span><span>t </span><span style="color:#81a1c1;">=&gt;</span><span> encoder</span><span style="color:#81a1c1;">.</span><span>transform(t</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val hot = </span><span>t </span><span style="color:#81a1c1;">=&gt;</span><span> hotEncoder</span><span style="color:#81a1c1;">.</span><span>transform(t</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val typeTransform = </span><span>(t: </span><span style="color:#8fbcbb;">Matrix</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]) </span><span style="color:#81a1c1;">=&gt;</span><span> transform[</span><span style="color:#8fbcbb;">T</span><span>](t)
+</span><span>
+</span><span>  label andThen hot andThen typeTransform
+</span><span>}
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">loadData</span><span>() </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>  </span><span style="color:#616e88;">// loading data from CSV file into memory 
+</span><span>  </span><span style="color:#81a1c1;">val loader = </span><span style="color:#8fbcbb;">TextLoader</span><span>(</span><span style="color:#8fbcbb;">Path</span><span style="color:#81a1c1;">.</span><span>of(</span><span style="color:#a3be8c;">&quot;data/Churn_Modelling.csv&quot;</span><span>))</span><span style="color:#81a1c1;">.</span><span>load()
+</span><span>  </span><span style="color:#81a1c1;">val data =</span><span> loader</span><span style="color:#81a1c1;">.</span><span>cols[</span><span style="color:#8fbcbb;">String</span><span>](</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val encoders =</span><span> createEncoders[</span><span style="color:#81a1c1;">Float</span><span>](data)
+</span><span>  </span><span style="color:#81a1c1;">val numericData =</span><span> encoders(data)
+</span><span>  </span><span style="color:#81a1c1;">val scaler = </span><span style="color:#8fbcbb;">StandardScaler</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]()</span><span style="color:#81a1c1;">.</span><span>fit(numericData)
+</span><span>
+</span><span>  </span><span style="color:#616e88;">// create data transformation as custom code
+</span><span>  </span><span style="color:#81a1c1;">val prepareData = </span><span>(t: </span><span style="color:#8fbcbb;">Matrix</span><span>[</span><span style="color:#8fbcbb;">String</span><span>]) </span><span style="color:#81a1c1;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val numericData =</span><span> encoders(t)
+</span><span>    scaler</span><span style="color:#81a1c1;">.</span><span>transform(numericData)
+</span><span>  }
+</span><span>
+</span><span>  </span><span style="color:#616e88;">// transform features
+</span><span>  </span><span style="color:#81a1c1;">val xMatrix =</span><span> prepareData(data)    
+</span><span>  </span><span style="color:#81a1c1;">val yVector =</span><span> loader</span><span style="color:#81a1c1;">.</span><span>col[</span><span style="color:#81a1c1;">Float</span><span>](-</span><span style="color:#b48ead;">1</span><span>)
+</span><span>
+</span></code></pre>
+<h2 id="tensor-api-1">Tensor API</h2>
+<p>Continuation of <code>loadData</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>platanios</span><span style="color:#81a1c1;">.</span><span>tensorflow</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>utilities</span><span style="color:#81a1c1;">.</span><span>UniformSplit
+</span><span>  </span><span style="color:#616e88;">// Wrap arrays into Tensors and set Shapes
+</span><span>  </span><span style="color:#81a1c1;">val xData =</span><span> xMatrix</span><span style="color:#81a1c1;">.</span><span>map(a </span><span style="color:#81a1c1;">=&gt; </span><span style="color:#8fbcbb;">Tensor</span><span>(a</span><span style="color:#81a1c1;">.</span><span>toSeq))</span><span style="color:#81a1c1;">.</span><span>toSeq
+</span><span>  </span><span style="color:#81a1c1;">val x = </span><span style="color:#8fbcbb;">Tensor</span><span>(xData)</span><span style="color:#81a1c1;">.</span><span>reshape(</span><span style="color:#8fbcbb;">Shape</span><span>(-</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> features))
+</span><span>  </span><span style="color:#81a1c1;">val y = </span><span style="color:#8fbcbb;">Tensor</span><span>(yVector</span><span style="color:#81a1c1;">.</span><span>toSeq)</span><span style="color:#81a1c1;">.</span><span>reshape(</span><span style="color:#8fbcbb;">Shape</span><span>(-</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> targets))
+</span><span>
+</span><span>  </span><span style="color:#616e88;">// use library API to split data for train and test sets
+</span><span>  </span><span style="color:#81a1c1;">val split = </span><span style="color:#8fbcbb;">UniformSplit</span><span>(x</span><span style="color:#81a1c1;">.</span><span>shape(</span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">None</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">trainIndices</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">testIndices</span><span>) </span><span style="color:#81a1c1;">=</span><span> split(trainPortion </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">8</span><span style="color:#81a1c1;">f</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val xTrain =</span><span> x</span><span style="color:#81a1c1;">.</span><span>gather[</span><span style="color:#81a1c1;">Int</span><span>](trainIndices</span><span style="color:#eceff4;">,</span><span> axis </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val yTrain =</span><span> y</span><span style="color:#81a1c1;">.</span><span>gather[</span><span style="color:#81a1c1;">Int</span><span>](trainIndices</span><span style="color:#eceff4;">,</span><span> axis </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val xTest =</span><span> x</span><span style="color:#81a1c1;">.</span><span>gather[</span><span style="color:#81a1c1;">Int</span><span>](testIndices</span><span style="color:#eceff4;">,</span><span> axis </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">val yTest =</span><span> y</span><span style="color:#81a1c1;">.</span><span>gather[</span><span style="color:#81a1c1;">Int</span><span>](testIndices</span><span style="color:#eceff4;">,</span><span> axis </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span>)
+</span><span>  (xTrain</span><span style="color:#eceff4;">,</span><span> yTrain</span><span style="color:#eceff4;">,</span><span> xTest</span><span style="color:#eceff4;">,</span><span> yTest</span><span style="color:#eceff4;">,</span><span> prepareData)
+</span><span>}
+</span></code></pre>
+<p>As per comments above, we prepare training and test data and return it as 4
+different Tensor objects. Also, we return a function as fifth element of the tuple
+for one more application (read further).</p>
+<p>Full code of data preparation that includes:</p>
+<ul>
+<li>selecting specific CSV file columns</li>
+<li>normalising numeric columns</li>
+<li>encoding categorical columns as one-hot </li>
+<li>encoding label-like columns</li>
+</ul>
+<p>see here:</p>
+<ul>
+<li><a href="https://github.com/novakov-alexey/tensorflow-scala-example/blob/main/src/main/scala/tensorflow/tutorial/encoders.scala">encoders</a></li>
+<li><a href="https://github.com/novakov-alexey/tensorflow-scala-example/blob/main/src/main/scala/tensorflow/tutorial/TextLoader.scala">TextLoader</a> </li>
+</ul>
+<h1 id="model-assembly">Model Assembly</h1>
+<p>We are going to learn on 12 features to predict one target.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val features = </span><span style="color:#b48ead;">12
+</span><span style="color:#81a1c1;">val targets = </span><span style="color:#b48ead;">1
+</span><span style="color:#81a1c1;">val batchSize = </span><span style="color:#b48ead;">100
+</span><span>
+</span><span style="color:#81a1c1;">val input =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Input</span><span>(</span><span style="color:#8fbcbb;">FLOAT32</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Shape</span><span>(-</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> features))
+</span><span style="color:#81a1c1;">val trainInput =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Input</span><span>(</span><span style="color:#8fbcbb;">FLOAT32</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Shape</span><span>(-</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> targets))
+</span></code></pre>
+<p><code>batchSize</code> will be used in a couple of places of TensorFlow API.</p>
+<p>In order to construct all 12 x 6 x 6 x 1 network below:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;17388142498b32cd00.png" class="center-image"/>
+<br/><br/>
+<p>we use the following API:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val layer =
+</span><span>  tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Linear</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;Layer_0/Linear&quot;</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">6</span><span>) &gt;&gt;
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">ReLU</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;Layer_0/ReLU&quot;</span><span>) &gt;&gt;
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Linear</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;Layer_1/Linear&quot;</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">6</span><span>) &gt;&gt;
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">ReLU</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;Layer_1/ReLU&quot;</span><span>) &gt;&gt;
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Linear</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;OutputLayer/Linear&quot;</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>) &gt;&gt;
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Sigmoid</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;OutputLayer/Sigmoid&quot;</span><span>)
+</span></code></pre>
+<p><code>layer</code> state is a composition of fully-connected layers with its own activation function. We specify <code>String</code> name for each layer that will be eventually used in TensorFlow graph.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val loss =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">L2Loss</span><span>[</span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Float</span><span>](</span><span style="color:#a3be8c;">&quot;Loss/L2Loss&quot;</span><span>)    
+</span><span style="color:#81a1c1;">val optimizer =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>train</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Adam</span><span>()
+</span></code></pre>
+<p>We are going to use <code>L2</code>, which is a <code>half least square error</code> as a loss function.
+And Adaptive Moment Estimation (Adam) as weights optimization algorithm.</p>
+<p>Finally, we pass above values to construct simple supervised model. </p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val model =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Model</span><span style="color:#81a1c1;">.</span><span>simpleSupervised(
+</span><span>  input </span><span style="color:#81a1c1;">=</span><span> input</span><span style="color:#eceff4;">,
+</span><span>  trainInput </span><span style="color:#81a1c1;">=</span><span> trainInput</span><span style="color:#eceff4;">,
+</span><span>  layer </span><span style="color:#81a1c1;">=</span><span> layer</span><span style="color:#eceff4;">,
+</span><span>  loss </span><span style="color:#81a1c1;">=</span><span> loss</span><span style="color:#eceff4;">,
+</span><span>  optimizer </span><span style="color:#81a1c1;">=</span><span> optimizer</span><span style="color:#eceff4;">,
+</span><span>  clipGradients </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">ClipGradientsByGlobalNorm</span><span>(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f</span><span>)
+</span><span>)
+</span></code></pre>
+<p>You can also create unsupervised model with <code>.unsupervised</code> method, if needed.</p>
+<p>As we can see, model construction is highly declarative as the entire <code>TensorFlow Scala</code> library API.</p>
+<h1 id="estimator">Estimator</h1>
+<p>Another abstraction in TensorFlow we are going to use is <a href="https://www.tensorflow.org/guide/estimator">Estimator</a>. It is used to train, predict, evaluate and export for serving the TensorFlow models. In some other libraries, an estimator is usually a model abstraction itself. Estimator provides nice separation from the input data and actual model to train.</p>
+<h2 id="dataset">Dataset</h2>
+<p>Before we construct an estimator we need to wrap the input data into a Dataset. As I mentioned before, the <code>TensorFlow Scala</code> provides a <a href="https://github.com/eaplatanios/tensorflow_scala/tree/master/modules/api/src/main/scala/org/platanios/tensorflow/api/ops/data">data package</a> to 
+load some data formats in streaming way / lazily. This is recommended way to use this library that allows us to iterate over the data in streaming fashion, so the full dataset does not need to fit into memory. However, our current example dataset is quite small. so that we used custom code to load and transform the data before we start any learning. Now we have to wrap Tensors into Datasets:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">xTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTrain</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">xTest</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">yTest</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">dataTransformer</span><span>) </span><span style="color:#81a1c1;">=</span><span> loadData()
+</span><span>
+</span><span style="color:#81a1c1;">val trainFeatures =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>datasetFromTensorSlices(xTrain)
+</span><span style="color:#81a1c1;">val trainLabels =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>datasetFromTensorSlices(yTrain)
+</span><span style="color:#81a1c1;">val testFeatures =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>datasetFromTensorSlices(xTest)
+</span><span style="color:#81a1c1;">val testLabels =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>datasetFromTensorSlices(yTest)
+</span><span>
+</span><span style="color:#81a1c1;">val trainData =
+</span><span>  trainFeatures
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>zip(trainLabels)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>repeat()
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>shuffle(</span><span style="color:#b48ead;">1000</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>batch(batchSize)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>prefetch(</span><span style="color:#b48ead;">10</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">val evalTrainData =</span><span> trainFeatures</span><span style="color:#81a1c1;">.</span><span>zip(trainLabels)</span><span style="color:#81a1c1;">.</span><span>batch(batchSize)</span><span style="color:#81a1c1;">.</span><span>prefetch(</span><span style="color:#b48ead;">10</span><span>)
+</span><span style="color:#81a1c1;">val evalTestData =</span><span> testFeatures</span><span style="color:#81a1c1;">.</span><span>zip(testLabels)</span><span style="color:#81a1c1;">.</span><span>batch(batchSize)</span><span style="color:#81a1c1;">.</span><span>prefetch(</span><span style="color:#b48ead;">10</span><span>)
+</span></code></pre>
+<h2 id="output">Output</h2>
+<p>Above code creates training dataset as combination of features and labels <code>outputs</code>.
+Core TensorFlow library has an idea of <a href="https://www.tensorflow.org/api_docs/cc/class/tensorflow/output">Output abstraction</a>. The <code>Output</code> is a symbolic handle that represents a tensor value produced by an <code>Operation</code>. In other words, it is future state of a Tensor once particular operand is applied to that tensor. It does not hold the values of that operation
+output, but instead provides a means of computing those values in a TensorFlow <code>Session</code>, which is another TensorFlow abstraction. The session is created automatically by the Estimator. One can also construct TensorFlow session manually, we are not going to do this in this article.</p>
+<h2 id="training-metrics">Training Metrics</h2>
+<p>One of the place where we work with <code>Output</code>s directly in this example, is 
+training metric configuration. For binary classification we need to transform predicted
+values by the model to <code>0</code> and <code>1</code>.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val accMetric =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>metrics</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">MapMetric</span><span>(
+</span><span>  (v: (</span><span style="color:#8fbcbb;">Output</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]</span><span style="color:#eceff4;">, </span><span>(</span><span style="color:#8fbcbb;">Output</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Output</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]))) </span><span style="color:#81a1c1;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">predicted</span><span style="color:#eceff4;">, </span><span>(</span><span style="color:#81a1c1;">_</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">actual</span><span>)) </span><span style="color:#81a1c1;">=</span><span> v
+</span><span>    </span><span style="color:#81a1c1;">val positives =</span><span> predicted &gt; </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">5</span><span style="color:#81a1c1;">f
+</span><span>    </span><span style="color:#81a1c1;">val shape = </span><span style="color:#8fbcbb;">Shape</span><span>(batchSize</span><span style="color:#eceff4;">,</span><span> positives</span><span style="color:#81a1c1;">.</span><span>shape(</span><span style="color:#b48ead;">1</span><span>))
+</span><span>    </span><span style="color:#81a1c1;">val binary =</span><span> tf
+</span><span>      </span><span style="color:#81a1c1;">.</span><span>select(
+</span><span>        positives</span><span style="color:#eceff4;">,
+</span><span>        tf</span><span style="color:#81a1c1;">.</span><span>fill(shape)(</span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">f</span><span>)</span><span style="color:#eceff4;">,
+</span><span>        tf</span><span style="color:#81a1c1;">.</span><span>fill(shape)(</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f</span><span>)
+</span><span>      )
+</span><span>    (binary</span><span style="color:#eceff4;">,</span><span> actual)
+</span><span>  }</span><span style="color:#eceff4;">,
+</span><span>  tf</span><span style="color:#81a1c1;">.</span><span>metrics</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Accuracy</span><span>(</span><span style="color:#a3be8c;">&quot;Accuracy&quot;</span><span>)
+</span><span>)
+</span></code></pre>
+<p>I think to transform predicted values to binary values, i.e. <code>1</code> and <code>0</code> can be done more efficient than filling <code>true</code> boolean values with <code>1</code> and <code>false</code> values with <code>0</code> using <code>tf.select</code> function, but I could not find another way.</p>
+<p>We will use above accuracy metric in <code>estimator</code> construction.</p>
+<h2 id="construct-estimator">Construct Estimator</h2>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val summariesDir = </span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(</span><span style="color:#a3be8c;">&quot;temp/ann&quot;</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">val estimator =</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">InMemoryEstimator</span><span>(
+</span><span>  model</span><span style="color:#eceff4;">,
+</span><span>  tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Configuration</span><span>(</span><span style="color:#8fbcbb;">Some</span><span>(summariesDir))</span><span style="color:#eceff4;">,
+</span><span>  tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StopCriteria</span><span>(maxSteps </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">100000</span><span>))</span><span style="color:#eceff4;">,
+</span><span>  </span><span style="color:#8fbcbb;">Set</span><span>(
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">LossLogger</span><span>(trigger </span><span style="color:#81a1c1;">=</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepHookTrigger</span><span>(</span><span style="color:#b48ead;">100</span><span>))</span><span style="color:#eceff4;">,
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">Evaluator</span><span>(
+</span><span>      summaryDir </span><span style="color:#81a1c1;">=</span><span> summariesDir</span><span style="color:#eceff4;">,
+</span><span>      log </span><span style="color:#81a1c1;">= true</span><span style="color:#eceff4;">,
+</span><span>      datasets </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Seq</span><span>((</span><span style="color:#a3be8c;">&quot;Train&quot;</span><span style="color:#eceff4;">, </span><span>() </span><span style="color:#81a1c1;">=&gt;</span><span> evalTrainData)</span><span style="color:#eceff4;">, </span><span>(</span><span style="color:#a3be8c;">&quot;Test&quot;</span><span style="color:#eceff4;">, </span><span>() </span><span style="color:#81a1c1;">=&gt;</span><span> evalTestData))</span><span style="color:#eceff4;">,
+</span><span>      metrics </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Seq</span><span>(accMetric)</span><span style="color:#eceff4;">,
+</span><span>      trigger </span><span style="color:#81a1c1;">=</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepHookTrigger</span><span>(</span><span style="color:#b48ead;">1000</span><span>)</span><span style="color:#eceff4;">,
+</span><span>      name </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&quot;Evaluator&quot;
+</span><span>    )</span><span style="color:#eceff4;">,
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepRateLogger</span><span>(
+</span><span>      log </span><span style="color:#81a1c1;">= false</span><span style="color:#eceff4;">,
+</span><span>      summaryDir </span><span style="color:#81a1c1;">=</span><span> summariesDir</span><span style="color:#eceff4;">,
+</span><span>      trigger </span><span style="color:#81a1c1;">=</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepHookTrigger</span><span>(</span><span style="color:#b48ead;">100</span><span>)
+</span><span>    )</span><span style="color:#eceff4;">,
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">SummarySaver</span><span>(summariesDir</span><span style="color:#eceff4;">,</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepHookTrigger</span><span>(</span><span style="color:#b48ead;">100</span><span>))</span><span style="color:#eceff4;">,
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">CheckpointSaver</span><span>(summariesDir</span><span style="color:#eceff4;">,</span><span> tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StepHookTrigger</span><span>(</span><span style="color:#b48ead;">1000</span><span>))
+</span><span>  )</span><span style="color:#eceff4;">,
+</span><span>  tensorBoardConfig </span><span style="color:#81a1c1;">=
+</span><span>    tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">TensorBoardConfig</span><span>(summariesDir</span><span style="color:#eceff4;">,</span><span> reloadInterval </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">1</span><span>)
+</span><span>)
+</span></code></pre>
+<p>Above code configures:</p>
+<ul>
+<li>Logging in training loop:
+<ul>
+<li>log to summary directory &quot;temp/ann&quot;</li>
+<li>store checkpoint at every 1000 step to summary directory</li>
+<li>log at every 100 steps</li>
+<li>log loss value at every 100 steps</li>
+</ul>
+</li>
+<li>Evaluate metrics:
+<ul>
+<li>calculate accuracy metric (and any other specified metrics in Seq) at every 1000 step</li>
+<li>use data specified in Evaluator datasets</li>
+</ul>
+</li>
+<li>Take data for Tensorboard from summary directory</li>
+<li>Stop after <code>100 000</code> step unless overridden by <code>.train</code> method</li>
+</ul>
+<p><strong>Note:</strong> estimator works with <code>step</code> notion rather than with <code>epoch</code>. In order to calculate number of desired training steps, you can divide a <em>number training records</em> on <em>batch size</em>. In our case we have 8000 training records / 100 batch size = 80 steps. This is one epoch, i.e. one full training cycle on available dataset. In order to repeat training on the same model parameters 100 times, i.e. 100 epochs instead of 1 epoch we need 80 * 100 = 8000 steps. So if we set <code>10 000</code> steps we ask for 125 epochs since 2000 steps is 25 epochs. </p>
+<h1 id="training">Training</h1>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>estimator</span><span style="color:#81a1c1;">.</span><span>train(
+</span><span>  () </span><span style="color:#81a1c1;">=&gt;</span><span> trainData</span><span style="color:#eceff4;">,
+</span><span>  tf</span><span style="color:#81a1c1;">.</span><span>learn</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">StopCriteria</span><span>(maxSteps </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#b48ead;">10000</span><span>))
+</span><span>)
+</span></code></pre>
+<p>Finally we are starting the training loop. We pass the same <code>trainData</code> as we used
+for metric evaluation. However, we could use different datasets for training and metric evaluations. We override <code>maxSteps</code> with <code>10 000</code>. As we have only 10k rows in CSV file, we do not need initial <code>100 000</code> steps for training. TensorFlow</p>
+<p>Once we run <code>train</code> method, we can see the following output in console:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">.....
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.308 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - Step 10000 Evaluator:
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.308 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ╔═══════╤════════════╗
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.308 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ║       │   Accuracy ║
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.308 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ╟───────┼────────────╢
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.369 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ║ Train │     0,8494 ║
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.386 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ║  Test │     0,8367 ║
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 19:07:15.391 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>9</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / Evaluation - ╚═══════╧════════════╝
+</span></code></pre>
+<p>there will be <code>11</code> logging statements for intermediate accuracy value, so I copied only the last summary.</p>
+<p><code>train</code> method returns <code>Unit</code>, so it mutates state of the estimator, so that you can use
+it further for model inference.</p>
+<h2 id="single-test">Single test</h2>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val example = </span><span style="color:#8fbcbb;">TextLoader</span><span>(
+</span><span>    </span><span style="color:#a3be8c;">&quot;n/a,n/a,n/a,600,France,Male,40,3,60000,2,1,1,50000,n/a&quot;
+</span><span>  )</span><span style="color:#81a1c1;">.</span><span>cols[</span><span style="color:#8fbcbb;">String</span><span>](</span><span style="color:#b48ead;">3</span><span style="color:#eceff4;">,</span><span> -</span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">val testExample = </span><span style="color:#8fbcbb;">Tensor</span><span>(dataTransformer(example)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#8fbcbb;">Tensor</span><span>(</span><span style="color:#81a1c1;">_</span><span>))</span><span style="color:#81a1c1;">.</span><span>toSeq)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>reshape(</span><span style="color:#8fbcbb;">Shape</span><span>(-</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,</span><span> features))
+</span><span style="color:#81a1c1;">val prediction =</span><span> estimator</span><span style="color:#81a1c1;">.</span><span>infer(() </span><span style="color:#81a1c1;">=&gt;</span><span> testExample)
+</span><span>
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Customer exited ? ${prediction</span><span style="color:#81a1c1;">.</span><span>scalar &gt; </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">5</span><span style="color:#81a1c1;">f</span><span>}</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>We use <code>dataTransformer</code> function one more time for converting raw single data record into
+numeric format that our model can understand and return a target value for it:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">Customer</span><span> exited </span><span style="color:#81a1c1;">?</span><span> false
+</span></code></pre>
+<p><code>false</code> is expected value for that simple example.</p>
+<h2 id="batch-test">Batch test</h2>
+<p>We can also submit data batch to infer a target value for each record.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Train accuracy = ${accuracy(xTrain</span><span style="color:#eceff4;">,</span><span> yTrain)}</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Test accuracy = ${accuracy(xTest</span><span style="color:#eceff4;">,</span><span> yTest)}</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span></code></pre>
+<p>We are going to calculate the accuracy metric manually based on known labels for train and test datasets:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">accuracy</span><span>(input: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]</span><span style="color:#eceff4;">, </span><span>labels: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]): </span><span style="color:#81a1c1;">Float = </span><span>{    
+</span><span>  </span><span style="color:#81a1c1;">val predictions =</span><span> estimator</span><span style="color:#81a1c1;">.</span><span>infer(() </span><span style="color:#81a1c1;">=&gt;</span><span> input</span><span style="color:#81a1c1;">.</span><span>toFloat)</span><span style="color:#81a1c1;">.</span><span>toArray
+</span><span>  </span><span style="color:#81a1c1;">val correct =</span><span> predictions
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>map(v </span><span style="color:#81a1c1;">=&gt; if </span><span>(v &gt; </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">5</span><span style="color:#81a1c1;">f</span><span>) </span><span style="color:#b48ead;">1</span><span style="color:#81a1c1;">f else </span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>zip(labels</span><span style="color:#81a1c1;">.</span><span>toFloat</span><span style="color:#81a1c1;">.</span><span>toArray)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>foldLeft(</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f</span><span>) { </span><span style="color:#81a1c1;">case </span><span>(acc</span><span style="color:#eceff4;">, </span><span>(yHat</span><span style="color:#eceff4;">, </span><span>y)) </span><span style="color:#81a1c1;">=&gt; if </span><span>(yHat </span><span style="color:#81a1c1;">==</span><span> y) acc + </span><span style="color:#b48ead;">1 </span><span style="color:#81a1c1;">else</span><span> acc }
+</span><span>  correct / predictions</span><span style="color:#81a1c1;">.</span><span>length
+</span><span>}  
+</span></code></pre>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">Train</span><span> accuracy = 0.867875
+</span><span style="color:#88c0d0;">Test</span><span> accuracy = 0.8605
+</span></code></pre>
+<p>Although we used again the same data for checking accuracy, however one can take new / unseen
+data to check the accuracy on just trained or loaded from checkpoint estimator.</p>
+<h1 id="tensorboard">Tensorboard</h1>
+<p><a href="https://www.tensorflow.org/tensorboard">Tensorboard</a> is an additional tool from TensorFlow main framework. It can be installed via <code>pip</code> tool:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">pip</span><span> install tensorboard
+</span></code></pre>
+<p>We enable Tensorboard as part of Estimator configuration. Every time we run <code>training</code> cycle for an estimator with Tensorboard configured, we get the following console message:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">sbt:tensorflow-scala-example</span><span style="color:#81a1c1;">&gt;</span><span> run
+</span><span style="color:#88c0d0;">[info]</span><span> running MultipleLR
+</span><span style="color:#88c0d0;">2021-02-12</span><span> 21:09:04.933 </span><span style="color:#81a1c1;">[</span><span>run</span><span style="color:#81a1c1;">-</span><span>main</span><span style="color:#81a1c1;">-</span><span>c</span><span style="color:#81a1c1;">]</span><span> INFO  Learn / Hooks / TensorBoard - Launching TensorBoard in </span><span style="color:#a3be8c;">&#39;localhost:6006&#39;</span><span> for log directory </span><span style="color:#a3be8c;">&#39;..../tensorflow-ann/temp/ann&#39;
+</span></code></pre>
+<p>TensorFlow starts a web-app at <code>localhost</code> on port <code>6006</code> and using data from the the log directory that we configured at <code>estimator</code> level.</p>
+<p>Log directory accumulates TensorFlow logs between training cycles, so that if we run training
+cycle again and again we can see that estimator variables (graph state) is restored from that
+logging folder. Eventually, our model loss and accuracy metric values are going to be stable, i.e. not improving anymore.</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;8548b227c6e1239b00.png" class="center-image"/>
+<br/><br/>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;50a11a5d04cae6d200.png" class="center-image"/>
+<br/><br/><h1 id="summary">Summary</h1>
+<p><code>TensorFlow Scala</code> is a fantastic library that mimics most of <code>TensorFlow</code> core library and Python API.
+Although current library is missing some documentations, one can always use official TensorFlow documentation web-site to get an idea of the Scala API.</p>
+<p>Implemented ANN in <code>TensorFlow Scala</code> shows that one can use Scala to train Deep Learning models easily. Training program in Scala are going to be quite declarative and statically type-checked which eliminates lots of mistakes. Library API also allows to extend most of the abstractions, which is very important for real life use cases.</p>
+<h1 id="source-code">Source Code</h1>
+<p>Full source code as SBT project can be found here: </p>
+<ul>
+<li><a href="https://github.com/novakov-alexey/tensorflow-scala-example">https://github.com/novakov-alexey/tensorflow-scala-example</a></li>
+</ul>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='TensorFlow Scala - Linear Regression via ANN' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="TensorFlow Scala - Linear Regression via ANN" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="TensorFlow Scala - Linear Regression via ANN" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tensorflow-scala&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-setup-project" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/tensorflow-scala/#setup-project">
+                Setup Project
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-tensor-api" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#tensor-api">
+                Tensor API
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-data-preparation" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#data-preparation">
+                Data Preparation
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-custom-code" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#custom-code">
+                    Custom Code
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-tensor-api-1" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#tensor-api-1">
+                    Tensor API
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-model-assembly" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#model-assembly">
+                Model Assembly
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-estimator" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#estimator">
+                Estimator
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-dataset" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#dataset">
+                    Dataset
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-output" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#output">
+                    Output
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-training-metrics" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#training-metrics">
+                    Training Metrics
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-construct-estimator" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#construct-estimator">
+                    Construct Estimator
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-training" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#training">
+                Training
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-single-test" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#single-test">
+                    Single test
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-batch-test" class="toc is-size-7" href="https://novakov-alexey.github.io/tensorflow-scala/#batch-test">
+                    Batch test
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-tensorboard" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#tensorboard">
+                Tensorboard
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-source-code" class="toc is-size-7 " href="https://novakov-alexey.github.io/tensorflow-scala/#source-code">
+                Source Code
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/tensorflow-scala/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'tensorflow-scala'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

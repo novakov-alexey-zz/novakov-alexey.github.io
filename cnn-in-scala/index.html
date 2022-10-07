@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Convolutional Neural Network in Scala
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Convolutional Neural Network in Scala
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-04-02'>April 02, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    9 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1737 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/convolution/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        convolution
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/computer-vision/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        computer vision
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/image-recognition/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        image recognition
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Last time we used <a href="../ann-mnist/">ANN</a> to train a Deep Learning model for image recognition using MNIST dataset.
+This time we are going to look at more advanced network called Convolutional Neural Network or CNN in short.</p>
+<p>CNN is designed to tackle image recognition problem. However, it can be used not only for image recognition. 
+As we have seen last time, ANN using just hidden layers can learn quite well on MNIST.
+However, for real life use cases we need higher accuracy. The main idea of CNN is to learn how to recognise object in their different shapes and positions 
+using specific features of the image data. The goal of CNN is better model regularisation by using convolution and pooling operations.</p>
+<span id="continue-reading"></span>
+<p>CNN adds two more type of layers:</p>
+<ul>
+<li>Convolution layer</li>
+<li>Max, Average or Global Pooling layer</li>
+</ul>
+<p>Convolution is a mathematical <a href="https://en.wikipedia.org/wiki/Convolution">operation</a>, which is used in CNN layers instead of matrix multiplication like in fully-connected (dense) layers.
+Typical CNN may consist of several Convolutional and Pooling layers. Final part of the network consists of the fully-connected layers like in ANN.</p>
+<p>Below picture is showing typical CNN architecture with Tensor shapes. For example, 32x32x1 is an input image 32 pixels width and height having 1 color channel:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;acd29d2c9534fdb800.png" class="center-image"/>
+<br/><br/>
+<p>I will clarify what other shapes dimensions mean further.</p>
+<h1 id="cnn-topology">CNN Topology</h1>
+<p>We are going to design a simple CNN architecture for image recognition of the MNIST dataset. The problem type will be still the same:
+predict a hand-written digit based on input image data. CNN works with image properties like height, width and color depth (RGB, etc.). 
+Basically, it uses image pixel matrices to perform convolution and pooling operations. 
+CNN works with every color channel separately. After some point, channels add up to each other using element-wise addition.</p>
+<p>I am going to build CNN using my existing mini-library in Scala:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val cnn = </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#8fbcbb;">Precision</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Adam</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">HeNormal</span><span>](
+</span><span>    crossEntropy</span><span style="color:#eceff4;">,
+</span><span>    learningRate </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">001</span><span style="color:#eceff4;">,
+</span><span>    metrics </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">List</span><span>(accuracy)</span><span style="color:#eceff4;">,
+</span><span>    batchSize </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">128</span><span style="color:#eceff4;">,
+</span><span>    gradientClipping </span><span style="color:#81a1c1;">=</span><span> clipByNorm(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0</span><span>)</span><span style="color:#eceff4;">,
+</span><span>    printStepTps </span><span style="color:#81a1c1;">= true
+</span><span>  )    
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Conv2D</span><span>(relu</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">8</span><span style="color:#eceff4;">,</span><span> kernel </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">5</span><span>)</span><span style="color:#eceff4;">,</span><span> strides </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)))    
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">MaxPool</span><span>(strides </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)</span><span style="color:#eceff4;">,</span><span> pool </span><span style="color:#81a1c1;">= </span><span>(</span><span style="color:#b48ead;">2</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">2</span><span>)</span><span style="color:#eceff4;">,</span><span> padding </span><span style="color:#81a1c1;">= false</span><span>))       
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Flatten2D</span><span>())
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(relu</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">50</span><span>))      
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>(softmax</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">10</span><span>))
+</span></code></pre>
+<p>There are 3 more layers that we have not seen before. </p>
+<h2 id="convolution-layer">Convolution Layer</h2>
+<p><code>Conv2D</code> is a Scala case class which has already familiar to us <code>relu</code> parameter as an activation function. Other unique parameters of convolution layer:</p>
+<ul>
+<li><code>filterCount = 8</code> - number of filters which are going to be trained/optimised via gradient descent and back-propagation</li>
+<li><code>kernel  = (5, 5)</code> - window height and width to apply on input image/matrix</li>
+<li><code>strides = (1, 1)</code> - increment value when moving filter over the input image/matrix to the right <code>(1</code> and to the bottom <code>1)</code></li>
+</ul>
+<p>While implementing CNN we are going to enter the world of 4-dimensional tensors. <code>Conv2D</code> layer will keep its data in 4D Tensor where:</p>
+<ul>
+<li>1st dimension is filter count</li>
+<li>2nd - color depth. Grey scale image is 1, RGB is 3, RGBA is 4 and so on.</li>
+<li>3rd - filter height</li>
+<li>4th - filter width</li>
+</ul>
+<p>According to above code snippet, added filter will have the following trainable weights and biases:</p>
+<ul>
+<li>weights shape: (8 x 1 x 5 x 5) <code>Tensor4D</code></li>
+<li>biases shape: (8) <code>Tensor1D</code></li>
+</ul>
+<h3 id="example">Example</h3>
+<p>If we take simple example as image matrix 3 x 4 and filter with weights set from <code>1</code> to <code>4</code> then we get the following output as <code>z</code>:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;b59edbed5f5d117000.png" class="center-image"/>
+<br/><br/>
+<p>z value at (0, 0) position is elementwise multiplication and then sum of the elements of the matrix such as<br />
+<code>1 * 1 + 2 * 2 + 3 * 2 + 3 * 4 = 23</code>. Other output elements of the <code>z</code> matrix are produced in the same way.</p>
+<p>Every layer that we add to <code>Sequential</code> model has at least two methods <code>apply</code>, 
+which is used to do forward propagation and <code>backward</code> for producing gradients based on the layer input data.</p>
+<p>We can code forward propagation like this:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>
+</span><span style="color:#616e88;">// create input image regions with their positions to be used by other functions
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">imageRegions</span><span>(image: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>kernel: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)</span><span style="color:#eceff4;">, </span><span>stride: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">rows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">cols</span><span>) </span><span style="color:#81a1c1;">=</span><span> image</span><span style="color:#81a1c1;">.</span><span>shape2D    
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> i &lt;- </span><span style="color:#b48ead;">0</span><span> to rows - kernel</span><span style="color:#81a1c1;">.</span><span>_1 by stride</span><span style="color:#81a1c1;">.</span><span>_1 </span><span style="color:#81a1c1;">yield   
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> j &lt;- </span><span style="color:#b48ead;">0</span><span> to cols - kernel</span><span style="color:#81a1c1;">.</span><span>_2 by stride</span><span style="color:#81a1c1;">.</span><span>_2 </span><span style="color:#81a1c1;">yield       
+</span><span>    (image</span><span style="color:#81a1c1;">.</span><span>slice((i</span><span style="color:#eceff4;">,</span><span> i + kernel</span><span style="color:#81a1c1;">.</span><span>_1)</span><span style="color:#eceff4;">, </span><span>(j</span><span style="color:#eceff4;">,</span><span> j + kernel</span><span style="color:#81a1c1;">.</span><span>_2))</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> i</span><span style="color:#eceff4;">,</span><span> j)
+</span><span>
+</span><span style="color:#616e88;">// convolution operation which is
+</span><span style="color:#616e88;">// element-wise multiplication between each image region and filter matrix
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">conv</span><span>(filterChannel: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>imageChannel: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>         kernel: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)</span><span style="color:#eceff4;">, </span><span>stride: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)) </span><span style="color:#81a1c1;">=    
+</span><span>  </span><span style="color:#81a1c1;">val filtered = 
+</span><span>    </span><span style="color:#81a1c1;">for</span><span> row &lt;- imageRegions(imageChannel</span><span style="color:#eceff4;">,</span><span> kernel</span><span style="color:#eceff4;">,</span><span> stride) </span><span style="color:#81a1c1;">yield
+</span><span>      </span><span style="color:#81a1c1;">for </span><span>(region</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">_</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">_</span><span>) &lt;- row </span><span style="color:#81a1c1;">yield
+</span><span>        (region |*| filterChannel)</span><span style="color:#81a1c1;">.</span><span>sum
+</span><span>
+</span><span>  filtered</span><span style="color:#81a1c1;">.</span><span>as2D
+</span><span>
+</span><span style="color:#616e88;">// main forward function which is used by Conv2D layer to 
+</span><span style="color:#616e88;">// apply every filter channel matrix to every input image.
+</span><span style="color:#616e88;">// N.B. convoluted channels adds us together
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">forward</span><span>(kernel: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)</span><span style="color:#eceff4;">, </span><span>stride: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)</span><span style="color:#eceff4;">, 
+</span><span>  x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>w: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">images</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">filters</span><span>) </span><span style="color:#81a1c1;">= </span><span>(x</span><span style="color:#81a1c1;">.</span><span>as4D</span><span style="color:#eceff4;">,</span><span> w</span><span style="color:#81a1c1;">.</span><span>as4D)    
+</span><span>   
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">filterImage</span><span>(image: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]]) </span><span style="color:#81a1c1;">=
+</span><span>    filters</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>zip(b</span><span style="color:#81a1c1;">.</span><span>as1D</span><span style="color:#81a1c1;">.</span><span>data)</span><span style="color:#81a1c1;">.</span><span>map { (f, b) </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#81a1c1;">val filtered =</span><span> f</span><span style="color:#81a1c1;">.</span><span>zip(image)</span><span style="color:#81a1c1;">.</span><span>map { (fc, ic) </span><span style="color:#81a1c1;">=&gt;
+</span><span>         conv(fc</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> ic</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> kernel</span><span style="color:#eceff4;">,</span><span> stride)
+</span><span>      }</span><span style="color:#81a1c1;">.</span><span>reduce(</span><span style="color:#81a1c1;">_</span><span> + </span><span style="color:#81a1c1;">_</span><span>)
+</span><span>      filtered + b</span><span style="color:#81a1c1;">.</span><span>asT
+</span><span>    }
+</span><span>   
+</span><span>  images</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>par</span><span style="color:#81a1c1;">.</span><span>map(filterImage)</span><span style="color:#81a1c1;">.</span><span>toArray</span><span style="color:#81a1c1;">.</span><span>as4D
+</span><span>
+</span><span> </span><span style="color:#616e88;">// Layer interface to the training loop. 
+</span><span> </span><span style="color:#616e88;">// `w` and `b` are the Layer state.
+</span><span> </span><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">apply</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>   </span><span style="color:#81a1c1;">val z = </span><span>(w</span><span style="color:#eceff4;">,</span><span> b) </span><span style="color:#81a1c1;">match
+</span><span>     </span><span style="color:#81a1c1;">case </span><span>(</span><span style="color:#8fbcbb;">Some</span><span>(w)</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Some</span><span>(b)) </span><span style="color:#81a1c1;">=&gt;</span><span> forward(kernel</span><span style="color:#eceff4;">,</span><span> strides</span><span style="color:#eceff4;">,</span><span> x</span><span style="color:#eceff4;">,</span><span> w</span><span style="color:#eceff4;">,</span><span> b)
+</span><span>     </span><span style="color:#81a1c1;">case _ =&gt;</span><span> x </span><span style="color:#616e88;">// does nothing when one of the params is empty    
+</span><span>   </span><span style="color:#81a1c1;">val a =</span><span> f(z)    
+</span><span>   </span><span style="color:#8fbcbb;">Activation</span><span>(x</span><span style="color:#eceff4;">,</span><span> z</span><span style="color:#eceff4;">,</span><span> a)
+</span></code></pre>
+<p>I have left <code>private</code> modifier to show you that <code>apply</code> function uses other functions internally.</p>
+<p>In general, forward propagation of the Convolution layer is not that simple as for Dense layer. 
+Convolution layer is also computationally intensive in forward and backward propagation.</p>
+<p>The main line of code in forward propagation is <code>(region |*| filterChannel).sum</code>. It corresponds to element-wise multiplication of two matrices and summing the resulting matrix up
+to get single number as one of the value for the output matrix. </p>
+<p>Tensor shape of the forward propagation can be calculated in advance using the following formula:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val rows = </span><span>(height - kernel</span><span style="color:#81a1c1;">.</span><span>_1) / strides</span><span style="color:#81a1c1;">.</span><span>_1 + </span><span style="color:#b48ead;">1
+</span><span style="color:#81a1c1;">val cols = </span><span>(width - kernel</span><span style="color:#81a1c1;">.</span><span>_2) / strides</span><span style="color:#81a1c1;">.</span><span>_2 + </span><span style="color:#b48ead;">1
+</span><span style="color:#616e88;">// final output shape after layer activation is
+</span><span style="color:#81a1c1;">val shape = </span><span style="color:#8fbcbb;">List</span><span>(images</span><span style="color:#eceff4;">,</span><span> filterCount</span><span style="color:#eceff4;">,</span><span> rows</span><span style="color:#eceff4;">,</span><span> cols)
+</span></code></pre>
+<p><code>images</code> is a number of images passed via <code>apply</code>, i.e. during the forward propagation. That means we can process a batch of images at once, i.e. at a step. 
+We use similar idea in Dense layers via 2D Tensor to pass multiple images as rows at once (see further).</p>
+<h2 id="pooling-layer">Pooling Layer</h2>
+<p>Typical pooling layer that is used for CNN is Max Pooling. As denoted by its name, it pools maximum elements from some image region to place it into the output matrix.</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;f243dbe04ffd011100.png" class="center-image"/>
+<br/><br/>
+<p>Although above example is quite simple, it shows the idea how forward propagation of <code>MaxPool</code> layer works. Basically, it downsamples input image resolution and takes the most
+bright pixels.</p>
+<p>Here is how we can code max pooling forward propagation:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// shape2D is output shape of this layer
+</span><span style="color:#616e88;">// this function creates image regions from the input X
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">imageRegions</span><span>(image: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>window: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)</span><span style="color:#eceff4;">, </span><span>strides: (</span><span style="color:#81a1c1;">Int</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Int</span><span>)) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">rows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">cols</span><span>) </span><span style="color:#81a1c1;">=</span><span> shape2D
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> i &lt;- </span><span style="color:#b48ead;">0</span><span> until rows by strides</span><span style="color:#81a1c1;">.</span><span>_1 </span><span style="color:#81a1c1;">yield   
+</span><span>    </span><span style="color:#81a1c1;">for</span><span> j &lt;- </span><span style="color:#b48ead;">0</span><span> until cols by strides</span><span style="color:#81a1c1;">.</span><span>_2 </span><span style="color:#81a1c1;">yield          
+</span><span>      (image</span><span style="color:#81a1c1;">.</span><span>slice((i</span><span style="color:#eceff4;">,</span><span> i + window</span><span style="color:#81a1c1;">.</span><span>_1)</span><span style="color:#eceff4;">, </span><span>(j</span><span style="color:#eceff4;">,</span><span> j + window</span><span style="color:#81a1c1;">.</span><span>_2))</span><span style="color:#81a1c1;">.</span><span>as2D</span><span style="color:#eceff4;">,</span><span> i</span><span style="color:#eceff4;">,</span><span> j)
+</span><span>
+</span><span style="color:#616e88;">// main function to find max element in the region
+</span><span style="color:#81a1c1;">private def </span><span style="color:#88c0d0;">poolMax</span><span>(image: </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Tensor2D</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">rows</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">cols</span><span>) </span><span style="color:#81a1c1;">=</span><span> shape2D
+</span><span>  </span><span style="color:#81a1c1;">val out = </span><span style="color:#8fbcbb;">Array</span><span style="color:#81a1c1;">.</span><span>ofDim(rows</span><span style="color:#eceff4;">,</span><span> cols)
+</span><span>  </span><span style="color:#81a1c1;">val pooled = 
+</span><span>    </span><span style="color:#81a1c1;">for </span><span>(region</span><span style="color:#eceff4;">, </span><span>i</span><span style="color:#eceff4;">, </span><span>j) &lt;- imageRegions(image</span><span style="color:#eceff4;">,</span><span> window</span><span style="color:#eceff4;">,</span><span> strides)</span><span style="color:#81a1c1;">.</span><span>flatten </span><span style="color:#81a1c1;">yield            
+</span><span>      out(i)(j) </span><span style="color:#81a1c1;">=</span><span> region</span><span style="color:#81a1c1;">.</span><span>max
+</span><span>  out</span><span style="color:#81a1c1;">.</span><span>as2D
+</span><span>
+</span><span style="color:#616e88;">// Layer interface to forward propagation
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">apply</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=    
+</span><span>  </span><span style="color:#81a1c1;">val pooled =</span><span> x</span><span style="color:#81a1c1;">.</span><span>as4D</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>map(c </span><span style="color:#81a1c1;">=&gt;</span><span> poolMax(c</span><span style="color:#81a1c1;">.</span><span>as2D)))</span><span style="color:#81a1c1;">.</span><span>as4D
+</span><span>  </span><span style="color:#8fbcbb;">Activation</span><span>(x</span><span style="color:#eceff4;">,</span><span> pooled</span><span style="color:#eceff4;">,</span><span> pooled)
+</span></code></pre>
+<h2 id="flatten2d">Flatten2D</h2>
+<p>Before we feed intermediate data from the Convolution and Pooling layers forward, we need to flatten every image to a vector. Image channels are going to be 
+appended to each other to get a single vector per image.
+Our Tensor4D becomes a Tensor2D, where every row is an image. It is going to be still a long row per image, but since we have done some convolutions on the input
+image, such processed data helps a model to learn better and avoid overfitting. 
+Again, real-life CNN network will have multiple convolution and pooling layers, which are not necessarily
+decrease amount of features, but transform them to achieve better model regularisation.</p>
+<p>This layer forward propagation is going to be very simple to implement:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">apply</span><span>(x: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val flat =</span><span> x</span><span style="color:#81a1c1;">.</span><span>as2D
+</span><span>  </span><span style="color:#8fbcbb;">Activation</span><span>(x</span><span style="color:#eceff4;">,</span><span> flat</span><span style="color:#eceff4;">,</span><span> flat)
+</span></code></pre>
+<p>Where <code>.as2D</code> is combining all nested arrays of 4D Tensor starting from axis = 1.</p>
+<p>When we flatten input data we get 4232 long vector image. To summarise the Tensor shapes we get the following <strong>output</strong> shapes:</p>
+<ul>
+<li>Conv2D shape: 128 x 8 x 24 x 24</li>
+<li>MaxPool shape: 128 x 8 x 23 x 23</li>
+<li>Flatten: 128 x 4232</li>
+<li>Dense shape: 128 x 32</li>
+<li>Dense shape: 128 x 1</li>
+</ul>
+<h1 id="summary">Summary</h1>
+<p>If I run training for 5 epochs it takes a lot time than before with ANN. </p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val model =</span><span> cnn</span><span style="color:#81a1c1;">.</span><span>train(xTrain</span><span style="color:#eceff4;">,</span><span> yTrain</span><span style="color:#eceff4;">,</span><span> epochs </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">,</span><span> shuffle </span><span style="color:#81a1c1;">= true</span><span>)
+</span></code></pre>
+<p>First of all we have more feature now with CNN = 4232 to learn in fully-connected layers.
+But the main slowness comes from the forward and backward computation of the convolutional and pooling layers. They are much slower than simple dense layer matrix multiplication.</p>
+<p>This takes up to 1 hour to train on MNIST on 50k images. The highest accuracy score I got was 92%, which is much lower than with ANN = 98.5%. 
+As we have too few layers and most probably exploding/vanishing gradient I could not better result with CNN. However, it is quite possible to get
+that with production libraries like Tensorflow, where you will get 98% accuracy or higher using the same architecture that I used in this article.</p>
+<p>If you are curious to know how back-propagation is done for Flatten, MaxPool and Conv layers feel free to look at the code of <code>backward</code> methods <a href="https://github.com/novakov-alexey/deep-learning-scala/blob/master/src/main/scala/ml/network/layers.scala">here</a>.</p>
+<h1 id="links">Links</h1>
+<ol>
+<li><a href="https://github.com/novakov-alexey/deep-learning-scala">Library source code</a></li>
+<li><a href="https://www.researchgate.net/figure/The-convolutional-neural-network-CSI-channel-state-information_fig2_333437070">CNN Figure</a></li>
+</ol>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Convolutional Neural Network in Scala' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Convolutional Neural Network in Scala" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Convolutional Neural Network in Scala" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cnn-in-scala&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-cnn-topology" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/cnn-in-scala/#cnn-topology">
+                CNN Topology
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-convolution-layer" class="toc is-size-7" href="https://novakov-alexey.github.io/cnn-in-scala/#convolution-layer">
+                    Convolution Layer
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-pooling-layer" class="toc is-size-7" href="https://novakov-alexey.github.io/cnn-in-scala/#pooling-layer">
+                    Pooling Layer
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-flatten2d" class="toc is-size-7" href="https://novakov-alexey.github.io/cnn-in-scala/#flatten2d">
+                    Flatten2D
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/cnn-in-scala/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-links" class="toc is-size-7 " href="https://novakov-alexey.github.io/cnn-in-scala/#links">
+                Links
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/cnn-in-scala/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'cnn-in-scala'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

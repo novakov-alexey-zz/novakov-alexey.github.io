@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Face Identification with VGGFace and OpenCV
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Face Identification with VGGFace and OpenCV
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-05-22'>May 22, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    10 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1853 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/computer-vision/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        computer vision
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/cnn/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        cnn
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p>Face detection and recognition is one the area where Deep Learning is incredibly useful. There are many studies and datasets related to
+human faces and their detection/recognition. In this article we will implement Machine Learning pipeline for face detection and recognition using few libraries and CNN model.</p>
+<span id="continue-reading"></span><h1 id="pipeline">Pipeline</h1>
+<p>One the part will be implemented with very popular C++ library <a href="https://opencv.org/">OpenCV</a>, which is around for a long time. 
+It has many modules for image processing, object classification, neural networks and more. We are going to use its Java Wrapper - <a href="https://github.com/bytedeco/javacv">JavaCV</a></p>
+<p>OpenCV comes with human face detector module, which is called &quot;Haar Cascade&quot; classifier. 
+This class takes an image and returns a <a href="http://bytedeco.org/javacpp-presets/opencv/apidocs/org/bytedeco/opencv/opencv_core/Rect.html">Rect</a> object of the detected face(s) in it. The Rect object is a data structure that has X and Y coordiantes of
+the left-top corners plus width and height where region of interest is located. In our case, rectangular area is a face. For example:</p>
+<p>Original photo:
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;70f2f0172cd4f1ad00.jpg" class="center-image"/>
+<br/><br/></p>
+<p>Cropped with Haar Cascade:
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;b02f7692619756c700.jpg" class="center-image"/>
+<br/><br/></p>
+<p>Once we get an area of the detected face(s), we can compare its pixel data with in advance extracted face features of known faces. 
+Comparison algroithm calculates a Euclidean distance between detected face vector with vectors of known faces. 
+The smallest distance with some known face sets its label as a result. 
+That means, we can take known face label that has smallest distance as a result of face identification. 
+Our workflow will look like this:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;c1e610a2db543bd000.png" class="center-image"/>
+<br/><br/><h1 id="photo-preparation">Photo Preparation</h1>
+<p>In order to extract person features, we will prepare separate folder with image per each person:</p>
+<ul>
+<li>Alexey (myself)</li>
+<li><a href="https://en.wikipedia.org/wiki/Guy_Ritchie">Guy Ritchie</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tom_Araya">Tom Araya</a></li>
+</ul>
+<p>Input directory:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">raw_photos
+</span><span style="color:#88c0d0;">├──</span><span> guy_ritchie
+</span><span style="color:#88c0d0;">└──</span><span> tom_arraya
+</span></code></pre>
+<p>Output folder:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">dataset-people
+</span><span style="color:#88c0d0;">├──</span><span> guy_ritchie
+</span><span style="color:#88c0d0;">└──</span><span> tom_arraya
+</span></code></pre>
+<p>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;9632d2c8f35f44d000.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;4f5219ea6bc3316100.png" class="center-image"/>
+<br/><br/></p>
+<p>Plus I am adding my photos to <code>dataset-people</code> directory</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">dataset-people
+</span><span style="color:#88c0d0;">├──</span><span> alexey
+</span><span style="color:#88c0d0;">├──</span><span> guy_ritchie
+</span><span style="color:#88c0d0;">└──</span><span> tom_arraya
+</span></code></pre>
+<p>Below program reads photos from the local folder and crops faces to save them to a separate folder:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">//cropFaces.scala
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_core</span><span style="color:#81a1c1;">.</span><span>{Rect</span><span style="color:#eceff4;">,</span><span> Mat</span><span style="color:#eceff4;">,</span><span> Size}
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_imgproc</span><span style="color:#81a1c1;">.</span><span>resize
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_imgcodecs</span><span style="color:#81a1c1;">.</span><span>{imread</span><span style="color:#eceff4;">,</span><span> imwrite}
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>nio</span><span style="color:#81a1c1;">.</span><span>file</span><span style="color:#81a1c1;">.</span><span>{Files</span><span style="color:#eceff4;">,</span><span> Paths}
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createIfNotExists</span><span>(path: </span><span style="color:#8fbcbb;">String</span><span>) </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">if</span><span> !</span><span style="color:#8fbcbb;">Files</span><span style="color:#81a1c1;">.</span><span>exists(</span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(path)) then 
+</span><span>    </span><span style="color:#8fbcbb;">Files</span><span style="color:#81a1c1;">.</span><span>createDirectory(</span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(path))
+</span><span>
+</span><span>@main
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">crop</span><span>() </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val datasetDir = </span><span style="color:#a3be8c;">&quot;dataset-people&quot;
+</span><span>  createIfNotExists(datasetDir)
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val dirs = </span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(</span><span style="color:#a3be8c;">&quot;raw_photos&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toFile</span><span style="color:#81a1c1;">.</span><span>listFiles</span><span style="color:#81a1c1;">.</span><span>filter(f </span><span style="color:#81a1c1;">=&gt;</span><span> !f</span><span style="color:#81a1c1;">.</span><span>getName</span><span style="color:#81a1c1;">.</span><span>startsWith(</span><span style="color:#a3be8c;">&quot;.&quot;</span><span>))
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">for</span><span> dir &lt;- dirs </span><span style="color:#81a1c1;">do
+</span><span>    </span><span style="color:#81a1c1;">val label =</span><span> dir</span><span style="color:#81a1c1;">.</span><span>getName
+</span><span>    println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Extracting faces for &#39;$label&#39; label</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>
+</span><span>    createIfNotExists(</span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(datasetDir</span><span style="color:#eceff4;">,</span><span> label)</span><span style="color:#81a1c1;">.</span><span>toString)
+</span><span>    </span><span style="color:#81a1c1;">val images =</span><span> dir</span><span style="color:#81a1c1;">.</span><span>listFiles</span><span style="color:#81a1c1;">.</span><span>filter(</span><span style="color:#81a1c1;">_.</span><span>toString</span><span style="color:#81a1c1;">.</span><span>endsWith(</span><span style="color:#a3be8c;">&quot;.jpg&quot;</span><span>))
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">for</span><span> file &lt;- images </span><span style="color:#81a1c1;">do
+</span><span>      println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Reading file: $file</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>      </span><span style="color:#81a1c1;">val image =</span><span> imread(file</span><span style="color:#81a1c1;">.</span><span>toString)
+</span><span>      </span><span style="color:#81a1c1;">val faces =</span><span> detectFaces(image)  
+</span><span>
+</span><span>      </span><span style="color:#81a1c1;">for </span><span>(face</span><span style="color:#eceff4;">, </span><span>i) &lt;- faces</span><span style="color:#81a1c1;">.</span><span>get</span><span style="color:#81a1c1;">.</span><span>zipWithIndex </span><span style="color:#81a1c1;">do        
+</span><span>        </span><span style="color:#81a1c1;">val crop = </span><span style="color:#8fbcbb;">Rect</span><span>(face</span><span style="color:#81a1c1;">.</span><span>x</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>y</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>width</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>height)
+</span><span>        </span><span style="color:#81a1c1;">val cropped = </span><span style="color:#8fbcbb;">Mat</span><span>(image</span><span style="color:#eceff4;">,</span><span> crop)
+</span><span>        resize(cropped</span><span style="color:#eceff4;">,</span><span> cropped</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Size</span><span>(</span><span style="color:#8fbcbb;">ImageHeight</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">ImageWidth</span><span>))  
+</span><span>        </span><span style="color:#81a1c1;">val filename = </span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(datasetDir</span><span style="color:#eceff4;">,</span><span> label</span><span style="color:#eceff4;">, </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$i-${file</span><span style="color:#81a1c1;">.</span><span>getName}</span><span style="color:#a3be8c;">&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toString
+</span><span>        println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Writing $filename</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>        imwrite(filename</span><span style="color:#eceff4;">,</span><span> cropped)
+</span></code></pre>
+<p>The same code on GitHub is <a href="https://github.com/novakov-alexey/face-identification/blob/main/src/main/scala/cropFaces.scala">here</a>.</p>
+<h1 id="get-onnx-model">Get ONNX model</h1>
+<p>Now we can extract face features for all three persons. We are going to use CNN model which was trained on the <a href="https://exposing.ai/vgg_face/">VGGFace dataset</a>.
+The easiest option to access Keras (which is Python high-level API to Tensorflow) trained model from Scala is to export it to <a href="https://onnx.ai/">ONNX</a> format. 
+Let's proceed:</p>
+<ol>
+<li>Create <code>SavedModel</code> file:</li>
+</ol>
+<ul>
+<li>Instaniate Python VGGFace class from <a href="https://github.com/rcmalli/keras-vggface">keras-vggface</a> library
+with <code>include_top=False</code> to skip last layer of the CNN. </li>
+<li>Save instaniated model to Tensforflow <a href="https://keras.io/api/models/model_saving_apis/">Tensorflow SavedModel</a></li>
+</ul>
+<pre data-lang="python" style="background-color:#2e3440;color:#d8dee9;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#81a1c1;">from </span><span>keras_vggface</span><span style="color:#81a1c1;">.</span><span>vggface </span><span style="color:#81a1c1;">import </span><span>VGGFace
+</span><span>
+</span><span style="color:#81a1c1;">IMAGE_HEIGHT = </span><span style="color:#b48ead;">224
+</span><span style="color:#81a1c1;">IMAGE_WIDTH = </span><span style="color:#b48ead;">224
+</span><span style="color:#81a1c1;">COLOR_CHANNELS = </span><span style="color:#b48ead;">3
+</span><span>
+</span><span>output_path </span><span style="color:#81a1c1;">= </span><span style="color:#a3be8c;">&#39;vggface_model&#39;
+</span><span>model </span><span style="color:#81a1c1;">= </span><span style="color:#88c0d0;">VGGFace</span><span>(model</span><span style="color:#81a1c1;">=</span><span style="color:#a3be8c;">&#39;vgg16&#39;</span><span style="color:#eceff4;">,
+</span><span>                include_top</span><span style="color:#81a1c1;">=False</span><span style="color:#eceff4;">,
+</span><span>                input_shape</span><span style="color:#81a1c1;">=</span><span>(</span><span style="color:#81a1c1;">IMAGE_HEIGHT</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">IMAGE_WIDTH</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">COLOR_CHANNELS</span><span>)</span><span style="color:#eceff4;">,
+</span><span>                pooling</span><span style="color:#81a1c1;">=</span><span style="color:#a3be8c;">&#39;avg&#39;</span><span>)
+</span><span>model</span><span style="color:#81a1c1;">.</span><span style="color:#88c0d0;">save</span><span>(output_path)
+</span></code></pre>
+<p><strong>Important: we save VGGFace model without last layer. We do not need any predictions that VGGFace model originally was supposed to output, 
+since we are going to use extracted features to predict other persons than those in original VGGFace dataset.</strong></p>
+<ol start="2">
+<li>Convert saved model to ONNX format via <a href="https://github.com/onnx/tensorflow-onnx">tensorflow-onnx</a> library</li>
+</ol>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">python</span><span> -m tf2onnx.convert </span><span style="color:#81a1c1;">\
+</span><span>  --saved-model vggface_model </span><span style="color:#81a1c1;">\
+</span><span>  --output data/model.onnx </span><span style="color:#81a1c1;">\
+</span><span>  --tag serve
+</span></code></pre>
+<p>After converting SavedModel to ONNX we get file <code>data/model.onnx</code> of approx. 56Mb in size:</p>
+<h1 id="extracting-features">Extracting Features</h1>
+<p>Now we can use ONNX model from Scala code. In this step, we use VGGFace model to extract features of all 3 person faces
+and save them into a file as HasMap for further step.</p>
+<p>First we implement common functions, which we will use one more time for real-time face identification algorithm:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// common.scala
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>kjaer</span><span style="color:#81a1c1;">.</span><span>compiletime</span><span style="color:#81a1c1;">.</span><span>*
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>javacpp</span><span style="color:#81a1c1;">.</span><span>indexer</span><span style="color:#81a1c1;">.</span><span>{UByteIndexer</span><span style="color:#eceff4;">,</span><span> FloatRawIndexer}
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_core</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_core</span><span style="color:#81a1c1;">.</span><span>{Mat</span><span style="color:#eceff4;">,</span><span> Scalar</span><span style="color:#eceff4;">,</span><span> RectVector</span><span style="color:#eceff4;">,</span><span> UMat}
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_imgproc</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_objdetect</span><span style="color:#81a1c1;">.</span><span>CascadeClassifier
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>compiletime</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>onnx</span><span style="color:#81a1c1;">.</span><span>Tensors</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>onnx</span><span style="color:#81a1c1;">.</span><span>backends</span><span style="color:#81a1c1;">.</span><span>*
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>nio</span><span style="color:#81a1c1;">.</span><span>file</span><span style="color:#81a1c1;">.</span><span>{Files</span><span style="color:#eceff4;">,</span><span> Paths</span><span style="color:#eceff4;">,</span><span> Path}
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>bullet</span><span style="color:#81a1c1;">.</span><span>borer</span><span style="color:#81a1c1;">.</span><span>Cbor
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>{ByteArrayOutputStream</span><span style="color:#eceff4;">,</span><span> File}
+</span><span>
+</span><span style="color:#81a1c1;">val OutputSize</span><span>: </span><span style="color:#8fbcbb;">Dimension </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">512
+</span><span style="color:#81a1c1;">val FeatureFilePath = </span><span style="color:#a3be8c;">&quot;data/precomputed_features.cbor&quot;
+</span><span>
+</span><span style="color:#81a1c1;">type Features = </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]]
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">saveFeatures</span><span>(features: </span><span style="color:#8fbcbb;">Features</span><span>) </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val file = </span><span style="color:#8fbcbb;">File</span><span>(</span><span style="color:#8fbcbb;">FeatureFilePath</span><span>)
+</span><span> </span><span style="color:#8fbcbb;">Cbor</span><span style="color:#81a1c1;">.</span><span>encode(features)</span><span style="color:#81a1c1;">.</span><span>to(file)</span><span style="color:#81a1c1;">.</span><span>result
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">getModel</span><span>(path: </span><span style="color:#8fbcbb;">Path </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(</span><span style="color:#a3be8c;">&quot;data&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;model.onnx&quot;</span><span>)) </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val bytes = </span><span style="color:#8fbcbb;">Files</span><span style="color:#81a1c1;">.</span><span>readAllBytes(path)
+</span><span> </span><span style="color:#8fbcbb;">ORTModelBackend</span><span>(bytes)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">predict</span><span>(
+</span><span> images: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]</span><span style="color:#eceff4;">, 
+</span><span> model: </span><span style="color:#8fbcbb;">ORTModelBackend</span><span style="color:#eceff4;">, 
+</span><span> batch: </span><span style="color:#8fbcbb;">Dimension </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">, 
+</span><span> outputSize: </span><span style="color:#8fbcbb;">Dimension </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">OutputSize
+</span><span>) </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val input = </span><span style="color:#8fbcbb;">Tensor</span><span>(images</span><span style="color:#eceff4;">,</span><span> tensorDenotation</span><span style="color:#eceff4;">,</span><span> tensorShapeDenotation</span><span style="color:#eceff4;">,</span><span> shape(batch))
+</span><span> model</span><span style="color:#81a1c1;">.</span><span>fullModel[
+</span><span>   </span><span style="color:#81a1c1;">Float</span><span style="color:#eceff4;">, 
+</span><span>   &quot;</span><span style="color:#8fbcbb;">ImageClassification</span><span>&quot;</span><span style="color:#eceff4;">, 
+</span><span>   &quot;</span><span style="color:#8fbcbb;">Batch</span><span>&quot; </span><span style="color:#81a1c1;">##</span><span>: &quot;</span><span style="color:#8fbcbb;">Features</span><span>&quot; </span><span style="color:#81a1c1;">##</span><span>: </span><span style="color:#8fbcbb;">TSNil</span><span style="color:#eceff4;">, 
+</span><span>   </span><span style="color:#8fbcbb;">batch</span><span style="color:#81a1c1;">.type #</span><span>: </span><span style="color:#8fbcbb;">outputSize</span><span style="color:#81a1c1;">.type #</span><span>: </span><span style="color:#8fbcbb;">SNil</span><span>](
+</span><span>     </span><span style="color:#8fbcbb;">Tuple</span><span>(input)
+</span><span>   )
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">scale</span><span>(img: </span><span style="color:#8fbcbb;">Mat</span><span>): </span><span style="color:#8fbcbb;">Mat </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val out = </span><span style="color:#8fbcbb;">Mat</span><span>()
+</span><span> img</span><span style="color:#81a1c1;">.</span><span>assignTo(out</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">CV_32FC4</span><span>)
+</span><span> subtract(out</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Scalar</span><span>(</span><span style="color:#b48ead;">93</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">5940</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">104</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">7624</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">129</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">1863</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">f</span><span>))</span><span style="color:#81a1c1;">.</span><span>asMat
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">toArray</span><span>(mat: </span><span style="color:#8fbcbb;">Mat</span><span>): </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>] </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val w =</span><span> mat</span><span style="color:#81a1c1;">.</span><span>cols
+</span><span> </span><span style="color:#81a1c1;">val h =</span><span> mat</span><span style="color:#81a1c1;">.</span><span>rows
+</span><span> </span><span style="color:#81a1c1;">val c =</span><span> mat</span><span style="color:#81a1c1;">.</span><span>channels
+</span><span> </span><span style="color:#81a1c1;">val rowStride =</span><span> w * c
+</span><span>
+</span><span> </span><span style="color:#81a1c1;">val result = new </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>](rowStride * h)
+</span><span> </span><span style="color:#81a1c1;">val indexer =</span><span> mat</span><span style="color:#81a1c1;">.</span><span>createIndexer[</span><span style="color:#8fbcbb;">FloatRawIndexer</span><span>]()
+</span><span> </span><span style="color:#81a1c1;">var </span><span>off </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span> </span><span style="color:#81a1c1;">var </span><span>y </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0
+</span><span> </span><span style="color:#81a1c1;">while </span><span>(y &lt; h)
+</span><span>   indexer</span><span style="color:#81a1c1;">.</span><span>get(y</span><span style="color:#eceff4;">,</span><span> result</span><span style="color:#eceff4;">,</span><span> off</span><span style="color:#eceff4;">,</span><span> rowStride)
+</span><span>   off += rowStride
+</span><span>   y += </span><span style="color:#b48ead;">1
+</span><span>
+</span><span> result
+</span></code></pre>
+<p>At this point we can run extraction step:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">//extract.scala
+</span><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>kjaer</span><span style="color:#81a1c1;">.</span><span>compiletime</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>compiletime</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>onnx</span><span style="color:#81a1c1;">.</span><span>Tensors</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>emergentorder</span><span style="color:#81a1c1;">.</span><span>onnx</span><span style="color:#81a1c1;">.</span><span>backends</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_imgcodecs</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_core</span><span style="color:#81a1c1;">.</span><span>{Mat</span><span style="color:#eceff4;">,</span><span> Scalar}
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>nio</span><span style="color:#81a1c1;">.</span><span>file</span><span style="color:#81a1c1;">.</span><span>{Files</span><span style="color:#eceff4;">,</span><span> Paths}
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>File
+</span><span style="color:#81a1c1;">import</span><span> javax</span><span style="color:#81a1c1;">.</span><span>imageio</span><span style="color:#81a1c1;">.</span><span>ImageIO
+</span><span style="color:#81a1c1;">import</span><span> scala</span><span style="color:#81a1c1;">.</span><span>collection</span><span style="color:#81a1c1;">.</span><span>parallel</span><span style="color:#81a1c1;">.</span><span>CollectionConverters</span><span style="color:#81a1c1;">.</span><span>*
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">label2Features</span><span>(dirs: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#8fbcbb;">File</span><span>]) </span><span style="color:#81a1c1;">= 
+</span><span>  </span><span style="color:#81a1c1;">lazy val model =</span><span> getModel()
+</span><span>  </span><span style="color:#81a1c1;">val batchSize = </span><span style="color:#b48ead;">16
+</span><span>
+</span><span>  dirs</span><span style="color:#81a1c1;">.</span><span>par</span><span style="color:#81a1c1;">.</span><span>map { dir </span><span style="color:#81a1c1;">=&gt;
+</span><span>    </span><span style="color:#81a1c1;">val label =</span><span> dir</span><span style="color:#81a1c1;">.</span><span>getName
+</span><span>    println(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Extracting features for &#39;$label&#39; at $dir folder</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">val groups =</span><span> dir</span><span style="color:#81a1c1;">.</span><span>listFiles</span><span style="color:#81a1c1;">.</span><span>grouped(batchSize)
+</span><span>    </span><span style="color:#81a1c1;">val features =</span><span> groups</span><span style="color:#81a1c1;">.</span><span>map { files </span><span style="color:#81a1c1;">=&gt;
+</span><span>      </span><span style="color:#81a1c1;">val images =</span><span> files</span><span style="color:#81a1c1;">.</span><span>map(f </span><span style="color:#81a1c1;">=&gt;</span><span> toArray(scale(imread(f</span><span style="color:#81a1c1;">.</span><span>toString))))</span><span style="color:#81a1c1;">.</span><span>flatten
+</span><span>      </span><span style="color:#81a1c1;">val currentBatch =</span><span> files</span><span style="color:#81a1c1;">.</span><span>length</span><span style="color:#81a1c1;">.</span><span>asInstanceOf[</span><span style="color:#8fbcbb;">Dimension</span><span>]      
+</span><span>      </span><span style="color:#81a1c1;">val out =</span><span> predict(images</span><span style="color:#eceff4;">,</span><span> model</span><span style="color:#eceff4;">,</span><span> currentBatch)      
+</span><span>      out</span><span style="color:#81a1c1;">.</span><span>data</span><span style="color:#81a1c1;">.</span><span>grouped(</span><span style="color:#8fbcbb;">OutputSize</span><span>)</span><span style="color:#81a1c1;">.</span><span>toList
+</span><span>    }  
+</span><span>    label -&gt; features</span><span style="color:#81a1c1;">.</span><span>toList</span><span style="color:#81a1c1;">.</span><span>flatten
+</span><span>  }
+</span><span>
+</span><span>@main
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">extract </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val dirs = </span><span style="color:#8fbcbb;">Paths</span><span style="color:#81a1c1;">.</span><span>get(</span><span style="color:#a3be8c;">&quot;dataset-people&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toFile</span><span style="color:#81a1c1;">.</span><span>listFiles
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">val avgFeatures =</span><span> label2Features(dirs)</span><span style="color:#81a1c1;">.</span><span>map {
+</span><span>    (label, features) </span><span style="color:#81a1c1;">=&gt; 
+</span><span>      </span><span style="color:#81a1c1;">val count =</span><span> features</span><span style="color:#81a1c1;">.</span><span>length      
+</span><span>      </span><span style="color:#81a1c1;">val sum =</span><span> features</span><span style="color:#81a1c1;">.</span><span>reduce((a, b) </span><span style="color:#81a1c1;">=&gt;</span><span> a</span><span style="color:#81a1c1;">.</span><span>zip(b)</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> + </span><span style="color:#81a1c1;">_</span><span>))
+</span><span>      label -&gt; sum</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_</span><span> / count)
+</span><span>  }</span><span style="color:#81a1c1;">.</span><span>toList</span><span style="color:#81a1c1;">.</span><span>toMap
+</span><span>
+</span><span>  saveFeatures(avgFeatures)
+</span></code></pre>
+<p>In the <code>extract</code> function, we do element-wise addition of all extracted vectors per each person. 
+Then, final person vector is divided by number of images for that person to get average values of the extracted features. 
+In the result we will get/define such type alias:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">type Features = </span><span style="color:#8fbcbb;">Map</span><span>[</span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]]
+</span></code></pre>
+<h1 id="identify-faces">Identify Faces</h1>
+<p>Finally, we can use our extracted features to identify a person face. Keep in mind, that our prediction algorithm
+knowns only 3 person faces. Any other person may be confused with one of the three known faces or they can be unknown.
+If we want to more different people to be identifieable, we need their features as well, so go to step number one of our 
+pipeline to collect those people photos and extract their features.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#616e88;">// main.scala
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_core</span><span style="color:#81a1c1;">.</span><span>{Mat</span><span style="color:#eceff4;">,</span><span> Size</span><span style="color:#eceff4;">,</span><span> Rect</span><span style="color:#eceff4;">,</span><span> Point</span><span style="color:#eceff4;">,</span><span> Scalar}
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>global</span><span style="color:#81a1c1;">.</span><span>opencv_imgproc</span><span style="color:#81a1c1;">.</span><span>*
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>opencv</span><span style="color:#81a1c1;">.</span><span>opencv_videoio</span><span style="color:#81a1c1;">.</span><span>VideoCapture
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>bytedeco</span><span style="color:#81a1c1;">.</span><span>javacv</span><span style="color:#81a1c1;">.</span><span>{CanvasFrame</span><span style="color:#eceff4;">,</span><span> OpenCVFrameConverter}
+</span><span>
+</span><span style="color:#81a1c1;">import</span><span> javax</span><span style="color:#81a1c1;">.</span><span>swing</span><span style="color:#81a1c1;">.</span><span>WindowConstants
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">createCavasFrame </span><span style="color:#81a1c1;">= 
+</span><span> </span><span style="color:#81a1c1;">val frame = </span><span style="color:#8fbcbb;">CanvasFrame</span><span>(</span><span style="color:#a3be8c;">&quot;Detected Faces&quot;</span><span>)
+</span><span> frame</span><span style="color:#81a1c1;">.</span><span>setDefaultCloseOperation(</span><span style="color:#8fbcbb;">WindowConstants</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">EXIT_ON_CLOSE</span><span>)
+</span><span> frame</span><span style="color:#81a1c1;">.</span><span>setCanvasSize(</span><span style="color:#b48ead;">1280</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">720</span><span>)
+</span><span> frame
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">calcLabel</span><span>(face: </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Float</span><span>]</span><span style="color:#eceff4;">, </span><span>features: </span><span style="color:#8fbcbb;">Features</span><span style="color:#eceff4;">, </span><span>threshold: </span><span style="color:#81a1c1;">Int = </span><span style="color:#b48ead;">100</span><span>) </span><span style="color:#81a1c1;">= 
+</span><span> features</span><span style="color:#81a1c1;">.</span><span>foldLeft(</span><span style="color:#a3be8c;">&quot;?&quot;</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">Float.</span><span style="color:#8fbcbb;">MaxValue</span><span>){ 
+</span><span>   </span><span style="color:#81a1c1;">case </span><span>((label</span><span style="color:#eceff4;">, </span><span>min)</span><span style="color:#eceff4;">, </span><span>(l</span><span style="color:#eceff4;">, </span><span>f)) </span><span style="color:#81a1c1;">=&gt; 
+</span><span>     </span><span style="color:#81a1c1;">val d =</span><span> distance(face</span><span style="color:#eceff4;">,</span><span> f)
+</span><span>     </span><span style="color:#81a1c1;">if</span><span> d &lt; threshold &amp;&amp; d &lt; min then (l</span><span style="color:#eceff4;">,</span><span> d)
+</span><span>     </span><span style="color:#81a1c1;">else </span><span>(label</span><span style="color:#eceff4;">,</span><span> min)
+</span><span> }</span><span style="color:#81a1c1;">.</span><span>_1  
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">drawLabel</span><span>(label: </span><span style="color:#8fbcbb;">String</span><span style="color:#eceff4;">, </span><span>frame: </span><span style="color:#8fbcbb;">Mat</span><span style="color:#eceff4;">, </span><span>topLeft: </span><span style="color:#8fbcbb;">Point</span><span>) </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val x =</span><span> math</span><span style="color:#81a1c1;">.</span><span>max(topLeft</span><span style="color:#81a1c1;">.</span><span>x - </span><span style="color:#b48ead;">10</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>)
+</span><span> </span><span style="color:#81a1c1;">val y =</span><span> math</span><span style="color:#81a1c1;">.</span><span>max(topLeft</span><span style="color:#81a1c1;">.</span><span>y - </span><span style="color:#b48ead;">10</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>)
+</span><span> </span><span style="color:#81a1c1;">val font = </span><span style="color:#8fbcbb;">FONT_HERSHEY_SIMPLEX
+</span><span> </span><span style="color:#81a1c1;">val thickness = </span><span style="color:#b48ead;">2
+</span><span> </span><span style="color:#81a1c1;">val fontScale = </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0
+</span><span> </span><span style="color:#81a1c1;">val baseline = new </span><span style="color:#8fbcbb;">Array</span><span>[</span><span style="color:#81a1c1;">Int</span><span>](</span><span style="color:#b48ead;">2</span><span>)
+</span><span> </span><span style="color:#81a1c1;">val size =</span><span> getTextSize(label</span><span style="color:#eceff4;">,</span><span> font</span><span style="color:#eceff4;">,</span><span> fontScale</span><span style="color:#eceff4;">,</span><span> thickness</span><span style="color:#eceff4;">,</span><span> baseline)
+</span><span> </span><span style="color:#81a1c1;">val rectColor = </span><span style="color:#8fbcbb;">Scalar</span><span>(</span><span style="color:#b48ead;">255</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>)
+</span><span> rectangle(
+</span><span>   frame</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">Point</span><span>(x</span><span style="color:#eceff4;">,</span><span> y - size</span><span style="color:#81a1c1;">.</span><span>height() - thickness)</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">Point</span><span>(x + size</span><span style="color:#81a1c1;">.</span><span>width() - thickness</span><span style="color:#eceff4;">,</span><span> y + </span><span style="color:#b48ead;">10</span><span>)</span><span style="color:#eceff4;">,
+</span><span>   rectColor</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">CV_FILLED</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">LINE_8</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#b48ead;">0</span><span>)
+</span><span> </span><span style="color:#81a1c1;">val fontColor = </span><span style="color:#8fbcbb;">Scalar</span><span>(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">255</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span>)
+</span><span> putText(frame</span><span style="color:#eceff4;">,</span><span> label</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Point</span><span>(x</span><span style="color:#eceff4;">,</span><span> y)</span><span style="color:#eceff4;">,</span><span> font</span><span style="color:#eceff4;">,</span><span> fontScale</span><span style="color:#eceff4;">,</span><span> fontColor</span><span style="color:#eceff4;">,</span><span> thickness</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">CV_FILLED</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">false</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">toModelInput</span><span>(crop: </span><span style="color:#8fbcbb;">Rect</span><span style="color:#eceff4;">, </span><span>frame: </span><span style="color:#8fbcbb;">Mat</span><span>) </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val cropped = </span><span style="color:#8fbcbb;">Mat</span><span>(frame</span><span style="color:#eceff4;">,</span><span> crop)
+</span><span> resize(cropped</span><span style="color:#eceff4;">,</span><span> cropped</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Size</span><span>(</span><span style="color:#8fbcbb;">ImageHeight</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">ImageWidth</span><span>))
+</span><span> toArray(scale(cropped))
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">drawRectangle</span><span>(face: </span><span style="color:#8fbcbb;">Rect</span><span style="color:#eceff4;">, </span><span>frame: </span><span style="color:#8fbcbb;">Mat</span><span>) </span><span style="color:#81a1c1;">=
+</span><span> rectangle(frame</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">Point</span><span>(face</span><span style="color:#81a1c1;">.</span><span>x</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>y)</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">Point</span><span>(face</span><span style="color:#81a1c1;">.</span><span>x + face</span><span style="color:#81a1c1;">.</span><span>width</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>y + face</span><span style="color:#81a1c1;">.</span><span>height)</span><span style="color:#eceff4;">,
+</span><span>   </span><span style="color:#8fbcbb;">Scalar</span><span>(</span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">255</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">, </span><span style="color:#b48ead;">1</span><span>)
+</span><span> )
+</span></code></pre>
+<p>In the main function we run infinite loop that captures video frame as an image.
+The captured image is then used to detect and identify person faces.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>@main
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">demo</span><span>() </span><span style="color:#81a1c1;">=
+</span><span> </span><span style="color:#81a1c1;">val capture = </span><span style="color:#8fbcbb;">VideoCapture</span><span>(</span><span style="color:#b48ead;">0</span><span>)
+</span><span> </span><span style="color:#81a1c1;">val canvasFrame =</span><span> createCavasFrame  
+</span><span> </span><span style="color:#81a1c1;">val frame = </span><span style="color:#8fbcbb;">Mat</span><span>()
+</span><span> </span><span style="color:#81a1c1;">val converter = </span><span style="color:#8fbcbb;">OpenCVFrameConverter</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">ToMat</span><span>()
+</span><span> </span><span style="color:#81a1c1;">val model =</span><span> getModel()
+</span><span> </span><span style="color:#81a1c1;">val features =</span><span> loadFeatures
+</span><span>
+</span><span> </span><span style="color:#81a1c1;">try
+</span><span>   </span><span style="color:#81a1c1;">while</span><span> capture</span><span style="color:#81a1c1;">.</span><span>read(frame) </span><span style="color:#81a1c1;">do
+</span><span>     </span><span style="color:#81a1c1;">val faces =</span><span> detectFaces(frame)
+</span><span>     
+</span><span>     </span><span style="color:#81a1c1;">for</span><span> face &lt;- faces</span><span style="color:#81a1c1;">.</span><span>get </span><span style="color:#81a1c1;">yield
+</span><span>       drawRectangle(face</span><span style="color:#eceff4;">,</span><span> frame)
+</span><span>       </span><span style="color:#81a1c1;">val crop = </span><span style="color:#8fbcbb;">Rect</span><span>(face</span><span style="color:#81a1c1;">.</span><span>x</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>y</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>width</span><span style="color:#eceff4;">,</span><span> face</span><span style="color:#81a1c1;">.</span><span>height)
+</span><span>       </span><span style="color:#81a1c1;">val image =</span><span> toModelInput(crop</span><span style="color:#eceff4;">,</span><span> frame)
+</span><span>       </span><span style="color:#81a1c1;">val faceFeatures =</span><span> predict(image</span><span style="color:#eceff4;">,</span><span> model)</span><span style="color:#81a1c1;">.</span><span>data
+</span><span>       </span><span style="color:#81a1c1;">val label =</span><span> calcLabel(faceFeatures</span><span style="color:#eceff4;">,</span><span> features)
+</span><span>       drawLabel(label</span><span style="color:#eceff4;">,</span><span> frame</span><span style="color:#eceff4;">,</span><span> crop</span><span style="color:#81a1c1;">.</span><span>tl)
+</span><span>
+</span><span>     canvasFrame</span><span style="color:#81a1c1;">.</span><span>showImage(converter</span><span style="color:#81a1c1;">.</span><span>convert(frame))                              
+</span><span> </span><span style="color:#81a1c1;">finally
+</span><span>   capture</span><span style="color:#81a1c1;">.</span><span>release
+</span><span>   canvasFrame</span><span style="color:#81a1c1;">.</span><span>dispose
+</span></code></pre>
+<h2 id="demo-time">Demo time</h2>
+<p>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;de9cd242be1dd7a200.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;8fb6b204e90c5a1000.png" class="center-image"/>
+<br/><br/></p>
+<p>If I put more faces into the frame, identification algorithm may confuse some of them and identify someone with a beard as Tom Araya or someone
+with bright white skin color as Guy Ritchie. In order to overcome such issue, you need to add more different faces. 
+Also, we would need to tune <code>threshold</code> parameter, which is used to discard faces which are far away from those we are interested in.
+Level of certantity is relative of course, there can be still many people in the world who have very similar face features like Tom, Guy or me.</p>
+<h1 id="summary">Summary</h1>
+<p>We have made powerful application with so little code to identify some person faces. There are several libraries were used to 
+get the face detection working, such as OpenCV. <a href="https://github.com/EmergentOrder/onnx-scala">ONNX-Scala</a> to access ONNX model fromm Scala. 
+<a href="https://sirthias.github.io/borer/">Borer</a> library to save and load face features as Scala object (HashMap) into memory from disk.</p>
+<p>Current approach to identify faces by calculating Euclidian distance between input faces and pre-calculated face is not the only one.
+We could also train custom CNN or VGGFace-based model with new layer to predict labels for Tom, Guy and myself. 
+However, such approach is compute intensive and actually gave me quite bad results. 
+If you know something crucial about this approach to work well, please let me know.</p>
+<p>Other approaches to solve face identification task which you may want to get familiar with are
+<a href="https://machinelearning.wtf/terms/triplet-loss/">Triplet Loss function</a> and <a href="https://machinelearning.wtf/terms/siamese-neural-network/">Siamese Networks</a>. 
+Perhaps, I will try one of them next time.</p>
+<h1 id="links">Links</h1>
+<p>You can find complete project code at GitHub:</p>
+<p><a href="https://github.com/novakov-alexey/face-identification/tree/main/src/main/scala">https://github.com/novakov-alexey/face-identification/tree/main/src/main/scala</a></p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Face Identification with VGGFace and OpenCV' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Face Identification with VGGFace and OpenCV" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Face Identification with VGGFace and OpenCV" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;face-identification&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-pipeline" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/face-identification/#pipeline">
+                Pipeline
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-photo-preparation" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#photo-preparation">
+                Photo Preparation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-get-onnx-model" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#get-onnx-model">
+                Get ONNX model
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-extracting-features" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#extracting-features">
+                Extracting Features
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-identify-faces" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#identify-faces">
+                Identify Faces
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-demo-time" class="toc is-size-7" href="https://novakov-alexey.github.io/face-identification/#demo-time">
+                    Demo time
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-links" class="toc is-size-7 " href="https://novakov-alexey.github.io/face-identification/#links">
+                Links
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/face-identification/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'face-identification'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

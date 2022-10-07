@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | Linear Regression with Adam Optimizer
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            Linear Regression with Adam Optimizer
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2021-02-24'>February 24, 2021</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    8 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1488 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/deep-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        deep learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/machine-learning/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        machine learning
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/linear-regression/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        linear regression
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/adam/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        Adam
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/picta/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        Picta
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            <p><a href="https://arxiv.org/pdf/1412.6980.pdf">Adam</a> is one more optimization algorithm used in neural networks. It is based on adaptive estimates of lower-order moments. It has more hyper-parameters than classic Gradient Descent to tune externally</p>
+<p>Good default settings for the tested machine learning problems are:</p>
+<ul>
+<li>α =  0.001, // learning rate. We have already seen this one in classic Gradient Descent.</li>
+<li>β<sub>1</sub> = 0.9,</li>
+<li>β<sub>2</sub> = 0.999</li>
+<li>eps = 10−8.</li>
+</ul>
+<span id="continue-reading"></span>
+<p>Values on the right-hand side are proposed in the paper. However, you should tune them on your data, 
+also experiment with batch size and other parameters which may influence the Adam parameters.</p>
+<h1 id="algorithm">Algorithm</h1>
+<p>Let's look at original algorithm and then try to implement it in the code.</p>
+<p>All operations on vectors are element-wise.  With β<sub>1</sub><sup>t</sup> and β<sub>2</sub><sup>t</sup> 
+we denote β<sub>1</sub> and β<sub>2</sub> to the power of <code>t</code>.</p>
+<p><strong>Require</strong>: α: Stepsize</p>
+<p><strong>Require:</strong> β<sub>1</sub>, β<sub>2</sub> ∈[0,1): Exponential decay rates for the moment estimates</p>
+<p><strong>Require</strong>: f(θ): Stochastic objective function with parameters θ </p>
+<p><strong>Require</strong>: θ<sub>0</sub>: Initial parameter vector</p>
+<p>m<sub>0</sub> ← 0 (Initialize 1st moment vector)</p>
+<p>v<sub>0</sub> ← 0 (Initialize 2nd moment vector)</p>
+<p>t ← 0 (Initialize timestep)</p>
+<p><strong>while</strong> θ<sub>t</sub> not converged do </p>
+<p>t ← t + 1</p>
+<p>gt ← ∇θf<sub>t</sub> (θ<sub>t−1</sub>) (Get gradients w.r.t. stochastic objective at timestep t)</p>
+<p>mt ← β<sub>1</sub> · m<sub>t−1</sub> + (1−β<sub>1</sub>) · gt (Update biased first moment estimate)</p>
+<p>vt ← β<sub>2</sub> · v<sub>t</sub>−1 + (1−β<sub>2</sub>) · g<sup>2</sup>t (Update biased second raw moment estimate)̂ </p>
+<p>mt ← m<sub>t</sub> / (1−βt<sub>1</sub>) (Compute bias-corrected first moment estimate)̂</p>
+<p>v<sub>t</sub> ← v<sub>t</sub> / (1−βt<sub>2</sub>) (Compute bias-corrected second raw moment estimate)</p>
+<p>θ<sub>t</sub> ← θ<sub>t−1</sub>−α·̂mt/(√̂v<sub>t</sub> +eps) (Update parameters)</p>
+<p><strong>end while</strong></p>
+<p><strong>return</strong> θ<sub>t</sub> (Resulting parameters)</p>
+<p>At the last line we update parameters based on long chain of formulas which incorporate gradient and moments.</p>
+<h1 id="implementation">Implementation</h1>
+<h2 id="changes-to-existing-library">Changes to existing library</h2>
+<p>In order to implement <code>Adam</code> for multi-layer neural network with backpropogation we will need to translate above algorithm to
+linear algebra and Tensor API that we wrote in <a href="../ann-in-scala-2">previous articles</a>. Apart from that we would need to 
+add additional state to <code>Layer</code> type:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](
+</span><span>    w: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    f: </span><span style="color:#8fbcbb;">ActivationFunc</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">ActivationFuncApi</span><span style="color:#81a1c1;">.</span><span>noActivation[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>    units: </span><span style="color:#81a1c1;">Int = </span><span style="color:#b48ead;">1</span><span style="color:#eceff4;">,
+</span><span>    state: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">OptimizerState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">None </span><span style="color:#616e88;">// additional property for an optimizer
+</span><span>)
+</span></code></pre>
+<p>We assume that any optimizer may bring its own state apart of the usual weight and bias matrices, so we model 
+new property as trait and add implementation for Adam:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">sealed trait</span><span style="color:#8fbcbb;"> OptimizerState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> AdamState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](
+</span><span>    mw: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#616e88;">// 1st moment equal in shape to weight
+</span><span>    vw: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#616e88;">// 2nd moment equal in shape to weight
+</span><span>    mb: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span style="color:#616e88;">// 1st moment equal in shape to bias
+</span><span>    vb: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]  </span><span style="color:#616e88;">// 2nd moment equal in shape to bias
+</span><span>) extends </span><span style="color:#8fbcbb;">OptimizerState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span></code></pre>
+<p>We also need to initialise this state properties with zeros. For that, we extend layer construction code to let the optimizer type class
+to init its properties.</p>
+<p>First, we change <code>add</code> method in the <code>Sequential</code> type:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">add</span><span>(layer: </span><span style="color:#8fbcbb;">LayerCfg</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">U</span><span>] </span><span style="color:#81a1c1;">=
+</span><span>  copy(layerStack </span><span style="color:#81a1c1;">= </span><span>(inputs) </span><span style="color:#81a1c1;">=&gt; </span><span>{
+</span><span>    </span><span style="color:#81a1c1;">val currentLayers =</span><span> layerStack(inputs)
+</span><span>    </span><span style="color:#81a1c1;">val prevInput =</span><span> currentLayers</span><span style="color:#81a1c1;">.</span><span>lastOption</span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>units)</span><span style="color:#81a1c1;">.</span><span>getOrElse(inputs)
+</span><span>    </span><span style="color:#81a1c1;">val w =</span><span> random2D(prevInput</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>units)
+</span><span>    </span><span style="color:#81a1c1;">val b =</span><span> zeros(layer</span><span style="color:#81a1c1;">.</span><span>units)
+</span><span>    </span><span style="color:#616e88;">// new line to init state for the chosen optimizer
+</span><span>    </span><span style="color:#81a1c1;">val optimizerState =</span><span> optimizer</span><span style="color:#81a1c1;">.</span><span>initState(w</span><span style="color:#eceff4;">,</span><span> b) 
+</span><span>    (currentLayers :+ </span><span style="color:#8fbcbb;">Layer</span><span>(w</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>f</span><span style="color:#eceff4;">,</span><span> layer</span><span style="color:#81a1c1;">.</span><span>units</span><span style="color:#eceff4;">,</span><span> optimizerState))
+</span><span>  })
+</span></code></pre>
+<p>Optimizer trait now gets additional method:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">initState</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](
+</span><span>      w: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>  ): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">OptimizerState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">None
+</span></code></pre>
+<p>Adam implementation for <code>initState</code>:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">initState</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Numeric</span><span>](
+</span><span>    w: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, 
+</span><span>    b: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">OptimizerState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">AdamState</span><span>[</span><span style="color:#8fbcbb;">T</span><span>](w</span><span style="color:#81a1c1;">.</span><span>zero</span><span style="color:#eceff4;">,</span><span> w</span><span style="color:#81a1c1;">.</span><span>zero</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#81a1c1;">.</span><span>zero</span><span style="color:#eceff4;">,</span><span> b</span><span style="color:#81a1c1;">.</span><span>zero))
+</span></code></pre>
+<p><code>Tensor.zero</code> method creates new tensor with zeros using the same shape as original tensor.</p>
+<p>Also, we need to keep Adam hyper-parameters somewhere. Let's create <code>OptimizerCfg</code> class and Adam extension in it.
+We could design custom configuration nicely, for example, using traits, but I have decided to make it &quot;dirty&quot; at the moment:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> OptimizerCfg</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">Fractional</span><span>](
+</span><span>  learningRate: </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">,
+</span><span>  clip: </span><span style="color:#8fbcbb;">GradientClipping</span><span>[</span><span style="color:#8fbcbb;">T</span><span>] </span><span style="color:#81a1c1;">= </span><span style="color:#8fbcbb;">GradientClippingApi</span><span style="color:#81a1c1;">.</span><span>noClipping[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>  adam: </span><span style="color:#8fbcbb;">AdamCfg</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]
+</span><span>)
+</span><span>
+</span><span style="color:#81a1c1;">case class</span><span style="color:#8fbcbb;"> AdamCfg</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](b1: </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span>b2: </span><span style="color:#8fbcbb;">T</span><span style="color:#eceff4;">, </span><span>eps: </span><span style="color:#8fbcbb;">T</span><span>)
+</span></code></pre>
+<h2 id="update-weights-using-adam">Update Weights using Adam</h2>
+<p>We now have all abstraction in place as well as all parameters to implement Adam optimizer.
+In fact, first part to calculate gradient (partial derivative) will be the same as in classic gradient descent algorithm.
+Second part will be <code>Adam's</code> own stuff:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">override def </span><span style="color:#88c0d0;">updateWeights</span><span>[</span><span style="color:#8fbcbb;">T</span><span style="color:#81a1c1;">: </span><span style="color:#8fbcbb;">ClassTag</span><span>](
+</span><span>  layers: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>  activations: </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Activation</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>  error: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>  c: </span><span style="color:#8fbcbb;">OptimizerCfg</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">,
+</span><span>  timestep: </span><span style="color:#81a1c1;">Int
+</span><span>)(using n: </span><span style="color:#8fbcbb;">Fractional</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]): </span><span style="color:#8fbcbb;">List</span><span>[</span><span style="color:#8fbcbb;">Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]] </span><span style="color:#81a1c1;">=
+</span><span>  </span><span style="color:#81a1c1;">val </span><span style="color:#8fbcbb;">AdamCfg</span><span>(</span><span style="color:#81a1c1;">b1</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">b2</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">eps</span><span>) </span><span style="color:#81a1c1;">=</span><span> c</span><span style="color:#81a1c1;">.</span><span>adam        
+</span><span>
+</span><span>  </span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">correction</span><span>(gradient: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>m: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]</span><span style="color:#eceff4;">, </span><span>v: </span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]) </span><span style="color:#81a1c1;">=        
+</span><span>    </span><span style="color:#81a1c1;">val mt = </span><span>(b1 * m) + ((n</span><span style="color:#81a1c1;">.</span><span>one - b1) * gradient)
+</span><span>    </span><span style="color:#81a1c1;">val vt = </span><span>(b2 * v) + ((n</span><span style="color:#81a1c1;">.</span><span>one - b2) * gradient</span><span style="color:#81a1c1;">.</span><span>sqr)        
+</span><span>    </span><span style="color:#81a1c1;">val mHat =</span><span> mt :/ (n</span><span style="color:#81a1c1;">.</span><span>one - (b1 ** timestep))
+</span><span>    </span><span style="color:#81a1c1;">val vHat =</span><span> vt :/ (n</span><span style="color:#81a1c1;">.</span><span>one - (b2 ** timestep))            
+</span><span>
+</span><span>    </span><span style="color:#81a1c1;">val corr =</span><span> c</span><span style="color:#81a1c1;">.</span><span>learningRate *: (mHat / (vHat</span><span style="color:#81a1c1;">.</span><span>sqrt + eps))
+</span><span>    (corr</span><span style="color:#eceff4;">,</span><span> mt</span><span style="color:#eceff4;">,</span><span> vt)
+</span><span>  
+</span><span>  layers
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>zip(activations)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>foldRight(
+</span><span>      </span><span style="color:#8fbcbb;">List</span><span style="color:#81a1c1;">.</span><span>empty[</span><span style="color:#8fbcbb;">Layer</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]</span><span style="color:#eceff4;">,
+</span><span>      error</span><span style="color:#eceff4;">,
+</span><span>      </span><span style="color:#8fbcbb;">None</span><span>: </span><span style="color:#8fbcbb;">Option</span><span>[</span><span style="color:#8fbcbb;">Tensor</span><span>[</span><span style="color:#8fbcbb;">T</span><span>]]          
+</span><span>    ) {             
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>(
+</span><span>          (</span><span style="color:#8fbcbb;">Layer</span><span>(w</span><span style="color:#eceff4;">, </span><span>b</span><span style="color:#eceff4;">, </span><span>f</span><span style="color:#eceff4;">, </span><span>u</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">AdamState</span><span>(mw</span><span style="color:#eceff4;">, </span><span>vw</span><span style="color:#eceff4;">, </span><span>mb</span><span style="color:#eceff4;">, </span><span>vb)))</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Activation</span><span>(x</span><span style="color:#eceff4;">, </span><span>z</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">_</span><span>))</span><span style="color:#eceff4;">,
+</span><span>          (ls</span><span style="color:#eceff4;">, </span><span>prevDelta</span><span style="color:#eceff4;">, </span><span>prevWeight)
+</span><span>        ) </span><span style="color:#81a1c1;">=&gt;            
+</span><span>        </span><span style="color:#81a1c1;">val delta = </span><span>(prevWeight </span><span style="color:#81a1c1;">match 
+</span><span>          </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">Some</span><span>(pw) </span><span style="color:#81a1c1;">=&gt;</span><span> prevDelta * pw</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T
+</span><span>          </span><span style="color:#81a1c1;">case </span><span style="color:#8fbcbb;">None     </span><span style="color:#81a1c1;">=&gt;</span><span> prevDelta
+</span><span>        ) multiply f</span><span style="color:#81a1c1;">.</span><span>derivative(z)        
+</span><span>        </span><span style="color:#81a1c1;">val wGradient =</span><span> c</span><span style="color:#81a1c1;">.</span><span>clip(x</span><span style="color:#81a1c1;">.</span><span style="color:#8fbcbb;">T</span><span> * delta)
+</span><span>        </span><span style="color:#81a1c1;">val bGradient =</span><span> c</span><span style="color:#81a1c1;">.</span><span>clip(delta)</span><span style="color:#81a1c1;">.</span><span>sum
+</span><span>        
+</span><span>        </span><span style="color:#616e88;">// Adam                        
+</span><span>        </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">corrW</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">weightM</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">weightV</span><span>) </span><span style="color:#81a1c1;">=</span><span> correction(wGradient</span><span style="color:#eceff4;">,</span><span> mw</span><span style="color:#eceff4;">,</span><span> vw)
+</span><span>        </span><span style="color:#81a1c1;">val newWeight =</span><span> w - corrW
+</span><span>
+</span><span>        </span><span style="color:#81a1c1;">val </span><span>(</span><span style="color:#81a1c1;">corrB</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">biasM</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">biasV</span><span>) </span><span style="color:#81a1c1;">=</span><span> correction(bGradient</span><span style="color:#81a1c1;">.</span><span>asT</span><span style="color:#eceff4;">,</span><span> mb</span><span style="color:#eceff4;">,</span><span> vb)
+</span><span>        </span><span style="color:#81a1c1;">val newBias =</span><span> b - corrB
+</span><span>
+</span><span>        </span><span style="color:#81a1c1;">val adamState = </span><span style="color:#8fbcbb;">Some</span><span>(</span><span style="color:#8fbcbb;">AdamState</span><span>(weightM</span><span style="color:#eceff4;">,</span><span> weightV</span><span style="color:#eceff4;">,</span><span> biasM</span><span style="color:#eceff4;">,</span><span> biasV))
+</span><span>        </span><span style="color:#81a1c1;">val updated = </span><span style="color:#8fbcbb;">Layer</span><span>(newWeight</span><span style="color:#eceff4;">,</span><span> newBias</span><span style="color:#eceff4;">,</span><span> f</span><span style="color:#eceff4;">,</span><span> u</span><span style="color:#eceff4;">,</span><span> adamState) +: ls              
+</span><span>        (updated</span><span style="color:#eceff4;">,</span><span> delta</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Some</span><span>(w))
+</span><span>        
+</span><span>      </span><span style="color:#81a1c1;">case </span><span>s </span><span style="color:#81a1c1;">=&gt;</span><span> sys</span><span style="color:#81a1c1;">.</span><span>error(</span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>Adam optimizer require state, but was:</span><span style="color:#ebcb8b;">\n</span><span>$s</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>    }
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>_1    
+</span></code></pre>
+<p>The difference with classic gradient optimizer is:</p>
+<ol>
+<li><code>timestep</code> is an index across all training epochs and intermediate batches. Its range: <code>[1 .. epochs * data.length / batchSize]</code></li>
+<li><code>correction</code> function that goes after Adam paper to calculate final learning rate based on the weight or bias gradient.</li>
+<li>We keep Adam moments for weight and bias <code>AdamState</code> as part of the Layer state across all learning epochs.</li>
+</ol>
+<p>There is an extension to Tensor API I have added to support element-wise operations like:</p>
+<ol>
+<li>division <code>def :/(that: T): Tensor[T]</code></li>
+<li>multiplication <code>(t: T) def *:(that: Tensor[T]): Tensor[T]</code></li>
+<li>power: <code>def :**(to: Int): Tensor[T]</code></li>
+<li>square: <code>def sqr: Tensor[T] = TensorOps.pow(t, 2)</code></li>
+<li>sqrt: <code>def sqrt: Tensor[T] = TensorOps.sqrt(t)</code></li>
+</ol>
+<h1 id="visualisation">Visualisation</h1>
+<p>We are going to visualise Adam gradient trace to global minimum using <a href="https://github.com/cedricmjohn/picta">Picta</a>. So all we do is constructing ANN with Adam type parameter:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val ann = </span><span style="color:#8fbcbb;">Sequential</span><span>[</span><span style="color:#81a1c1;">Double</span><span style="color:#eceff4;">, </span><span style="color:#8fbcbb;">Adam</span><span>](
+</span><span>    meanSquareError</span><span style="color:#eceff4;">,
+</span><span>    learningRate </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">0</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0012</span><span style="color:#81a1c1;">f</span><span style="color:#eceff4;">,    
+</span><span>    batchSize </span><span style="color:#81a1c1;">= </span><span style="color:#b48ead;">16</span><span style="color:#eceff4;">,
+</span><span>    gradientClipping </span><span style="color:#81a1c1;">=</span><span> clipByValue(</span><span style="color:#b48ead;">5</span><span style="color:#eceff4;">.</span><span style="color:#b48ead;">0</span><span style="color:#81a1c1;">d</span><span>)
+</span><span>  )</span><span style="color:#81a1c1;">.</span><span>add(</span><span style="color:#8fbcbb;">Dense</span><span>())    
+</span></code></pre>
+<p>Loss surface:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;c40dd353d7a2af8100.png" class="center-image"/>
+<br/><br/>
+<p>Also, we going to compare it on the same data with classic Gradient Descent:</p>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;4bf83176c39985de00.png" class="center-image"/>
+<br/><br/>
+<p>Adam gradient starts a bit differently then classic gradient descent. Eventually, they both converges at the same point.</p>
+<p>If we compare the speed of finding global minimum, then on my data and on the same learning hyper-parameters, classic Gradient Descent is faster:</p>
+<p>
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;4f7be8eecefb8a6e00.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;6d7d62b07dbc2e9d00.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;95962797a94514dc00.png" class="center-image"/>
+<br/><br/>
+
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;7e7392bb191e58c500.png" class="center-image"/>
+<br/><br/></p>
+<p>We can see that orange line is slightly behind the blue one. Around <code>9th</code> learning epoch they are both in the same position.</p>
+<h1 id="summary">Summary</h1>
+<p>We could easily extend existing library with one more optimizer such as Adam. It is quite popular optimizer nowadays as it shows
+good result in the paper and in practise. Anyway, it did not show better results on my data comparing to classic gradient descent algorithm.
+My experiment is not proving that Adam is not good, but it is just showing that in real life you need to experiment with 
+different weight optimisers. Also, you should tune hyper-parameters for each algorithm separately, i.e. reuse of the same hyper-parameters
+might not help to get the best results out of another optimizer you are currently trying.</p>
+<h1 id="links">Links</h1>
+<ol>
+<li><a href="https://github.com/novakov-alexey/deep-learning-scala/blob/master/src/main/scala/ml/network/optimizers.scala">Source code - Optimizers</a></li>
+<li><a href="https://machinelearningmastery.com/adam-optimization-from-scratch/">Reference Implementation for perceptron</a></li>
+<li><a href="https://arxiv.org/pdf/1412.6980.pdf">Paper: Adam: a method for stochastic optimization</a></li>
+<li><a href="https://gluon.mxnet.io/chapter06_optimization/adam-scratch.html">MXNET: Adam from scratch</a></li>
+</ol>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='Linear Regression with Adam Optimizer' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="Linear Regression with Adam Optimizer" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="Linear Regression with Adam Optimizer" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;adam-optimizer&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-algorithm" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/adam-optimizer/#algorithm">
+                Algorithm
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-implementation" class="toc is-size-7 " href="https://novakov-alexey.github.io/adam-optimizer/#implementation">
+                Implementation
+              </a>
+              
+              <ul>
+                
+                <li>
+                  <a id="link-changes-to-existing-library" class="toc is-size-7" href="https://novakov-alexey.github.io/adam-optimizer/#changes-to-existing-library">
+                    Changes to existing library
+                  </a>
+                </li>
+                
+                <li>
+                  <a id="link-update-weights-using-adam" class="toc is-size-7" href="https://novakov-alexey.github.io/adam-optimizer/#update-weights-using-adam">
+                    Update Weights using Adam
+                  </a>
+                </li>
+                
+              </ul>
+              
+            </li>
+            
+            <li>
+              <a id="link-visualisation" class="toc is-size-7 " href="https://novakov-alexey.github.io/adam-optimizer/#visualisation">
+                Visualisation
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/adam-optimizer/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-links" class="toc is-size-7 " href="https://novakov-alexey.github.io/adam-optimizer/#links">
+                Links
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/adam-optimizer/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'adam-optimizer'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>

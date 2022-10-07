@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <meta content="#ffffff" name="theme-color" />
+  <meta content="#da532c" name="msapplication-TileColor" />
+
+  
+  
+  
+  
+  
+
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.css"
+    rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <link href='https://novakov-alexey.github.io/site.css' rel="stylesheet" />
+
+  
+  
+
+  <title>
+    
+Alexey Novakov Notes | CDC with Delta Lake Streaming
+
+  </title>
+
+  <script crossorigin="anonymous" src="https://kit.fontawesome.com/201b8d5e05.js"></script>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-49N5BCWL0F"></script>
+  <script type="text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-49N5BCWL0F");
+  </script>
+  
+</head>
+
+<body class="has-background-white">
+  
+  <nav aria-label="section navigation" class="navbar is-light" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-bold" href="https:&#x2F;&#x2F;novakov-alexey.github.io">Alexey Novakov Notes</a>
+        <a aria-expanded="false" aria-label="menu" class="navbar-burger burger" data-target="navMenu" role="button">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu" id="navMenu">
+        <div class="navbar-end has-text-centered">
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;'>
+            Blog
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;cv'>
+            CV
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;presentations'>
+            Presentations
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;tags'>
+            Tags
+          </a>
+          
+          <a class="navbar-item" href='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;categories'>
+            Categories
+          </a>
+          
+          <a class="navbar-item" id="nav-search" title="Search" data-target="#search-modal">
+            <span class="icon">
+              <i class="fas fa-search"></i>
+            </span>
+          </a>
+          <a class="navbar-item" id="dark-mode" title="Switch to dark theme">
+            <span class="icon">
+              <i class="fas fa-adjust"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+  
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8 is-offset-2">
+        <article class="box">
+          <h1 class="title is-1">
+            CDC with Delta Lake Streaming
+          </h1>
+          <p class="subtitle"></p>
+          <div class="columns is-multiline is-gapless">
+            <div class="column is-8">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="fas fa-user"></i>
+    </span>
+    Alexey Novakov published on
+    <span class="icon">
+      <i class="far fa-calendar-alt"></i>
+    </span>
+    <time datetime='2022-08-07'>August 07, 2022</time>
+  </p>
+
+            </div>
+            <div class="column is-4 has-text-right-desktop">
+              
+  <p class="has-text-grey">
+    <span class="icon">
+      <i class="far fa-clock"></i>
+    </span>
+    7 min,
+    <span class="icon">
+      <i class="fas fa-pencil-alt"></i>
+    </span>
+    1304 words
+  </p>
+
+            </div>
+            <div class="column">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Categories:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/scala/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        scala
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/categories/spark/'>
+        <span class="icon is-small">
+          <i class="fas fa-folder fa-xs"></i>
+        </span>
+        spark
+      </a>
+    
+  </p>
+
+              
+            </div>
+            <div class="column has-text-right-desktop">
+              
+              
+  <p>
+    <span class="has-text-black has-text-weight-normal">Tags:</span>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/big-data/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        big data
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/lake-house/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        lake house
+      </a>
+    
+      <a class="link has-text-weight-light" href='https://novakov-alexey.github.io/tags/data-lake/'>
+        <span class="icon is-small">
+          <i class="fas fa-tag fa-xs"></i>
+        </span>
+        data lake
+      </a>
+    
+  </p>
+
+              
+            </div>
+          </div>
+          <div class="content mt-2 has-text-justified">
+            
+
+<img src="https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;processed_images&#x2F;f04457750ffdcf1500.png" class="center-image"/>
+<br/><br/>
+<p>Change Data Capture (CDC) is a popular technique for replication of data from OLTP to OLAP data store.
+Usually CDC tools integrate with transactional logs of relational databases and thus are mainly dedicated to replicate all possible data changes from relational databases. NoSQL databases are usually coming with built-in CDC for any possible data change (insert, update, delete), for example AWS DynamoDB Streams.</p>
+<p>In this blog-post, we will look at <a href="https://docs.delta.io/latest/index.html">Delta Lake</a> table format, which supports <a href="https://docs.delta.io/latest/delta-update.html#upsert-into-a-table-using-merge">&quot;merge&quot;</a> operation. This operation is useful when we need to update replicated data in Data Lake.</p>
+<span id="continue-reading"></span><h1 id="generate-data">Generate Data</h1>
+<p>Let's generate some input data and merge it using Spark streaming API. Delta Lake API comes with DSL for merging data frames into into a table.</p>
+<p>I have prepared a Scala script which can generate CSV files with hypotetical customer orders. Every few seconds this script creates a new file which contains few hundreds of rows.</p>
+<p>Using <a href="https://scala-cli.virtuslab.org/">Scala CLI</a>, run provided <a href="https://github.com/novakov-alexey/spark-elt-jobs/blob/main/scripts/csv-file-gen.scala">csv-file-gen.scala</a> script. I am doing that within its cloned repository like this:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">scala-cli</span><span> run scripts/csv-file-gen.scala --main-class localGenerateOrders</span><span style="color:#81a1c1;"> -- </span><span style="color:#a3be8c;">&quot;data/gen/orders&quot;</span><span> 3000
+</span></code></pre>
+<p>It will start to print a number of generates rows in a new file. <code>3000</code> is pause in milliseconds after each file generation. Do not forget to stop this script afterwards, otherwise it will generate many files on your disk, but you should keep it running if you follow me and run the code below.</p>
+<h1 id="create-delta-table">Create Delta Table</h1>
+<p>Using spark-shell, or any other tools which can initiate Spark session, for example Apache Zeppelin, Jupyter, run the code below:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>delta</span><span style="color:#81a1c1;">.</span><span>tables</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>File
+</span><span>
+</span><span style="color:#81a1c1;">val inputPath = new </span><span style="color:#8fbcbb;">File</span><span>(</span><span style="color:#a3be8c;">&quot;./data/gen/orders&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toURI</span><span style="color:#81a1c1;">.</span><span>toString
+</span><span style="color:#81a1c1;">val ordersDf =</span><span> spark</span><span style="color:#81a1c1;">.</span><span>read
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>option(</span><span style="color:#a3be8c;">&quot;inferSchema&quot;</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">true</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>option(</span><span style="color:#a3be8c;">&quot;header&quot;</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">true</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>csv(inputPath)
+</span><span>
+</span><span style="color:#81a1c1;">val tablePath = new </span><span style="color:#8fbcbb;">File</span><span>(</span><span style="color:#a3be8c;">&quot;./data/delta/orders&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toURI</span><span style="color:#81a1c1;">.</span><span>toString
+</span><span>ordersDf</span><span style="color:#81a1c1;">.</span><span>limit(</span><span style="color:#b48ead;">0</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>write
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>format(</span><span style="color:#a3be8c;">&quot;delta&quot;</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>mode(</span><span style="color:#a3be8c;">&quot;overwrite&quot;</span><span>)
+</span><span>  </span><span style="color:#81a1c1;">.</span><span>save(tablePath)
+</span></code></pre>
+<p>I am using Spark <strong>3.2.1</strong> with Scala <strong>2.12.15</strong> and <strong>Java 11.0.2</strong>.</p>
+<p>At this point we have a Delta table on the local file system. It is now ready for merging new changes using Spark batch or streaming queries.</p>
+<p>In the above code, we are using already available generated files in <code>data/gen/orders</code> to create Delta Lake table itself. This is a requirement of Spark <em>streaming</em> API to provide input schema in advance/staticaly.</p>
+<h1 id="merge-streaming-data">Merge streaming data</h1>
+<p>Our goal is to discover new files in the input directory and merge their content to a Delta Lake table. Essentially, we are going to run micro-batch processing, which allows to reference an intermediate DataFrame to merge its content to existing Delta Lake table.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val orders = </span><span style="color:#8fbcbb;">DeltaTable</span><span style="color:#81a1c1;">.</span><span>forPath(spark</span><span style="color:#eceff4;">,</span><span> tablePath) </span><span style="color:#616e88;">// pointing to existing table
+</span></code></pre>
+<p>We will use schema from existing <code>ordersDf</code> DataFrame to avoid manual schema definition, however you can also define required columns to be selected from intermiediate data frame for merge manually. </p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>apache</span><span style="color:#81a1c1;">.</span><span>spark</span><span style="color:#81a1c1;">.</span><span>sql</span><span style="color:#81a1c1;">.</span><span>streaming</span><span style="color:#81a1c1;">.</span><span>OutputMode
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>apache</span><span style="color:#81a1c1;">.</span><span>spark</span><span style="color:#81a1c1;">.</span><span>sql</span><span style="color:#81a1c1;">.</span><span>streaming</span><span style="color:#81a1c1;">.</span><span>Trigger
+</span><span style="color:#81a1c1;">import</span><span> org</span><span style="color:#81a1c1;">.</span><span>apache</span><span style="color:#81a1c1;">.</span><span>spark</span><span style="color:#81a1c1;">.</span><span>sql</span><span style="color:#81a1c1;">.</span><span>DataFrame
+</span><span>
+</span><span style="color:#81a1c1;">val precombineKey = </span><span style="color:#a3be8c;">&quot;last_update_time&quot;
+</span><span style="color:#81a1c1;">val primaryKey = </span><span style="color:#a3be8c;">&quot;orderId&quot;
+</span><span style="color:#81a1c1;">val otherColumns =
+</span><span>    ordersDf</span><span style="color:#81a1c1;">.</span><span>schema</span><span style="color:#81a1c1;">.</span><span>fields
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>map(</span><span style="color:#81a1c1;">_.</span><span>name)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>filterNot(n </span><span style="color:#81a1c1;">=&gt;</span><span> n </span><span style="color:#81a1c1;">==</span><span> precombineKey || n </span><span style="color:#81a1c1;">==</span><span> primaryKey)
+</span><span>
+</span><span style="color:#616e88;">// Function to upsert microBatchOutputDF into Delta table using merge
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">upsertToDelta</span><span>(microBatchOutputDF: </span><span style="color:#8fbcbb;">DataFrame</span><span style="color:#eceff4;">, </span><span>batchId: </span><span style="color:#81a1c1;">Long</span><span>) </span><span style="color:#81a1c1;">= </span><span>{
+</span><span>  </span><span style="color:#616e88;">// Find the latest change for each key based on the timestamp
+</span><span>  </span><span style="color:#616e88;">// Note: For nested structs, max on struct is computed as
+</span><span>  </span><span style="color:#616e88;">// max on first struct field, if equal fall back to second fields, and so on.  
+</span><span>  </span><span style="color:#81a1c1;">val latestChangeForEachKey =</span><span> microBatchOutputDF
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>selectExpr(
+</span><span>      primaryKey</span><span style="color:#eceff4;">,
+</span><span>      </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>struct($precombineKey, ${otherColumns</span><span style="color:#81a1c1;">.</span><span>mkString(</span><span style="color:#a3be8c;">&quot;,&quot;</span><span>)}) as otherCols</span><span style="color:#a3be8c;">&quot;
+</span><span>    )
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>groupBy(primaryKey)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>agg(max(</span><span style="color:#a3be8c;">&quot;otherCols&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#a3be8c;">&quot;latest&quot;</span><span>))
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>selectExpr(primaryKey</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;latest.*&quot;</span><span>)
+</span><span>
+</span><span>  orders</span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#a3be8c;">&quot;t&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>merge(
+</span><span>      latestChangeForEachKey</span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#a3be8c;">&quot;s&quot;</span><span>)</span><span style="color:#eceff4;">,
+</span><span>      </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>s.$primaryKey = t.$primaryKey</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>whenMatched()</span><span style="color:#81a1c1;">.</span><span>updateAll()
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>whenNotMatched()</span><span style="color:#81a1c1;">.</span><span>insertAll()
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>execute()
+</span><span>}    
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">runStream</span><span>() </span><span style="color:#81a1c1;">= 
+</span><span>  spark</span><span style="color:#81a1c1;">.</span><span>readStream
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>format(</span><span style="color:#a3be8c;">&quot;csv&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>schema(ordersDf</span><span style="color:#81a1c1;">.</span><span>schema)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>load(inputPath)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>writeStream
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>option(</span><span style="color:#a3be8c;">&quot;checkpointLocation&quot;</span><span style="color:#eceff4;">, </span><span style="color:#88c0d0;">s</span><span style="color:#a3be8c;">&quot;</span><span>$tablePath/_checkpoints</span><span style="color:#a3be8c;">&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>format(</span><span style="color:#a3be8c;">&quot;delta&quot;</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>foreachBatch(upsertToDelta </span><span style="color:#81a1c1;">_</span><span>)
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>outputMode(</span><span style="color:#a3be8c;">&quot;update&quot;</span><span>)    
+</span><span>    </span><span style="color:#81a1c1;">.</span><span>start()
+</span><span>
+</span><span>runStream()
+</span></code></pre>
+<p>Once <code>start</code> method is executed, Spark starts to run a streaming job, which is going to merge all incoming data based on the primareKey <code>orderId</code> and its precombine key <code>last_update_time</code>. Precombine key is used to sort all records with the same primary key and then take the record with <code>max(..)</code> value. Usually, precombine key is a time-based column which can indidicate the latest transaction happened to a specific row.</p>
+<h1 id="verify-merge-result">Verify merge result</h1>
+<p>In another spark-shell terminal we are checking that there is a maximum of 1 order per each unique <code>orderId</code>. If any of the <code>orderId</code> groups show more than 1 in the count column, then merge process is not working correctly.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">import</span><span> io</span><span style="color:#81a1c1;">.</span><span>delta</span><span style="color:#81a1c1;">.</span><span>tables</span><span style="color:#81a1c1;">._
+</span><span style="color:#81a1c1;">import</span><span> java</span><span style="color:#81a1c1;">.</span><span>io</span><span style="color:#81a1c1;">.</span><span>File
+</span><span>
+</span><span style="color:#81a1c1;">val tablePath = new </span><span style="color:#8fbcbb;">File</span><span>(</span><span style="color:#a3be8c;">&quot;./data/delta/orders&quot;</span><span>)</span><span style="color:#81a1c1;">.</span><span>toURI</span><span style="color:#81a1c1;">.</span><span>toString
+</span><span style="color:#81a1c1;">val orders = </span><span style="color:#8fbcbb;">DeltaTable</span><span style="color:#81a1c1;">.</span><span>forPath(spark</span><span style="color:#eceff4;">,</span><span> tablePath) </span><span style="color:#616e88;">// pointing to existing table
+</span><span style="color:#81a1c1;">val primaryKey = </span><span style="color:#a3be8c;">&quot;orderId&quot;
+</span><span>
+</span><span>orders</span><span style="color:#81a1c1;">.</span><span>toDF
+</span><span style="color:#81a1c1;">.</span><span>groupBy(primaryKey)
+</span><span style="color:#81a1c1;">.</span><span>agg(count(primaryKey)</span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#a3be8c;">&quot;count&quot;</span><span>))
+</span><span style="color:#81a1c1;">.</span><span>sort(desc(</span><span style="color:#a3be8c;">&quot;count&quot;</span><span>))
+</span><span style="color:#81a1c1;">.</span><span>show
+</span></code></pre>
+<p>Output:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">+-------+-----+
+</span><span style="color:#81a1c1;">|</span><span style="color:#88c0d0;">orderId</span><span style="color:#81a1c1;">|</span><span style="color:#88c0d0;">count</span><span style="color:#81a1c1;">|
+</span><span style="color:#88c0d0;">+-------+-----+
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">148</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">463</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">471</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">496</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">833</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">243</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">392</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">540</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">623</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">737</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">858</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">897</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|     </span><span style="color:#88c0d0;">31</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">516</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|     </span><span style="color:#88c0d0;">85</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">137</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">251</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">451</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">580</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">808</span><span style="color:#81a1c1;">|    </span><span style="color:#88c0d0;">1</span><span style="color:#81a1c1;">|
+</span><span style="color:#88c0d0;">+-------+-----+
+</span><span style="color:#88c0d0;">only</span><span> showing top 20 rows
+</span></code></pre>
+<p>Prooving that there are no duplicates for any order:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>orders</span><span style="color:#81a1c1;">.</span><span>toDF
+</span><span>res2
+</span><span style="color:#81a1c1;">.</span><span>groupBy(primaryKey)
+</span><span style="color:#81a1c1;">.</span><span>agg(count(primaryKey)</span><span style="color:#81a1c1;">.</span><span>as(</span><span style="color:#a3be8c;">&quot;count&quot;</span><span>))
+</span><span style="color:#81a1c1;">.</span><span>sort(desc(</span><span style="color:#a3be8c;">&quot;count&quot;</span><span>))
+</span><span style="color:#81a1c1;">.</span><span>where(</span><span style="color:#88c0d0;">$</span><span style="color:#a3be8c;">&quot;</span><span>count</span><span style="color:#a3be8c;">&quot;</span><span> &gt; </span><span style="color:#b48ead;">1</span><span>)
+</span><span style="color:#81a1c1;">.</span><span>show
+</span></code></pre>
+<p>Output:</p>
+<pre data-lang="bash" style="background-color:#2e3440;color:#d8dee9;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#88c0d0;">+-------+-----+
+</span><span style="color:#81a1c1;">|</span><span style="color:#88c0d0;">orderId</span><span style="color:#81a1c1;">|</span><span style="color:#88c0d0;">count</span><span style="color:#81a1c1;">|
+</span><span style="color:#88c0d0;">+-------+-----+
+</span><span style="color:#88c0d0;">+-------+-----+
+</span></code></pre>
+<p>Result is an empty dataset as expected.</p>
+<h1 id="optimization">Optimization</h1>
+<p>If we process micro batches and merge them to Delta Lake table, then sooner or later Spark will create a lot of small Parquet files inside the table folder. Some of the files will be already obsolete and will be only needed if we query historical state of the Delta Lake table. In order to optimize table reads and writes, one should compact large number of files to get smaller number files in the table folder. <strong>Compaction</strong> can be done via standard Spark <code>repartition</code> operation.</p>
+<p>Compact files:</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span style="color:#81a1c1;">val numFiles = </span><span style="color:#b48ead;">4
+</span><span>
+</span><span style="color:#81a1c1;">def </span><span style="color:#88c0d0;">compact </span><span style="color:#81a1c1;">= 
+</span><span>  spark</span><span style="color:#81a1c1;">.</span><span>read
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>format(</span><span style="color:#a3be8c;">&quot;delta&quot;</span><span>)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>load(tablePath)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>repartition(numFiles)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>write
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>option(</span><span style="color:#a3be8c;">&quot;dataChange&quot;</span><span style="color:#eceff4;">, </span><span style="color:#a3be8c;">&quot;false&quot;</span><span>)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>format(</span><span style="color:#a3be8c;">&quot;delta&quot;</span><span>)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>mode(</span><span style="color:#a3be8c;">&quot;overwrite&quot;</span><span>)
+</span><span>   </span><span style="color:#81a1c1;">.</span><span>save(tablePath)
+</span><span>
+</span><span>compact
+</span></code></pre>
+<p><code>dataChange=false</code> is Delta's option here to minimize potential failure to other concurrent operations on the current Delta table.</p>
+<p>Another way to get rid of large number of files is to run Delta's <strong>vacuum</strong> operation, which effectively removes data files older than N number of hours.</p>
+<p>Vacuum command deletes old files which are still part of the tables, but not used when you query the latest table state. However these files are still used if you query historical state of the table. So once you vacuum old files, you loose a possibility to query those historical data after that.</p>
+<p>Below example removes all histoical data by setting <code>0</code> as number of hours.</p>
+<pre data-lang="scala" style="background-color:#2e3440;color:#d8dee9;" class="language-scala "><code class="language-scala" data-lang="scala"><span>spark</span><span style="color:#81a1c1;">.</span><span>conf</span><span style="color:#81a1c1;">.</span><span>set(</span><span style="color:#a3be8c;">&quot;spark.databricks.delta.retentionDurationCheck.enabled&quot;</span><span style="color:#eceff4;">, </span><span style="color:#81a1c1;">false</span><span>)
+</span><span>orders</span><span style="color:#81a1c1;">.</span><span>vacuum(</span><span style="color:#b48ead;">0</span><span>)
+</span></code></pre>
+<p>During the compaction or vacuum you may get an exception in the running Spark streaming or batch job which can terminate your job. The reason is that both processes, i.e. main job and compact/vacuum, are trying to move table files around and thus may lead to a conflicting situations. But we remember that Delta Lake is ACID compliant, it should allow us to change data from multiple writers and still be consistent. It is still true. Delta Lake is based on <a href="https://docs.delta.io/latest/concurrency-control.html#id1">optimistic concurrency</a> principles which requires clients to retry their operations upon such failures/exceptions. If you see such a failure, then make sure you repeat the same operation again or restart Spark job upon such exceptions. </p>
+<h1 id="summary">Summary</h1>
+<p>In this blog-post we have seen that Delta Lake can easily merge new data to existing table via standard Spark API, in this case via streaming API.
+Apart from the main opearion we need to run compaction and vacuum operations time by time as a separate <code>houskeeping</code> jobs to get overal better peformance when reading the table data by the main data consumers.</p>
+
+          </div>
+          <div class="container has-text-centered">
+            
+  <p class="is-size-5">
+    Share:
+    <a class="link" data-sharer="facebook" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on facebook">
+      <span class="icon">
+        <i class="fab fa-facebook-square"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="twitter" data-title='CDC with Delta Lake Streaming' data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on twitter">
+      <span class="icon">
+        <i class="fab fa-twitter"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="linkedin" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on linkedin">
+      <span class="icon">
+        <i class="fab fa-linkedin"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="reddit" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on reddit">
+      <span class="icon">
+        <i class="fab fa-reddit"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="hackernews" data-title="CDC with Delta Lake Streaming" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on hackernews">
+      <span class="icon">
+        <i class="fab fa-hacker-news"></i>
+      </span>
+    </a>
+    <a class="link" data-sharer="whatsapp" data-title="CDC with Delta Lake Streaming" data-url='https:&#x2F;&#x2F;novakov-alexey.github.io&#x2F;delta-lake&#x2F;' href="javascript:void(0);" title="Share on whatsapp">
+      <span class="icon">
+        <i class="fab fa-whatsapp-square"></i>
+      </span>
+    </a>
+  </p>
+
+          </div>
+        </article>
+      </div>
+      
+      <div class="column is-2 is-hidden-mobile">
+        <aside class="menu" style="position: sticky; top: 48px">
+          <p class="heading has-text-weight-bold">Contents</p>
+          <ul class="menu-list">
+            
+            <li>
+              <a id="link-generate-data" class="toc is-size-7 is-active" href="https://novakov-alexey.github.io/delta-lake/#generate-data">
+                Generate Data
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-create-delta-table" class="toc is-size-7 " href="https://novakov-alexey.github.io/delta-lake/#create-delta-table">
+                Create Delta Table
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-merge-streaming-data" class="toc is-size-7 " href="https://novakov-alexey.github.io/delta-lake/#merge-streaming-data">
+                Merge streaming data
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-verify-merge-result" class="toc is-size-7 " href="https://novakov-alexey.github.io/delta-lake/#verify-merge-result">
+                Verify merge result
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-optimization" class="toc is-size-7 " href="https://novakov-alexey.github.io/delta-lake/#optimization">
+                Optimization
+              </a>
+              
+            </li>
+            
+            <li>
+              <a id="link-summary" class="toc is-size-7 " href="https://novakov-alexey.github.io/delta-lake/#summary">
+                Summary
+              </a>
+              
+            </li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+    </div>
+  </div>
+</section>
+  
+
+
+  
+  <section class="modal" id="search-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="field">
+        <p class="control has-icons-right">
+          <input class="input" id="search" placeholder="Search this website." type="search" />
+          <span class="icon is-small is-right">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="search-results">
+        <div class="search-results__items"></div>
+      </div>
+    </div>
+    <button aria-label="close" class="modal-close is-large"></button>
+  </section>
+  
+
+
+  
+
+
+
+  
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <div id="disqus_thread"></div>
+      </div>
+    </div>
+  </div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    
+    var disqus_config = function () {      
+      this.page.url = 'https://novakov-alexey.github.io/delta-lake/';  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = 'delta-lake'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://novakov-alexey-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+  
+  <footer class="py-4 has-background-light">
+    <p class="has-text-centered">
+      Built with
+      <span class="icon is-small">
+        <i class="fas fa-code fa-xs"></i>
+      </span>
+      code and
+      <span class="icon is-small">
+        <i class="fas fa-heart fa-xs"></i>
+      </span>
+      love <br /> Powered By
+      <span class="icon is-small">
+        <i class="fas fa-power-off fa-xs"></i>
+      </span>
+      Zola
+    </p>
+  </footer>
+  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.xkcd@1/dist/chart.xkcd.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/folio/galleria.folio.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticlunr/0.9.6/elasticlunr.min.js"></script>
+  <script src='https://novakov-alexey.github.io/search_index.en.js'></script>
+  <script src='https://novakov-alexey.github.io/js/site.js'></script>
+
+  
+
+<script type="text/javascript">
+  const menuBarHeight = $("nav.navbar").height();
+  const tocItems = $('.toc');
+  const navSections = new Array($('.toc').length);
+
+  tocItems.each(function (i) {
+    let id = $(this).attr("id").substring(5);
+    navSections[i] = document.getElementById(id);
+  })
+
+  function isVisible(tocIndex) {
+    const current = navSections[tocIndex];
+    const next = tocIndex < tocItems.length - 1 ? navSections[tocIndex+1] : $("section.section").get(1);
+    
+    const c = current.getBoundingClientRect();
+    const n = next.getBoundingClientRect();
+    const h = (window.innerHeight || document.documentElement.clientHeight);
+
+    return (c.top <= h) && (c.top + (n.top - c.top) - menuBarHeight >= 0);
+  }
+
+  function activateIfVisible() {
+    for (b = true, i = 0; i < tocItems.length; i++) {
+      if (b && isVisible(i)) {
+        tocItems[i].classList.add('is-active');
+        b = false;
+      } else
+        tocItems[i].classList.remove('is-active');
+    }
+  }
+
+  var isTicking = null;
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        activateIfVisible();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, false);
+</script>
+
+
+
+
+</body>
+
+</html>
